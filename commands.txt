@@ -1,0 +1,11 @@
+// Main
+npm init
+git init
+npm install express dotenv mongoose colors bcryptjs express-async-handler jsonwebtoken concurrently
+npm install -D nodemon
+
+// Create React App
+npx create-react-app frontend --template redux
+
+// In front end
+npm install react-router-dom react-toastify axios react-icons classnames prop-types
