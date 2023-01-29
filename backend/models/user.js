@@ -6,6 +6,12 @@ const userSchema = mongoose.Schema(
       type: String,
       required: [true, "Please add an email!"],
       unique: true,
+      validate: {
+        validator: (email) => {
+          return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+        },
+        message: "Please enter a valid email",
+      },
     },
     password: {
       type: String,
@@ -13,13 +19,20 @@ const userSchema = mongoose.Schema(
     },
     role: {
       type: String,
+      enum: ["student", "instructor", "guardian"],
+      description: " Must be either student, instructor ot guardian",
       required: true,
     },
     isAdmin: {
       type: Boolean,
       required: true,
       default: false,
-    }
+    },
+    studentprofiles: [{ type: mongoose.Schema.Types.ObjectId, ref: "Student" }],
+    instructorprofile: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Instructor",
+    },
   },
   {
     timestamps: true,
