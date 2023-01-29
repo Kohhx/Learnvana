@@ -16,7 +16,7 @@ const studentSchema = mongoose.Schema(
     },
     gender: {
       enum: ["male", "female"],
-      description: " Must be either male of female",
+      description: "Must be either male of female",
       required: true,
     },
     avatar: String,

@@ -9,5 +9,3 @@ npx create-react-app frontend --template redux
 
 // In front end
 npm install react-router-dom react-toastify axios react-icons classnames prop-types
-
-
