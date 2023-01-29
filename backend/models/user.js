@@ -15,12 +15,12 @@ const userSchema = mongoose.Schema(
     },
     password: {
       type: String,
-      required: [true, "Please add an Password!"],
+      required: [true, "Please enter a password!"],
     },
     role: {
       type: String,
       enum: ["student", "instructor", "guardian"],
-      description: " Must be either student, instructor ot guardian",
+      description: " Must be either student, instructor or guardian",
       required: true,
     },
     isAdmin: {
