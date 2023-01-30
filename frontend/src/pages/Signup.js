@@ -1,4 +1,6 @@
-import React from 'react'
+import React from 'react';
+import SignUp from "../components/Sign_in"
+
 
 const Signup = () => {
   return (
