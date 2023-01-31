@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import classNames from "classnames";
 import Validator from "../utilities/Validator";
 
 const Input = ({
+  id,
   type,
   textarea,
   label,
@@ -10,6 +11,7 @@ const Input = ({
   errorMessage,
   validators,
   disableErrorMessages,
+  inputFormHandler,
   ...rest
 }) => {
   const [inputState, setInputState] = useState({
@@ -31,7 +33,19 @@ const Input = ({
       isValid: isInputValid,
       errorMessages: validatorMessages,
     }));
+
+
   };
+
+  useEffect(() => {
+    inputFormHandler({
+      id: id,
+      payload: {
+        value: inputState.value,
+        isValid: inputState.isValid,
+      }
+    });
+  },[inputState, inputFormHandler, id])
 
   const focusHandler = () => {
     setInputState((state) => ({

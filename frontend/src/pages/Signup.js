@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import { FaUser } from "react-icons/fa";
@@ -13,14 +13,18 @@ const Signup = () => {
     password: {
       value: "",
       isValid: false,
-    }
+    },
   };
 
   const [inputData, setInputData] = useState(formInitialState);
 
   // Handle all changes from all input and get back value and validity
-  const inputFormHandler = (input) => {};
+  // Must use call back or go into infinite loop
+  const inputFormHandler = useCallback((input) => {
+    setInputData({ ...inputData, [input.id]: { ...input.payload } });
+  }, []);
 
+  //  console.log(inputData)
   return (
     <div>
       <div className="text-center">
@@ -40,6 +44,7 @@ const Signup = () => {
             Validator.VALIDATOR_EMAIL(),
             Validator.VALIDATOR_REQUIRE(),
           ]}
+          inputFormHandler={inputFormHandler}
         ></Input>
         <Input
           id="password"
@@ -51,6 +56,7 @@ const Signup = () => {
             Validator.VALIDATOR_REQUIRE(),
             Validator.VALIDATOR_MINLENGTH(6),
           ]}
+          inputFormHandler={inputFormHandler}
         ></Input>
         <Button primary rounded>
           Sign up
