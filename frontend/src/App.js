@@ -4,11 +4,14 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import ProtectedRoute from "./routing/ProtectedRoute";
 import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
 import New from "./pages/New";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+
 
 const App = () => {
   return (
@@ -22,7 +25,9 @@ const App = () => {
             <Route path="/users/signup" element={<Signup />} />
             <Route path="/classes" element={<Index />} />
             <Route path="/classes/dashboard" element={<Dashboard />} />
-            <Route path="/classes/new" element={<New />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path="/classes/new" element={<New />} />
+            </Route>
           </Routes>
         </div>
       </Router>
