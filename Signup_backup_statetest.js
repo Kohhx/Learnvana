@@ -4,7 +4,6 @@ import Button from "../components/Button";
 import Select from "../components/Select";
 import { FaUser } from "react-icons/fa";
 import Validator from "../utilities/Validator";
-import { toast } from "react-toastify";
 
 const formReducer = (state, action) => {
   switch (action.type) {
@@ -36,7 +35,6 @@ const formReducer = (state, action) => {
 
 const Signup = () => {
   const formInitialState = {
-    inputs: {
       email: {
         value: "",
         isValid: false,
@@ -45,41 +43,50 @@ const Signup = () => {
         value: "",
         isValid: false,
       },
-      password2: {
-        value: "",
-        isValid: true,
-      },
       role: {
         value: "",
         isValid: false,
       },
-    },
-    formisValid: false,
   };
 
+  // const formInitialState = {
+  //   inputs: {
+  //     email: {
+  //       value: "",
+  //       isValid: false,
+  //     },
+  //     password: {
+  //       value: "",
+  //       isValid: false,
+  //     },
+  //     role: {
+  //       value: "",
+  //       isValid: false,
+  //     },
+  //   },
+  //   formisValid: false,
+  // };
+
   const [formState, dispatch] = useReducer(formReducer, formInitialState);
+
+  const [inputData, setInputData] = useState(formInitialState);
 
   // Handle all changes from all input and get back value and validity
   // Must use call back or go into infinite loop
   const formHandler = useCallback((input) => {
-    dispatch({ type: "INPUT_CHANGE", payload: input.payload, id: input.id });
-  }, []);
+    console.log(inputData)
+    setInputData({
+      ...inputData,
+      [input.id]: { value: input.payload.value, isValid: input.payload.isValid },
+    });
+console.log(input)
+    // dispatch({type: "INPUT_CHANGE", payload: input.payload, id: input.id})
+  }, [inputData]);
 
   const submitHandler = (event) => {
     event.preventDefault();
-    console.log(formState);
-    if (formState.inputs.password.value !== formState.inputs.password2.value) {
-      toast.error("Password does not match");
-      return;
-    }
-
-    if (!formState.formisValid) {
-      toast.error("Form error. Please fill in the form again");
-      return;
-    }
-
-    // If all pass then we submit login form to backend
-
+    // console.log(formState);
+    console.log(inputData);
   };
 
   return (
@@ -113,14 +120,6 @@ const Signup = () => {
             Validator.VALIDATOR_REQUIRE(),
             Validator.VALIDATOR_MINLENGTH(6),
           ]}
-          formHandler={formHandler}
-        ></Input>
-        <Input
-          id="password2"
-          type="password"
-          label="Confirm Password"
-          placeholder="Please enter password again"
-          validators={[]}
           formHandler={formHandler}
         ></Input>
         <Select

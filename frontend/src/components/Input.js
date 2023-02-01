@@ -11,7 +11,7 @@ const Input = ({
   errorMessage,
   validators,
   disableErrorMessages,
-  inputFormHandler,
+  formHandler,
   ...rest
 }) => {
   const [inputState, setInputState] = useState({
@@ -38,14 +38,14 @@ const Input = ({
   };
 
   useEffect(() => {
-    inputFormHandler({
+    formHandler({
       id: id,
       payload: {
         value: inputState.value,
         isValid: inputState.isValid,
       }
     });
-  },[inputState, inputFormHandler, id])
+  },[inputState, formHandler, id])
 
   const focusHandler = () => {
     setInputState((state) => ({
@@ -61,7 +61,7 @@ const Input = ({
     errors = errorMessage
       ? <p className={errorClasses}>{errorMessage}</p>
 
-      : inputState.errorMessages.map((message) => <p className={errorClasses}>- {message}</p>);
+      : inputState.errorMessages.map((message,i) => <p id={i} className={errorClasses}>- {message}</p>);
   }
 
   // Build Classes for input
