@@ -1,11 +1,12 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Register from "./components/Register";
-import SignIn from "./components/Sign_in";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Index from "./pages/Index";
+import Dashboard from "./pages/Dashboard";
+import New from "./pages/New";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -17,8 +18,11 @@ const App = () => {
           <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/users/login" element={[<Login />, <SignIn />]} />
-            <Route path="/users/signup" element={[<Signup />]} />
+            <Route path="/users/login" element={<Login />} />
+            <Route path="/users/signup" element={<Signup />} />
+            <Route path="/classes" element={<Index />} />
+            <Route path="/classes/dashboard" element={<Dashboard />} />
+            <Route path="/classes/new" element={<New />} />
           </Routes>
         </div>
       </Router>

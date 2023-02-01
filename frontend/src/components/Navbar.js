@@ -10,6 +10,7 @@ const Navbar = () => {
       <div className="flex-1"><Link to="/">Learnava Logo</Link></div>
       <ul className="flex gap-4">
         <li><NavLink to="/" style={ activeStyle }>Home</NavLink></li>
+        <li><NavLink to="/classes/dashboard" style={ activeStyle }>Dashboard</NavLink></li>
         <li><NavLink to="/users/login" style={ activeStyle }>Login</NavLink></li>
         <li><NavLink to="/users/signup" style={ activeStyle }>Sign Up</NavLink></li>
       </ul>
