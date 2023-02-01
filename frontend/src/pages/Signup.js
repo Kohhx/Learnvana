@@ -1,11 +1,15 @@
-import React, { useState, useCallback, useReducer } from "react";
+import React, { useCallback, useReducer, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import Select from "../components/Select";
 import { FaUser } from "react-icons/fa";
 import Validator from "../utilities/Validator";
 import { toast } from "react-toastify";
+import { useSelector, useDispatch } from "react-redux"
+import { signUp, reset } from "../features/auth/authSlice";
 
+// Reducer function
 const formReducer = (state, action) => {
   switch (action.type) {
     case "INPUT_CHANGE":
@@ -35,6 +39,7 @@ const formReducer = (state, action) => {
 };
 
 const Signup = () => {
+
   const formInitialState = {
     inputs: {
       email: {
@@ -58,6 +63,11 @@ const Signup = () => {
   };
 
   const [formState, dispatch] = useReducer(formReducer, formInitialState);
+  const authDispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user, isLoading, isError, isSuccess, message } = useSelector( (state) => state.auth);
+  // const aaa = useSelector( (state) => state.auth);
+// console.log(aaa)
 
   // Handle all changes from all input and get back value and validity
   // Must use call back or go into infinite loop
@@ -79,8 +89,25 @@ const Signup = () => {
     }
 
     // If all pass then we submit login form to backend
-
+    const newUser = {
+      email: formState.inputs.email.value,
+      password: formState.inputs.password.value,
+      role: formState.inputs.role.value.toLowerCase(),
+    }
+    authDispatch(signUp(newUser))
   };
+
+  useEffect(() => {
+
+    if (isError) {
+      toast.error(message);
+    }
+
+    if (isSuccess || user) {
+      console.log('Helloooo')
+      navigate("/");
+    }
+  }, [isError, isSuccess, user, message, navigate]);
 
   return (
     <div>
