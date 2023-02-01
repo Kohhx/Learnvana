@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import Input from "../components/Input";
 import Button from "../components/Button";
+import Select from "../components/Select";
 import { FaUser } from "react-icons/fa";
 import Validator from "../utilities/Validator";
 
@@ -51,13 +52,21 @@ const Signup = () => {
           type="password"
           label="Password"
           placeholder="Please enter password"
-          // errorMessage="Please enter a valid email"
+          // errorMessage="Please enter a valid password"
           validators={[
             Validator.VALIDATOR_REQUIRE(),
             Validator.VALIDATOR_MINLENGTH(6),
           ]}
           inputFormHandler={inputFormHandler}
         ></Input>
+        <Select
+          id="role"
+          label="Role"
+          options={["Student", "Guardian", "Instructor"]}
+          validators={[
+            Validator.VALIDATOR_CONTAIN(["Student", "Guardian", "Instructor"]),
+          ]}
+        />
         <Button primary rounded>
           Sign up
         </Button>

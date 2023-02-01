@@ -5,6 +5,7 @@ const VALIDATOR_TYPE_MIN = "MIN";
 const VALIDATOR_TYPE_MAX = "MAX";
 const VALIDATOR_TYPE_EMAIL = "EMAIL";
 const VALIDATOR_TYPE_FILE = "FILE";
+const VALIDATOR_TYPE_CONTAIN = "CONTAIN"
 
 // Validators used in the validate functions
 exports.VALIDATOR_REQUIRE = () => ({ type: VALIDATOR_TYPE_REQUIRE });
@@ -20,6 +21,7 @@ exports.VALIDATOR_MAXLENGTH = (val) => ({
 exports.VALIDATOR_MIN = (val) => ({ type: VALIDATOR_TYPE_MIN, val: val });
 exports.VALIDATOR_MAX = (val) => ({ type: VALIDATOR_TYPE_MAX, val: val });
 exports.VALIDATOR_EMAIL = () => ({ type: VALIDATOR_TYPE_EMAIL });
+exports.VALIDATOR_CONTAIN = ( arr ) => ({ type: VALIDATOR_TYPE_CONTAIN, arr: arr })
 
 // Validate Function used to validate, validators is an array
 exports.validate = (value, validators) => {
@@ -73,6 +75,15 @@ exports.validate = (value, validators) => {
       const typeIsValid = /^\S+@\S+\.\S+$/.test(value);
       if (!typeIsValid) {
         errorMessages.push(`Please enter valid email`);
+      }
+      isValid = isValid && typeIsValid;
+    }
+    if (validator.type === VALIDATOR_TYPE_CONTAIN) {
+      const array = validator.arr;
+      const typeIsValid = array.includes(value)
+      // console.log("array: ",array," ","Value: ", value)
+      if (!typeIsValid) {
+        errorMessages.push(`Please select a valid option in ${validator.arr}`);
       }
       isValid = isValid && typeIsValid;
     }
