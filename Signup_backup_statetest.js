@@ -73,6 +73,7 @@ const Signup = () => {
 
   // Handle all changes from all input and get back value and validity
   // Must use call back or go into infinite loop
+  // Important this require inputData dependency if not it will not work
   const formHandler = useCallback((input) => {
     console.log(inputData)
     setInputData({
