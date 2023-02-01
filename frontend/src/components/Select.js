@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import classNames from "classnames";
-import Validator, { validate } from "../utilities/Validator";
+import Validator from "../utilities/Validator";
 
 const Select = ({
   id,
@@ -9,6 +9,7 @@ const Select = ({
   disableErrorMessages,
   errorMessage,
   validators,
+  formHandler,
   ...rest
 }) => {
   const [selectState, setSelectState] = useState({
@@ -40,6 +41,17 @@ const Select = ({
     }));
   };
 
+  // Use effect to call this function whenever change happen and state change
+  useEffect(() => {
+    formHandler({
+      id: id,
+      payload: {
+        value: selectState.value,
+        isValid: selectState.isValid,
+      }
+    });
+  },[selectState, formHandler, id])
+
   // Build Error
   const errorClasses = "text-red-500";
   let errors = null;
@@ -47,8 +59,8 @@ const Select = ({
     errors = errorMessage ? (
       <p className={errorClasses}>{errorMessage}</p>
     ) : (
-      selectState.errorMessages.map((message) => (
-        <p className={errorClasses}>- {message}</p>
+      selectState.errorMessages.map((message, i) => (
+        <p id={i} className={errorClasses}>- {message}</p>
       ))
     );
   }
@@ -60,8 +72,8 @@ const Select = ({
   const formContent = (
     <select className={classes} onChange={changeHandler} onFocus={focusHandler}>
       <option value="nil">Select a {label}</option>
-      {options.map((option) => (
-        <option value={option}>{option}</option>
+      {options.map((option, i) => (
+        <option id={i} value={option}>{option}</option>
       ))}
     </select>
   );
