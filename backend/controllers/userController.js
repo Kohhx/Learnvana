@@ -9,7 +9,6 @@ const User = require("../models/user");
 // @route /api/users/signup
 // @access Public
 exports.signupUser = asyncHandler(async (req, res) => {
-
   const { email, password, role } = req.body;
 
   // Validation
@@ -40,7 +39,6 @@ exports.signupUser = asyncHandler(async (req, res) => {
   if (user) {
     res.status(201).json({
       _id: user._id,
-      name: user.name,
       email: user.email,
       role: user.role,
       token: generateToken(user._id),
@@ -49,7 +47,41 @@ exports.signupUser = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("Invalid user data");
   }
+});
 
+// @desc Register a new user
+// @route /api/users/login
+// @access Public
+exports.loginUser = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+
+  // Validation
+  if (!email || !password) {
+    res.status(400);
+    throw new Error("Please include all fields");
+  }
+
+  // Find if user already exists
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    res.status(400);
+    throw new Error("No such user. Please create an account");
+  }
+
+  const passwordIsValid = await bcrypt.compare(password, user.password);
+  console.log(passwordIsValid);
+  if (passwordIsValid) {
+    res.status(201).json({
+      _id: user._id,
+      email: user.email,
+      role: user.role,
+      token: generateToken(user._id),
+    });
+  } else {
+    res.status(400);
+    throw new Error("Incorrect credentials. Try again");
+  }
 });
 
 // Utility Functions
