@@ -84,6 +84,43 @@ exports.loginUser = asyncHandler(async (req, res) => {
   }
 });
 
+
+// export user to be logged in
+
+exports.loginUser = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+
+  // Validation
+  if (!email || !password) {
+    res.status(400);
+    throw new Error("Please include all fields");
+  }
+
+  // Find if user already exists
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    res.status(400);
+    throw new Error("No such user. Please create an account");
+  }
+
+  const passwordIsValid = await bcrypt.compare(password, user.password);
+  console.log(passwordIsValid);
+  if (passwordIsValid) {
+    res.status(201).json({
+      _id: user._id,
+      email: user.email,
+      role: user.role,
+      token: generateToken(user._id),
+    });
+  } else {
+    res.status(400);
+    throw new Error("Incorrect credentials. Try again");
+  }
+});
+
+
+
 // Utility Functions
 // Generate Token
 const generateToken = (id) => {

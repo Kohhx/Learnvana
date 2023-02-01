@@ -32,6 +32,11 @@ const Navbar = () => {
         </NavLink>
       </li>
       <li>
+        <NavLink to="/classes/dashboard" style={activeStyle}>
+          Dashboard
+        </NavLink>
+      </li>
+      <li>
         <NavLink to="/users/login" style={activeStyle}>
           Login
         </NavLink>
