@@ -70,7 +70,7 @@ exports.loginUser = asyncHandler(async (req, res) => {
   }
 
   const passwordIsValid = await bcrypt.compare(password, user.password);
-  console.log(passwordIsValid);
+
   if (passwordIsValid) {
     res.status(201).json({
       _id: user._id,
@@ -86,7 +86,6 @@ exports.loginUser = asyncHandler(async (req, res) => {
 
 
 // export user to be logged in
-
 exports.loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 

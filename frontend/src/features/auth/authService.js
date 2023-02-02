@@ -1,7 +1,8 @@
 import axios from "axios";
 
-const API_SIGNUP_URL = "/api/users/signup";
-const API_LOGIN_URL = "/api/users/login";
+const PROXY = "http://localhost:5000"
+const API_SIGNUP_URL = PROXY.concat("/api/users/signup");
+const API_LOGIN_URL = PROXY.concat("/api/users/login");
 
 // Register user function (Aysnc)
 const signUp = async (userData) => {
