@@ -11,6 +11,7 @@ const classSchema = mongoose.Schema({
     type: String,
     required: true,
     default: "Not started",
+    enum: ["Not started", "In progress", "Closed"],
   },
   address: String,
   location: {
