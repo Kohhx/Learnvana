@@ -6,7 +6,7 @@ const Instructor = require("../models/instructor");
 const Class = require("../models/class");
 const User = require("../models/user");
 
-// @desc store user as pending in class
+// @desc Get all instructor classes
 // @route /api/classes/instructor-classes
 // @access user
 exports.getInstructorClasses = asyncHandler(async (req, res) => {
@@ -36,7 +36,7 @@ exports.getInstructorClasses = asyncHandler(async (req, res) => {
 
 });
 
-// @desc store user as pending in class
+// @desc Instructor can create a class
 // @route /api/classes/create
 // @access user
 exports.createClass = asyncHandler(async (req, res) => {
@@ -108,7 +108,9 @@ exports.createClass = asyncHandler(async (req, res) => {
   }
 });
 
-// User Pending Request action
+// @desc Add pending student request to class
+// @route /api/classes/:class_id/request
+// @access user
 exports.addPendingUserToClass = asyncHandler(async (req, res) => {
   const studentId = req.body.id;
   const classId = req.params.class_id;
