@@ -18,7 +18,7 @@ const classSchema = mongoose.Schema({
     lat: Number,
     lng: Number,
   },
-  images: [{ type: String }],
+  images: { type: String },
   announcements: [announcementSchema],
   lessons: [lessonSchema],
   students: [{ type: mongoose.Schema.Types.ObjectId, ref: "Student" }],

@@ -4,6 +4,7 @@ import classService from "../class/classService";
 // Create the initial state for auth
 const initialState = {
   classes: [],
+  class: {},
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -15,7 +16,8 @@ export const newClass = createAsyncThunk(
   "class/create",
   async (classData, thunkAPI) => {
     try {
-      return await classService.newClass(classData);
+      const token = thunkAPI.getState().auth.user.token;
+      return await classService.newClass(classData, token);
     } catch (error) {
       const message =
         (error.response &&
@@ -28,18 +30,12 @@ export const newClass = createAsyncThunk(
   }
 );
 
-
 // Create classSlice
 export const classSlice = createSlice({
   name: "class",
   initialState,
   reducers: {
-    reset: (state) => {
-      state.isLoading = false;
-      state.isError = false;
-      state.isSuccess = false;
-      state.message = "";
-    },
+    reset: (state) => initialState,
   },
   extraReducers: (builder) => {
     builder
@@ -49,15 +45,12 @@ export const classSlice = createSlice({
       .addCase(newClass.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.classes = action.payload;
       })
       .addCase(newClass.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
-        state.classes = null;
         state.message = action.payload;
-      })
-
+      });
   },
 });
 

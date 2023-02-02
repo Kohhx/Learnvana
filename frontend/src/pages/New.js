@@ -7,9 +7,7 @@ import { FaUser } from "react-icons/fa";
 import Validator from "../utilities/Validator";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux"
-import { newClass } from "../features/class/classSlice";
-
-
+import { newClass, reset } from "../features/class/classSlice";
 
 // Reducer function
 const formReducer = (state, action) => {
@@ -70,7 +68,7 @@ const New = () => {
   const [formState, dispatch] = useReducer(formReducer, formInitialState);
   const classDispatch = useDispatch();
   const navigate = useNavigate();
-  const { classes, isLoading, isError, isSuccess, message } = useSelector( (state) => state.auth);
+  const { classes, isLoading, isError, isSuccess, message } = useSelector( (state) => state.class);
 
   // Handle all changes from all input and get back value and validity
   // Must use call back or go into infinite loop
@@ -105,11 +103,12 @@ const New = () => {
       toast.error(message);
     }
 
-    if (isSuccess || classes) {
+    if (isSuccess) {
       console.log("class created")
+      classDispatch(reset())
       navigate("/classes/dashboard");
     }
-  }, [isError, isSuccess, classes, message, navigate]);
+  }, [isError, isSuccess, message, navigate]);
 
   return (
     <div>
