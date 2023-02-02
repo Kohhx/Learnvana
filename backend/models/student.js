@@ -15,6 +15,7 @@ const studentSchema = mongoose.Schema(
       required: [true, "Please enter age"],
     },
     gender: {
+      type: String,
       enum: ["male", "female"],
       description: "Must be either male of female",
       required: true,

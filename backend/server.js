@@ -38,7 +38,7 @@ app.use((req, res, next) => {
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
   );
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, PUT");
   next();
 });
 
@@ -54,8 +54,11 @@ app.get("/", (req, res) => {
   res.status(201).json({ message: "Welcome to Learnvana" });
 });
 
-// User routes
+// Routes
 app.use("/api/users", require("./routes/userRoutes"));
+app.use("/api/classes", require("./routes/classRoutes"));
+app.use("/api/students", require("./routes/studentRoutes"));
+app.use("/api/instructors", require("./routes/instructorRoutes"));
 
 /**
  * =============================================================================
