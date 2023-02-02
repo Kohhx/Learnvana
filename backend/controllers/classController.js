@@ -1,44 +1,48 @@
-// const asyncHandler = require("express-async-handler");
-// const Student = require("../models/student");
-// const Class = require("../models/class");
+const asyncHandler = require("express-async-handler");
+const Student = require("../models/student");
+const Class = require("../models/class");
+const User = require("../models/user");
 
-// // @desc store user as pending in class
-// // @route /api/classes/add
-// // @access user
+// @desc store user as pending in class
+// @route /api/classes/add
+// @access user
 
-// exports.addPendingUserToClass = asyncHandler(async (req, res) => {
-//   const user = req.user;
-//   const studentId = req.body.id;
-//   const classId = req.params;
+exports.addPendingUserToClass = asyncHandler(async (req, res) => {
 
-//   const student = await Student.findbyId(studentId);
-//   const classFound = await Class.findbyId(classId);
+  const studentId = req.body.id;
+  const classId = req.params.class_id;
 
-//   if (!user) {
-//     res.status(400);
-//     throw new Error("User not logged in");
-//   }
+  console.log(studentId)
 
-//   if (!studentId) {
-//     res.status(400);
-//     throw new Error("No student found");
-//   }
+  const user = await User.findById(req.user.id);
+  const student = await Student.findById(studentId);
+  const classFound = await Class.findById(classId);
 
-//   if (!classFound) {
-//     res.status(400);
-//     throw new Error("No class found");
-//   }
+  if (!user) {
+    res.status(400);
+    throw new Error("User not logged in");
+  }
 
-//   classFound.pending.push(student);
+  if (!student) {
+    res.status(400);
+    throw new Error("No student found");
+  }
 
-//   try {
-//     await classFound.save();
-//     const updatedClass = await Class.findbyId(classId);
-//     res.status(200).json({
-//       message: "Request sent. Pending approval"
-//     })
-//   } catch (error) {
-//     res.status(400);
-//     throw new Error("Error occured");
-//   }
-// });
+  if (!classFound) {
+    res.status(400);
+    throw new Error("No class found");
+  }
+
+  classFound.pending.push(student);
+
+  try {
+    await classFound.save();
+    const updatedClass = await Class.findbyId(classId);
+    res.status(200).json({
+      message: "Request sent. Pending approval"
+    })
+  } catch (error) {
+    res.status(400);
+    throw new Error("Error occured");
+  }
+});

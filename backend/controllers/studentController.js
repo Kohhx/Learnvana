@@ -13,6 +13,11 @@ exports.createStudent= asyncHandler(async (req, res) => {
     throw new Error("User not logged in");
   }
 
+  if (!user.role === "student" && !user.role === "guardian"){
+    res.status(400);
+    throw new Error("Only guardian or student account can create student profile");
+  }
+
   if (user.role == "student" && user.studentprofiles.length > 0) {
     res.status(400);
     throw new Error("Student account can only create 1 student profile");
@@ -37,8 +42,8 @@ exports.createStudent= asyncHandler(async (req, res) => {
 
   user.studentprofiles.push(student);
   await user.save();
-  const user1 = await User.findById(req.user.id).populate("studentprofiles");
-  console.log(user1)
+  // const user1 = await User.findById(req.user.id).populate("studentprofiles");
+  // console.log(user1)
 
   res.status(200).json({
     _id: student._id,

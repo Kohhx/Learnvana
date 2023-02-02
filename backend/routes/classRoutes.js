@@ -4,7 +4,6 @@ const classController = require("../controllers/classController");
 const { protect } = require("../middlewares/authMiddleware")
 
 // User add pending user routes route
-router.post('/add', classController.addPendingUserToClass)
+router.post('/:class_id/request', protect, classController.addPendingUserToClass)
 
-
-modules.export = router;
+module.exports = router;
