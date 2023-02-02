@@ -2,8 +2,39 @@ const asyncHandler = require("express-async-handler");
 
 // Import Model
 const Student = require("../models/student");
+const Instructor = require("../models/instructor");
 const Class = require("../models/class");
 const User = require("../models/user");
+
+// @desc store user as pending in class
+// @route /api/classes/instructor-classes
+// @access user
+exports.getInstructorClasses = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user.id);
+  const instructor = await Instructor.findById(user.instructorprofile).populate("classes");
+
+  if (!user) {
+    res.status(400);
+    throw new Error("No user found");
+  }
+
+  if (user.role !== "instructor") {
+    res.status(400);
+    throw new Error("User is not a instructor");
+  }
+
+  if (!instructor) {
+    res.status(400);
+    throw new Error(
+      "No instructor profile created. Create instructor profile first"
+    );
+  }
+
+  const instructorClasses = instructor.classes;
+
+  res.status(201).json(instructorClasses)
+
+});
 
 // @desc store user as pending in class
 // @route /api/classes/create
@@ -11,33 +42,56 @@ const User = require("../models/user");
 exports.createClass = asyncHandler(async (req, res) => {
   const { title, status, images, address } = req.body;
 
+  const user = await User.findById(req.user.id);
+  const instructor = await Instructor.findById(user.instructorprofile);
+
+  console.log(instructor);
+
   // Validation
   if (!title || !status || !images || !address) {
     res.status(400);
     throw new Error("Please include all fields");
   }
 
-  if (!req.user) {
+  if (!user) {
     res.status(400);
     throw new Error("No user found");
   }
 
-  if (req.user.role !== "instructor") {
+  if (user.role !== "instructor") {
     res.status(400);
     throw new Error("User is not a instructor");
   }
 
+  if (!instructor) {
+    res.status(400);
+    throw new Error(
+      "No instructor profile created. Create instructor profile first"
+    );
+  }
+
   // Create class
+  let newClass;
   try {
-    const newClass = await Class.create({
+    newClass = await Class.create({
       title,
       status,
       images,
       address,
+      instructor,
     });
   } catch (error) {
     res.status(500);
     throw new Error("Something went wrong");
+  }
+
+  // Add class to instructor
+  try {
+    instructor.classes.push(newClass);
+    await instructor.save();
+  } catch (error) {
+    res.status(500);
+    throw new Error("Something went wrong with adding classes to instructor");
   }
 
   if (newClass) {
