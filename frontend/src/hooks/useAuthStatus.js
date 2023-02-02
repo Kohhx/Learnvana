@@ -9,7 +9,7 @@ const useAuthStatus = () => {
   useEffect(() => {
     if (user) {
       setIsLoggedIn(true);
-      isLoading(false);
+      setIsLoading(false);
     } else {
       setIsLoggedIn(false);
     }

@@ -57,6 +57,9 @@ app.get("/", (req, res) => {
 // User routes
 app.use("/api/users", require("./routes/userRoutes"));
 
+// Class routes
+app.use("/api/classes", require("./routes/classRoutes"));
+
 /**
  * =============================================================================
  * Final stage Error Middleware Handling

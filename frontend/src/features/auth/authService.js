@@ -28,11 +28,12 @@ const logout = () => {
   console.log("user Removed")
 };
 
+
 // Put all the function into authService object before exporting
 const authService = {
   signUp,
   login,
-  logout
+  logout,
 };
 
 export default authService;
