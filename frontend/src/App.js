@@ -11,8 +11,6 @@ import New from "./pages/New";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
-
 const App = () => {
   return (
     <div>
@@ -24,7 +22,9 @@ const App = () => {
             <Route path="/users/login" element={<Login />} />
             <Route path="/users/signup" element={<Signup />} />
             <Route path="/classes" element={<Index />} />
-            <Route path="/classes/dashboard" element={<Dashboard />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path="/classes/dashboard" element={<Dashboard />} />
+            </Route>
             <Route element={<ProtectedRoute />}>
               <Route path="/classes/new" element={<New />} />
             </Route>

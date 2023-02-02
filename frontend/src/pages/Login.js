@@ -59,8 +59,6 @@ const Login = () => {
   const authDispatch = useDispatch();
   const navigate = useNavigate();
   const { user, isLoading, isError, isSuccess, message } = useSelector( (state) => state.auth);
-  // const aaa = useSelector( (state) => state.auth);
-// console.log(aaa)
 
   // Handle all changes from all input and get back value and validity
   // Must use call back or go into infinite loop
@@ -72,17 +70,16 @@ const Login = () => {
     event.preventDefault();
     console.log(formState);
 
+    // const users = JSON.parse(localStorage.getItem("user"));
+    // const usercheck = users.find(user => (user.email.value === formState.inputs.email.value && user.password.value === formState.inputs.password.value));
 
-    const users = JSON.parse(localStorage.getItem("user"));
-    const usercheck = users.find(user => (user.email.value === formState.inputs.email.value && user.password.value === formState.inputs.password.value));
+    // if(usercheck) {
+    //   console.log("Login successful");
+    // }else {
+    //   console.log("Wrong password or username");
+    // }
 
-    if(usercheck) {
-      console.log("Login successful");
-    }else {
-      console.log("Wrong password or username");
-    }
-
-    console.log(usercheck);
+    // console.log(usercheck);
 
     if (!formState.formisValid) {
       toast.error("Form error. Please fill in the form again");
@@ -90,8 +87,12 @@ const Login = () => {
     }
 
     // If all pass then we submit login form to backend
+    const loginUser = {
+      email: formState.inputs.email.value,
+      password: formState.inputs.password.value,
+    }
 
-    authDispatch(login(usercheck))
+    authDispatch(login(loginUser))
   };
 
   useEffect(() => {
@@ -101,7 +102,6 @@ const Login = () => {
     }
 
     if (isSuccess || user) {
-      console.log('Helloooo')
       navigate("/");
     }
   }, [isError, isSuccess, user, message, navigate]);
