@@ -4,7 +4,7 @@ import classService from "../class/classService";
 // Create the initial state for auth
 const initialState = {
   classes: [],
-  class: {},
+  oneClass: {},
   isError: false,
   isSuccess: false,
   classCreateSuccess: false,
@@ -31,13 +31,32 @@ export const newClass = createAsyncThunk(
   }
 );
 
-// Get Instructor class
-export const getInstructorClass = createAsyncThunk(
-  "class/getinstructor",
+// Get Instructor classes
+export const getInstructorClasses = createAsyncThunk(
+  "class/getAllInstructor",
   async (_, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
       return await classService.getInstructorClasses(token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// Get One Instructor class
+export const getInstructorClass = createAsyncThunk(
+  "class/getOneInstructor",
+  async (classId, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await classService.getInstructorClass(classId, token);
     } catch (error) {
       const message =
         (error.response &&
@@ -71,11 +90,16 @@ export const classSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
       })
-      .addCase(getInstructorClass.fulfilled, (state, action) => {
+      .addCase(getInstructorClasses.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
         state.classes = action.payload;
       })
+      .addCase(getInstructorClass.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.oneClass = action.payload;
+      });
   },
 });
 

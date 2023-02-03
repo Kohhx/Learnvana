@@ -10,6 +10,7 @@ import Dashboard from "./pages/Dashboard";
 import New from "./pages/New";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import InstructorClass from "./pages/InstructorClass"
 
 const App = () => {
   return (
@@ -27,6 +28,9 @@ const App = () => {
             </Route>
             <Route element={<ProtectedRoute />}>
               <Route path="/classes/new" element={<New />} />
+            </Route>
+            <Route element={<ProtectedRoute />}>
+              <Route path="/classes/:classId" element={<InstructorClass/>} />
             </Route>
           </Routes>
         </div>
