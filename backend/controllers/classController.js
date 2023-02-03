@@ -10,6 +10,7 @@ const User = require("../models/user");
 // @route /api/classes/instructor-classes
 // @access user
 exports.getInstructorClasses = asyncHandler(async (req, res) => {
+  console.log("/api/classes/instructor-classes")
   const user = await User.findById(req.user.id);
   const instructor = await Instructor.findById(user.instructorprofile).populate("classes");
 
@@ -31,6 +32,8 @@ exports.getInstructorClasses = asyncHandler(async (req, res) => {
   }
 
   const instructorClasses = instructor.classes;
+
+  console.log(instructorClasses)
 
   res.status(201).json(instructorClasses)
 

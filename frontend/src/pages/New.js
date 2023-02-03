@@ -6,7 +6,7 @@ import Select from "../components/Select";
 import { FaUser } from "react-icons/fa";
 import Validator from "../utilities/Validator";
 import { toast } from "react-toastify";
-import { useSelector, useDispatch } from "react-redux"
+import { useSelector, useDispatch } from "react-redux";
 import { newClass, reset } from "../features/class/classSlice";
 
 // Reducer function
@@ -68,7 +68,8 @@ const New = () => {
   const [formState, dispatch] = useReducer(formReducer, formInitialState);
   const classDispatch = useDispatch();
   const navigate = useNavigate();
-  const { classes, isLoading, isError, isSuccess, message } = useSelector( (state) => state.class);
+  const { classes, isLoading, isError, classCreateSuccess, message } =
+    useSelector((state) => state.class);
 
   // Handle all changes from all input and get back value and validity
   // Must use call back or go into infinite loop
@@ -92,23 +93,23 @@ const New = () => {
       lessons: formState.inputs.lessons.value,
       images: formState.inputs.images.value,
       address: formState.inputs.address.value,
-    }
+    };
 
-    classDispatch(newClass(newClassData))
+    classDispatch(newClass(newClassData));
   };
 
   useEffect(() => {
-
     if (isError) {
       toast.error(message);
     }
-
-    if (isSuccess) {
-      console.log("class created")
-      classDispatch(reset())
+    console.log(classCreateSuccess);
+    if (classCreateSuccess) {
+      console.log("class created");
+      // classDispatch(reset())
       navigate("/classes/dashboard");
+      classDispatch(reset());
     }
-  }, [isError, isSuccess, message, navigate]);
+  }, [isError, classCreateSuccess, message, navigate, classDispatch]);
 
   return (
     <div>
@@ -125,9 +126,7 @@ const New = () => {
           label="Title"
           placeholder="Enter title"
           // errorMessage="Please enter a valid email"
-          validators={[
-            Validator.VALIDATOR_REQUIRE(),
-          ]}
+          validators={[Validator.VALIDATOR_REQUIRE()]}
           formHandler={formHandler}
         ></Input>
         <Select
@@ -135,7 +134,11 @@ const New = () => {
           label="Status"
           options={["Not started", "In progress", "Closed"]}
           validators={[
-            Validator.VALIDATOR_CONTAIN(["Not started", "In progress", "Closed"]),
+            Validator.VALIDATOR_CONTAIN([
+              "Not started",
+              "In progress",
+              "Closed",
+            ]),
           ]}
           formHandler={formHandler}
         />
@@ -145,9 +148,7 @@ const New = () => {
           label="Number of lessons"
           placeholder="e.g. 2"
           // errorMessage="Please enter a valid password"
-          validators={[
-            Validator.VALIDATOR_REQUIRE(),
-          ]}
+          validators={[Validator.VALIDATOR_REQUIRE()]}
           formHandler={formHandler}
         ></Input>
         <Input
@@ -156,9 +157,7 @@ const New = () => {
           label="Attach images"
           placeholder="images"
           // errorMessage="Please enter a valid password"
-          validators={[
-            Validator.VALIDATOR_REQUIRE(),
-          ]}
+          validators={[Validator.VALIDATOR_REQUIRE()]}
           formHandler={formHandler}
         ></Input>
         <Input
@@ -167,9 +166,7 @@ const New = () => {
           label="Address"
           placeholder="Address"
           // errorMessage="Please enter a valid password"
-          validators={[
-            Validator.VALIDATOR_REQUIRE(),
-          ]}
+          validators={[Validator.VALIDATOR_REQUIRE()]}
           formHandler={formHandler}
         ></Input>
         <Button primary rounded>
@@ -177,7 +174,6 @@ const New = () => {
         </Button>
       </form>
     </div>
-
   );
 };
 
