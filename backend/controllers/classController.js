@@ -6,13 +6,62 @@ const Instructor = require("../models/instructor");
 const Class = require("../models/class");
 const User = require("../models/user");
 
+// @desc Get one instructor class
+// @route /api/classes/instructor-classes/:classId
+// @access private
+exports.getInstructorClass = asyncHandler(async (req, res) => {
+  console.log("/api/classes/instructor-classes/:classId");
+  const classId = req.params.classId;
+
+  let classFound;
+  try {
+    classFound = await Class.findById(classId);
+  } catch (error) {
+    res.status(400);
+    throw new Error(error);
+  }
+
+  const user = await User.findById(req.user.id);
+  const instructor = await Instructor.findById(user.instructorprofile).populate(
+    "classes"
+  );
+
+  if (!user) {
+    res.status(400);
+    throw new Error("No user found");
+  }
+
+  if (user.role !== "instructor") {
+    res.status(400);
+    throw new Error("User is not a instructor");
+  }
+
+  if (!instructor) {
+    res.status(400);
+    throw new Error(
+      "No instructor profile created. Create instructor profile first"
+    );
+  }
+
+  if (!classFound.instructor.toString() === user._id.toString()) {
+    res.status(400);
+    throw new Error("Class does not belong to this instructor");
+  }
+
+  console.log(classFound);
+
+  res.status(201).json(classFound);
+});
+
 // @desc Get all instructor classes
 // @route /api/classes/instructor-classes
-// @access user
+// @access private
 exports.getInstructorClasses = asyncHandler(async (req, res) => {
-  console.log("/api/classes/instructor-classes")
+  console.log("/api/classes/instructor-classes");
   const user = await User.findById(req.user.id);
-  const instructor = await Instructor.findById(user.instructorprofile).populate("classes");
+  const instructor = await Instructor.findById(user.instructorprofile).populate(
+    "classes"
+  );
 
   if (!user) {
     res.status(400);
@@ -33,15 +82,14 @@ exports.getInstructorClasses = asyncHandler(async (req, res) => {
 
   const instructorClasses = instructor.classes;
 
-  console.log(instructorClasses)
+  console.log(instructorClasses);
 
-  res.status(201).json(instructorClasses)
-
+  res.status(201).json(instructorClasses);
 });
 
 // @desc Instructor can create a class
 // @route /api/classes/create
-// @access user
+// @access private
 exports.createClass = asyncHandler(async (req, res) => {
   const { title, status, images, address } = req.body;
 
@@ -113,10 +161,10 @@ exports.createClass = asyncHandler(async (req, res) => {
 
 // @desc Add pending student request to class
 // @route /api/classes/:class_id/request
-// @access user
+// @access private
 exports.addPendingUserToClass = asyncHandler(async (req, res) => {
   const studentId = req.body.id;
-  const classId = req.params.class_id;
+  const classId = req.params.classId;
 
   console.log(studentId);
 

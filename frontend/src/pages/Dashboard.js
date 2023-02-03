@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import Button from "../components/Button";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getInstructorClass, reset } from "../features/class/classSlice";
+import { getInstructorClasses, reset } from "../features/class/classSlice";
+import Classitem from "../components/Classitem"
 
 const Dashboard = () => {
   const classDispatch = useDispatch();
@@ -17,10 +18,10 @@ const Dashboard = () => {
   }, [isSuccess,classDispatch]);
 
   useEffect(() => {
-    classDispatch(getInstructorClass());
+    classDispatch(getInstructorClasses());
   }, [classDispatch]);
 
-  const content = classes.map((singleClass,i) => <div key={i}>{singleClass.title}</div> );
+  const content = classes.map((singleClass,i) => <Classitem key={i} classData={singleClass}/> );
 
 
   return (
