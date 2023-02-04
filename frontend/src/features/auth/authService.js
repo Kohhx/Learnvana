@@ -14,9 +14,15 @@ const signUp = async (userData) => {
   return response.data;
 };
 
+
 // Register user: instructor profile function (Aysnc)
-const UserInstructorProfile = async (profileData) => {
-  const response = await axios.post(API_INSTRUCTOR_PROFILE_URL, profileData);
+const UserInstructorProfile = async (profileData, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const response = await axios.post(API_INSTRUCTOR_PROFILE_URL, profileData, config);
   if (response.data) {
     return response.data;
   }

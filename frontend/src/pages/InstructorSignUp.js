@@ -103,7 +103,9 @@ const InstructorSignUp = () => {
     if (isError) {
       toast.error(message);
     }
-
+    console.log(user)
+    console.log(isSuccess)
+    console.log(instructorProfileSuccess)
     if (isSuccess && instructorProfileSuccess && user) {
       console.log('Instructor profile created')
       // navigate("/");
@@ -114,9 +116,9 @@ const InstructorSignUp = () => {
     <div>
       <div className="text-center">
         <h1>
-          <FaUser className="inline mr-3" /> Register
+          <FaUser className="inline mr-3" /> Instructor Profile
         </h1>
-        <p>Please create an account</p>
+        <p>Fill in profile details</p>
       </div>
       <form onSubmit={submitHandler}>
         <Input
