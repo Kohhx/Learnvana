@@ -38,7 +38,8 @@ export const UserInstructorProfile = createAsyncThunk(
   "auth/signup/instructor",
   async (instructorProfile, thunkAPI) => {
     try {
-      return await authService.UserInstructorProfile(instructorProfile);
+      const token = thunkAPI.getState().auth.user.token;
+      return await authService.UserInstructorProfile(instructorProfile, token);
     } catch (error) {
       const message =
         (error.response &&
