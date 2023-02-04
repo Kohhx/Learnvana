@@ -7,7 +7,7 @@ import { FaUser } from "react-icons/fa";
 import Validator from "../utilities/Validator";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux"
-import { signUp, reset } from "../features/auth/authSlice";
+import { UserInstructorProfile } from "../features/auth/authSlice";
 
 // Reducer function
 const formReducer = (state, action) => {
@@ -38,23 +38,26 @@ const formReducer = (state, action) => {
   }
 };
 
-const Signup = () => {
-
+const InstructorSignUp = () => {
   const formInitialState = {
     inputs: {
-      email: {
+      first_name: {
         value: "",
         isValid: false,
       },
-      password: {
+      last_name: {
         value: "",
         isValid: false,
       },
-      password2: {
+      age: {
         value: "",
         isValid: true,
       },
-      role: {
+      gender: {
+        value: "",
+        isValid: false,
+      },
+      experience: {
         value: "",
         isValid: false,
       },
@@ -65,7 +68,7 @@ const Signup = () => {
   const [formState, dispatch] = useReducer(formReducer, formInitialState);
   const authDispatch = useDispatch();
   const navigate = useNavigate();
-  const { user, isLoading, isError, isSuccess, message } = useSelector( (state) => state.auth);
+  const { user, instructorProfileSuccess, isLoading, isError, isSuccess, message } = useSelector( (state) => state.auth);
   // const aaa = useSelector( (state) => state.auth);
 // console.log(aaa)
 
@@ -78,10 +81,6 @@ const Signup = () => {
   const submitHandler = (event) => {
     event.preventDefault();
     console.log(formState);
-    if (formState.inputs.password.value !== formState.inputs.password2.value) {
-      toast.error("Password does not match");
-      return;
-    }
 
     if (!formState.formisValid) {
       toast.error("Form error. Please fill in the form again");
@@ -89,12 +88,14 @@ const Signup = () => {
     }
 
     // If all pass then we submit login form to backend
-    const newUser = {
-      email: formState.inputs.email.value,
-      password: formState.inputs.password.value,
-      role: formState.inputs.role.value.toLowerCase(),
+    const newInstructorProfile = {
+      first_name: formState.inputs.first_name.value,
+      last_name: formState.inputs.last_name.value,
+      age: formState.inputs.age.value,
+      gender: formState.inputs.gender.value,
+      experience: formState.inputs.experience.value,
     }
-    authDispatch(signUp(newUser))
+    authDispatch(UserInstructorProfile(newInstructorProfile))
   };
 
   useEffect(() => {
@@ -103,16 +104,11 @@ const Signup = () => {
       toast.error(message);
     }
 
-    if (isSuccess || user) {
-      console.log('Helloooo')
-      // navigate("/");
-      // if instructor, navigate to instructor fill in form
-      if (user.role === "instructor") {
-        navigate("/users/signup/instructor");
-      }
+    if (isSuccess && instructorProfileSuccess && user) {
+      console.log('Instructor profile created')
       // navigate("/");
     }
-  }, [isError, isSuccess, user, message, navigate]);
+  }, [isError, isSuccess, instructorProfileSuccess, message, navigate]);
 
   return (
     <div>
@@ -124,52 +120,62 @@ const Signup = () => {
       </div>
       <form onSubmit={submitHandler}>
         <Input
-          id="email"
-          type="email"
-          label="Email"
-          placeholder="Enter email"
+          id="first_name"
+          type="first_name"
+          label="First_name"
+          placeholder="Enter first_name"
           // errorMessage="Please enter a valid email"
           validators={[
-            Validator.VALIDATOR_EMAIL(),
             Validator.VALIDATOR_REQUIRE(),
           ]}
           formHandler={formHandler}
         ></Input>
         <Input
-          id="password"
-          type="password"
-          label="Password"
-          placeholder="Please enter password"
+          id="last_name"
+          type="last_name"
+          label="Last_name"
+          placeholder="Enter last_name"
           // errorMessage="Please enter a valid password"
           validators={[
             Validator.VALIDATOR_REQUIRE(),
-            Validator.VALIDATOR_MINLENGTH(6),
           ]}
           formHandler={formHandler}
         ></Input>
         <Input
-          id="password2"
-          type="password"
-          label="Confirm Password"
-          placeholder="Please enter password again"
-          validators={[]}
+          id="age"
+          type="age"
+          label="Age"
+          placeholder="Enter age"
+          validators={[
+            Validator.VALIDATOR_REQUIRE(),
+          ]}
           formHandler={formHandler}
         ></Input>
         <Select
-          id="role"
-          label="Role"
-          options={["Student", "Guardian", "Instructor"]}
+          id="gender"
+          label="Gender"
+          options={["Male", "Female"]}
           validators={[
-            Validator.VALIDATOR_CONTAIN(["Student", "Guardian", "Instructor"]),
+            Validator.VALIDATOR_CONTAIN(["Male", "Female"]),
           ]}
           formHandler={formHandler}
         />
+        <Input
+          id="experience"
+          type="experience"
+          label="Experience"
+          placeholder="Share your experience"
+          validators={[
+            Validator.VALIDATOR_REQUIRE(),
+          ]}
+          formHandler={formHandler}
+        ></Input>
         <Button primary rounded>
-          Sign up
+          Confirm
         </Button>
       </form>
     </div>
   );
 };
 
-export default Signup;
+export default InstructorSignUp;
