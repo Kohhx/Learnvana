@@ -12,7 +12,7 @@ const initialState = {
   isSuccess: false,
   isLoading: false,
   message: "",
-  instructorProfileSuccess: user.instructorprofile,
+  instructorProfileSuccess: false,
 };
 
 // Sign up user
@@ -126,7 +126,7 @@ export const authSlice = createSlice({
       .addCase(UserInstructorProfile.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.instructorProfileSuccess = action.payload;
+        state.instructorProfileSuccess = true;
         state.user = action.payload;
       })
       .addCase(UserInstructorProfile.rejected, (state, action) => {
