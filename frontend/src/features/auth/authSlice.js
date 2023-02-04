@@ -4,6 +4,7 @@ import authService from "../auth/authService";
 // Get User from local storage
 const user = JSON.parse(localStorage.getItem("user"));
 
+
 // Create the initial state for auth
 const initialState = {
   user: user ? user : null,
@@ -11,7 +12,7 @@ const initialState = {
   isSuccess: false,
   isLoading: false,
   message: "",
-  instructorProfileSuccess: false,
+  instructorProfileSuccess: user.instructorprofile,
 };
 
 // Sign up user
@@ -125,7 +126,7 @@ export const authSlice = createSlice({
       .addCase(UserInstructorProfile.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.instructorProfileSuccess = true;
+        state.instructorProfileSuccess = action.payload;
         state.user = action.payload;
       })
       .addCase(UserInstructorProfile.rejected, (state, action) => {

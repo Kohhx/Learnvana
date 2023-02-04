@@ -108,7 +108,8 @@ const InstructorSignUp = () => {
     console.log(instructorProfileSuccess)
     if (isSuccess && instructorProfileSuccess && user) {
       console.log('Instructor profile created')
-      // navigate("/");
+      console.log(user.instructorprofile)
+      navigate("/");
     }
   }, [isError, isSuccess, instructorProfileSuccess, message, navigate]);
 
@@ -156,9 +157,9 @@ const InstructorSignUp = () => {
         <Select
           id="gender"
           label="Gender"
-          options={["Male", "Female"]}
+          options={["male", "female"]}
           validators={[
-            Validator.VALIDATOR_CONTAIN(["Male", "Female"]),
+            Validator.VALIDATOR_CONTAIN(["male", "female"]),
           ]}
           formHandler={formHandler}
         />
