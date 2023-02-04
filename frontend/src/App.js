@@ -4,6 +4,7 @@ import Navbar from "./components/Navbars/Navbar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import InstructorSignUp from "./pages/InstructorSignUp";
 import ProtectedRoute from "./routing/ProtectedRoute";
 import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
@@ -22,6 +23,9 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/users/login" element={<Login />} />
             <Route path="/users/signup" element={<Signup />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path="/users/signup/instructor" element={<InstructorSignUp />} />
+            </Route>
             <Route path="/classes" element={<Index />} />
             <Route element={<ProtectedRoute />}>
               <Route path="/classes/dashboard" element={<Dashboard />} />

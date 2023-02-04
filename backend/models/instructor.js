@@ -33,7 +33,7 @@ const instructorSchema = mongoose.Schema(
         },
         message: "Please enter a valid email",
       },
-      required: [true, "Please enter an email"],
+      // required: [true, "Please enter an email"],
     },
     experience: {
       type: String,

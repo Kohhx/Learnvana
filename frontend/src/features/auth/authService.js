@@ -3,6 +3,7 @@ import axios from "axios";
 const PROXY = "http://localhost:5000"
 const API_SIGNUP_URL = PROXY.concat("/api/users/signup");
 const API_LOGIN_URL = PROXY.concat("/api/users/login");
+const API_INSTRUCTOR_PROFILE_URL = PROXY.concat("/api/instructors/create");
 
 // Register user function (Aysnc)
 const signUp = async (userData) => {
@@ -11,6 +12,14 @@ const signUp = async (userData) => {
     localStorage.setItem("user", JSON.stringify(response.data));
   }
   return response.data;
+};
+
+// Register user: instructor profile function (Aysnc)
+const UserInstructorProfile = async (profileData) => {
+  const response = await axios.post(API_INSTRUCTOR_PROFILE_URL, profileData);
+  if (response.data) {
+    return response.data;
+  }
 };
 
 // login user
@@ -32,6 +41,7 @@ const logout = () => {
 // Put all the function into authService object before exporting
 const authService = {
   signUp,
+  UserInstructorProfile,
   login,
   logout,
 };

@@ -11,6 +11,7 @@ const initialState = {
   isSuccess: false,
   isLoading: false,
   message: "",
+  instructorProfileSuccess: false,
 };
 
 // Sign up user
@@ -19,6 +20,25 @@ export const signUp = createAsyncThunk(
   async (user, thunkAPI) => {
     try {
       return await authService.signUp(user);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+
+// create instructor profile for instructor user
+export const UserInstructorProfile = createAsyncThunk(
+  "auth/signup/instructor",
+  async (instructorProfile, thunkAPI) => {
+    try {
+      return await authService.UserInstructorProfile(instructorProfile);
     } catch (error) {
       const message =
         (error.response &&
@@ -98,6 +118,19 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.user = null;
+        state.message = action.payload;
+      })
+      // --------------------
+      .addCase(UserInstructorProfile.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.instructorProfileSuccess = true;
+        state.user = action.payload;
+      })
+      .addCase(UserInstructorProfile.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.instructorProfileSuccess = false;
         state.message = action.payload;
       })
   },
