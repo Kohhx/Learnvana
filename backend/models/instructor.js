@@ -24,17 +24,17 @@ const instructorSchema = mongoose.Schema(
     contact: {
       type: Number,
     },
-    email: {
-      type: String,
-      unique: true,
-      validate: {
-        validator: (email) => {
-          return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
-        },
-        message: "Please enter a valid email",
-      },
-      // required: [true, "Please enter an email"],
-    },
+    // email: {
+    //   type: String,
+    //   // unique: true,
+    //   validate: {
+    //     validator: (email) => {
+    //       return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+    //     },
+    //     message: "Please enter a valid email",
+    //   },
+    //   // required: [true, "Please enter an email"],
+    // },
     experience: {
       type: String,
       minlength: 50,
