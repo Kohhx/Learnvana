@@ -13,6 +13,7 @@ const initialState = {
   isLoading: false,
   message: "",
   instructorProfileSuccess: false,
+  studentProfileSuccess: false,
 };
 
 // Sign up user
@@ -41,6 +42,25 @@ export const UserInstructorProfile = createAsyncThunk(
     try {
       const token = thunkAPI.getState().auth.user.token;
       return await authService.UserInstructorProfile(instructorProfile, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// create student profile for student user
+export const UserStudentProfile = createAsyncThunk(
+  "auth/signup/student",
+  async (studentProfile, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await authService.UserStudentProfile(studentProfile, token);
     } catch (error) {
       const message =
         (error.response &&
@@ -88,6 +108,7 @@ export const authSlice = createSlice({
       state.isSuccess = false;
       state.message = "";
       state.instructorProfileSuccess = false;
+      state.studentProfileSuccess = false;
     },
   },
   extraReducers: (builder) => {
@@ -134,6 +155,18 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.instructorProfileSuccess = false;
+        state.message = action.payload;
+      })
+      .addCase(UserStudentProfile.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.studentProfileSuccess = true;
+        state.user = action.payload;
+      })
+      .addCase(UserStudentProfile.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.studentProfileSuccess = false;
         state.message = action.payload;
       })
   },

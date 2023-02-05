@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import InstructorSignUp from "./pages/InstructorSignUp";
+import StudentSignUp from "./pages/StudentSignUp";
 import ProtectedRoute from "./routing/ProtectedRoute";
 import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
@@ -25,6 +26,7 @@ const App = () => {
             <Route path="/users/signup" element={<Signup />} />
             <Route element={<ProtectedRoute />}>
               <Route path="/users/signup/instructor" element={<InstructorSignUp />} />
+              <Route path="/users/signup/student" element={<StudentSignUp />} />
             </Route>
             <Route path="/classes" element={<Index />} />
             <Route element={<ProtectedRoute />}>
