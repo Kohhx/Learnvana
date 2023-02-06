@@ -43,7 +43,11 @@ const UserStudentProfile = async (profileData, token) => {
       Authorization: `Bearer ${token}`,
     },
   };
-  const response = await axios.post(API_STUDENT_PROFILE_URL, profileData, config);
+  const response = await axios.post(
+    API_STUDENT_PROFILE_URL,
+    profileData,
+    config
+  );
   if (response.data) {
     return response.data;
   }

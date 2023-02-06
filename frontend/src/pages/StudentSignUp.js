@@ -1,4 +1,4 @@
-import React, { useCallback, useReducer, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Input from "../components/Input";
 import Button from "../components/Button";
@@ -6,41 +6,18 @@ import Select from "../components/Select";
 import { FaUser } from "react-icons/fa";
 import Validator from "../utilities/Validator";
 import { toast } from "react-toastify";
-import { useSelector, useDispatch } from "react-redux"
+import { useSelector, useDispatch } from "react-redux";
 import { UserStudentProfile } from "../features/auth/authSlice";
-
-// Reducer function
-const formReducer = (state, action) => {
-  switch (action.type) {
-    case "INPUT_CHANGE":
-      let formIsValid = true;
-      for (const inputId in state.inputs) {
-        if (inputId === action.id) {
-          formIsValid = formIsValid && action.payload.isValid;
-        } else {
-          formIsValid = formIsValid && state.inputs[inputId].isValid;
-        }
-      }
-      return {
-        ...state,
-        inputs: {
-          ...state.inputs,
-          [action.id]: {
-            value: action.payload.value,
-            isValid: action.payload.isValid,
-          },
-        },
-        formisValid: formIsValid,
-      };
-
-    default:
-      return state;
-  }
-};
+import useThunk from "../hooks/useThunkHook";
+import useForm from "../hooks/useFormHook";
 
 const StudentSignUp = () => {
-  const formInitialState = {
-    inputs: {
+  // Initalize navigate
+  const navigate = useNavigate();
+
+  // Use form hook for form handling
+  const [formState, formHandler] = useForm(
+    {
       first_name: {
         value: "",
         isValid: false,
@@ -62,21 +39,19 @@ const StudentSignUp = () => {
         isValid: false,
       },
     },
-    formisValid: false,
-  };
+    false
+  );
 
-  const [formState, dispatch] = useReducer(formReducer, formInitialState);
+  // Use Thunk hook for createAsyncThunk instructor profile create function
+  const [
+    doCreateStudentProfile,
+    createStudentProfileLoading,
+    createStudentProfileSuccess,
+    createStudentProfileError,
+  ] = useThunk(UserStudentProfile);
+
   const authDispatch = useDispatch();
-  const navigate = useNavigate();
-  const { user, studentProfileSuccess, isLoading, isError, isSuccess, message } = useSelector( (state) => state.auth);
-  // const aaa = useSelector( (state) => state.auth);
-// console.log(aaa)
-
-  // Handle all changes from all input and get back value and validity
-  // Must use call back or go into infinite loop
-  const formHandler = useCallback((input) => {
-    dispatch({ type: "INPUT_CHANGE", payload: input.payload, id: input.id });
-  }, []);
+  const { user } = useSelector((state) => state.auth);
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -94,22 +69,20 @@ const StudentSignUp = () => {
       age: formState.inputs.age.value,
       gender: formState.inputs.gender.value,
       contact: formState.inputs.contact.value,
-    }
-    authDispatch(UserStudentProfile(newStudentProfile))
+    };
+    doCreateStudentProfile(newStudentProfile);
   };
 
   useEffect(() => {
-
-    if (isError) {
-      toast.error(message);
-    }
-
-    if (isSuccess && studentProfileSuccess && user) {
-      console.log('Student profile created')
-      console.log(user.studentprofiles)
+    if (createStudentProfileSuccess) {
       navigate("/");
     }
-  }, [isError, isSuccess, studentProfileSuccess, message, navigate]);
+  }, [createStudentProfileSuccess, navigate]);
+
+  // Display loading spinner based on loading state
+  if (createStudentProfileLoading) {
+    return <h1>...isLoading</h1>;
+  }
 
   return (
     <div>
@@ -126,9 +99,7 @@ const StudentSignUp = () => {
           label="First_name"
           placeholder="Enter first_name"
           // errorMessage="Please enter a valid email"
-          validators={[
-            Validator.VALIDATOR_REQUIRE(),
-          ]}
+          validators={[Validator.VALIDATOR_REQUIRE()]}
           formHandler={formHandler}
         ></Input>
         <Input
@@ -137,9 +108,7 @@ const StudentSignUp = () => {
           label="Last_name"
           placeholder="Enter last_name"
           // errorMessage="Please enter a valid password"
-          validators={[
-            Validator.VALIDATOR_REQUIRE(),
-          ]}
+          validators={[Validator.VALIDATOR_REQUIRE()]}
           formHandler={formHandler}
         ></Input>
         <Input
@@ -147,18 +116,14 @@ const StudentSignUp = () => {
           type="age"
           label="Age"
           placeholder="Enter age"
-          validators={[
-            Validator.VALIDATOR_REQUIRE(),
-          ]}
+          validators={[Validator.VALIDATOR_REQUIRE()]}
           formHandler={formHandler}
         ></Input>
         <Select
           id="gender"
           label="Gender"
           options={["male", "female"]}
-          validators={[
-            Validator.VALIDATOR_CONTAIN(["male", "female"]),
-          ]}
+          validators={[Validator.VALIDATOR_CONTAIN(["male", "female"])]}
           formHandler={formHandler}
         />
         <Input
@@ -166,9 +131,7 @@ const StudentSignUp = () => {
           type="contact"
           label="Contact Number"
           placeholder="Contact number"
-          validators={[
-            Validator.VALIDATOR_REQUIRE(),
-          ]}
+          validators={[Validator.VALIDATOR_REQUIRE()]}
           formHandler={formHandler}
         ></Input>
         <Button primary rounded>
