@@ -7,7 +7,7 @@ import { FaUser } from "react-icons/fa";
 import Validator from "../utilities/Validator";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
-import { UserStudentProfile } from "../features/auth/authSlice";
+import { UserStudentProfile } from "../features/student/studentSlice";
 import useThunk from "../hooks/useThunkHook";
 import useForm from "../hooks/useFormHook";
 

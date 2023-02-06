@@ -1,29 +1,27 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import instructorService from "../instructor/instructorService";
+import studentService from "../student/studentService";
 import { updateProfile } from "../auth/authSlice";
 import { toast } from "react-toastify";
 
 // Create the initial state for auth
 const initialState = {
-  instructor: null,
+  student: null,
+  students: [],
   isError: false,
   isSuccess: false,
   isLoading: false,
   message: "",
 };
 
-// create instructor profile for instructor user
-export const UserInstructorProfile = createAsyncThunk(
-  "auth/signup/instructor",
-  async (instructorProfile, thunkAPI) => {
+// create student profile for student user
+export const UserStudentProfile = createAsyncThunk(
+  "auth/signup/student",
+  async (studentProfile, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      const instructorData = await instructorService.UserInstructorProfile(
-        instructorProfile,
-        token
-      );
-      thunkAPI.dispatch(updateProfile(instructorData));
-      return instructorProfile;
+      const studentData = await studentService.UserStudentProfile(studentProfile, token);
+      thunkAPI.dispatch(updateProfile(studentData));
+      return studentData
     } catch (error) {
       const message =
         (error.response &&
@@ -31,15 +29,15 @@ export const UserInstructorProfile = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-      toast.error(message);
+        toast.error(message)
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
 // Create instructorSlice
-export const instructorSlice = createSlice({
-  name: "instructor",
+export const studentSlice = createSlice({
+  name: "student",
   initialState,
   reducers: {
     reset: (state) => initialState,
@@ -52,15 +50,15 @@ export const instructorSlice = createSlice({
   extraReducers: (builder) => {
     builder
       // Create Instructor Profile
-      .addCase(UserInstructorProfile.fulfilled, (state, action) => {
+      .addCase(UserStudentProfile.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
+        // state.student = action.payload;
         const user = JSON.parse(localStorage.getItem("user"));
         user.profiles = action.payload;
         localStorage.setItem("user", JSON.stringify(user));
-        // state.instructor = action.payload;
       })
-      .addCase(UserInstructorProfile.rejected, (state, action) => {
+      .addCase(UserStudentProfile.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
@@ -68,5 +66,5 @@ export const instructorSlice = createSlice({
   },
 });
 
-export const { reset } = instructorSlice.actions;
-export default instructorSlice.reducer;
+export const { reset } = studentSlice.actions;
+export default studentSlice.reducer;

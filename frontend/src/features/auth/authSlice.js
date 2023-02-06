@@ -35,26 +35,6 @@ export const signUp = createAsyncThunk(
   }
 );
 
-// create student profile for student user
-export const UserStudentProfile = createAsyncThunk(
-  "auth/signup/student",
-  async (studentProfile, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await authService.UserStudentProfile(studentProfile, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-        toast.error(message)
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
-
 // Login user
 export const login = createAsyncThunk(
   "auth/login",
@@ -97,6 +77,10 @@ export const authSlice = createSlice({
       state.isLoading = false;
       state.isError = false;
       state.isSuccess = false;
+    },
+    updateProfile: (state, action) => {
+      console.log("Happening")
+      state.user.profiles = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -132,23 +116,8 @@ export const authSlice = createSlice({
         state.user = null;
         state.message = action.payload;
       })
-      .addCase(UserStudentProfile.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = true;
-        state.studentProfileSuccess = true;
-        const user = JSON.parse(localStorage.getItem('user'));
-        user.profiles = action.payload;
-        localStorage.setItem('user', JSON.stringify(user));
-        state.user = user;
-      })
-      .addCase(UserStudentProfile.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.studentProfileSuccess = false;
-        state.message = action.payload;
-      })
   },
 });
 
-export const { reset, resetStates } = authSlice.actions;
+export const { reset, resetStates, updateProfile } = authSlice.actions;
 export default authSlice.reducer;
