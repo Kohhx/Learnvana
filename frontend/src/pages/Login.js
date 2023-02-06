@@ -60,6 +60,11 @@ const Login = () => {
     }
   }, [LoginSuccess, user, navigate]);
 
+   // Display loading spinner based on loading state
+   if (LoginProfileLoading) {
+    return <h1>...isLoading</h1>;
+  }
+
   return (
     <div>
       <div className="text-center">

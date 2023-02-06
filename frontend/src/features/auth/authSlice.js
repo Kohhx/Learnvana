@@ -69,6 +69,7 @@ export const UserStudentProfile = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
+        toast.error(message)
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -168,7 +169,10 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.studentProfileSuccess = true;
-        state.user = action.payload;
+        const user = JSON.parse(localStorage.getItem('user'));
+        user.profiles = action.payload;
+        localStorage.setItem('user', JSON.stringify(user));
+        state.user = user;
       })
       .addCase(UserStudentProfile.rejected, (state, action) => {
         state.isLoading = false;
