@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import authService from "../auth/authService";
+import { toast } from "react-toastify";
 
 // Get User from local storage
 const user = JSON.parse(localStorage.getItem("user"));
-
 
 // Create the initial state for auth
 const initialState = {
@@ -12,7 +12,6 @@ const initialState = {
   isSuccess: false,
   isLoading: false,
   message: "",
-  instructorProfileSuccess: false,
 };
 
 // Sign up user
@@ -28,11 +27,11 @@ export const signUp = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
+        toast.error(message)
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
-
 
 // create instructor profile for instructor user
 export const UserInstructorProfile = createAsyncThunk(
@@ -48,6 +47,7 @@ export const UserInstructorProfile = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
+        toast.error(message)
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -66,6 +66,7 @@ export const login = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
+        toast.error(message)
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -89,6 +90,11 @@ export const authSlice = createSlice({
       state.message = "";
       state.instructorProfileSuccess = false;
     },
+    resetStates: (state) => {
+      state.isLoading = false;
+      state.isError = false;
+      state.isSuccess = false;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -123,21 +129,21 @@ export const authSlice = createSlice({
         state.user = null;
         state.message = action.payload;
       })
-      // --------------------
-      .addCase(UserInstructorProfile.fulfilled, (state, action) => {
+       .addCase(UserInstructorProfile.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.instructorProfileSuccess = true;
-        state.user = action.payload;
+        const user = JSON.parse(localStorage.getItem('user'));
+        user.profiles = action.payload;
+        localStorage.setItem('user', JSON.stringify(user));
+        state.user = user;
       })
       .addCase(UserInstructorProfile.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
-        state.instructorProfileSuccess = false;
         state.message = action.payload;
       })
   },
 });
 
-export const { reset } = authSlice.actions;
+export const { reset, resetStates } = authSlice.actions;
 export default authSlice.reducer;

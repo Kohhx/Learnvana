@@ -6,42 +6,18 @@ import Select from "../components/Select";
 import { FaUser } from "react-icons/fa";
 import Validator from "../utilities/Validator";
 import { toast } from "react-toastify";
-import { useSelector, useDispatch } from "react-redux"
-import { signUp, reset } from "../features/auth/authSlice";
-
-// Reducer function
-const formReducer = (state, action) => {
-  switch (action.type) {
-    case "INPUT_CHANGE":
-      let formIsValid = true;
-      for (const inputId in state.inputs) {
-        if (inputId === action.id) {
-          formIsValid = formIsValid && action.payload.isValid;
-        } else {
-          formIsValid = formIsValid && state.inputs[inputId].isValid;
-        }
-      }
-      return {
-        ...state,
-        inputs: {
-          ...state.inputs,
-          [action.id]: {
-            value: action.payload.value,
-            isValid: action.payload.isValid,
-          },
-        },
-        formisValid: formIsValid,
-      };
-
-    default:
-      return state;
-  }
-};
+import { useSelector } from "react-redux";
+import { signUp } from "../features/auth/authSlice";
+import useThunk from "../hooks/useThunkHook";
+import useForm from "../hooks/useFormHook";
 
 const Signup = () => {
+  // Initalize navigate
+  const navigate = useNavigate();
 
-  const formInitialState = {
-    inputs: {
+  // Use form hook for form handling
+  const [formState, formHandler] = useForm(
+    {
       email: {
         value: "",
         isValid: false,
@@ -59,25 +35,30 @@ const Signup = () => {
         isValid: false,
       },
     },
-    formisValid: false,
-  };
+    false
+  );
 
-  const [formState, dispatch] = useReducer(formReducer, formInitialState);
-  const authDispatch = useDispatch();
-  const navigate = useNavigate();
-  const { user, isLoading, isError, isSuccess, message } = useSelector( (state) => state.auth);
-  // const aaa = useSelector( (state) => state.auth);
-// console.log(aaa)
+  // Use Thunk hook for createAsyncThunk signup functions
+  const [doSignup, signUpLoading, signUpSuccess, signUpError] =
+    useThunk(signUp);
 
-  // Handle all changes from all input and get back value and validity
-  // Must use call back or go into infinite loop
-  const formHandler = useCallback((input) => {
-    dispatch({ type: "INPUT_CHANGE", payload: input.payload, id: input.id });
-  }, []);
+  // Get user from redux store
+  const { user } = useSelector((state) => state.auth);
 
+  // If user Sign up success, navigate to next page
+  useEffect(() => {
+    if (signUpSuccess) {
+      // if instructor, navigate to instructor fill in form
+      if (user.role === "instructor") {
+        navigate("/users/signup/instructor");
+      }
+    }
+  }, [signUpSuccess, navigate, user]);
+
+  // Handle functions
   const submitHandler = (event) => {
     event.preventDefault();
-    console.log(formState);
+    // console.log(formState);
     if (formState.inputs.password.value !== formState.inputs.password2.value) {
       toast.error("Password does not match");
       return;
@@ -93,26 +74,14 @@ const Signup = () => {
       email: formState.inputs.email.value,
       password: formState.inputs.password.value,
       role: formState.inputs.role.value.toLowerCase(),
-    }
-    authDispatch(signUp(newUser))
+    };
+    doSignup(newUser);
   };
 
-  useEffect(() => {
-
-    if (isError) {
-      toast.error(message);
-    }
-
-    if (isSuccess || user) {
-      console.log('Helloooo')
-      // navigate("/");
-      // if instructor, navigate to instructor fill in form
-      if (user.role === "instructor") {
-        navigate("/users/signup/instructor");
-      }
-      // navigate("/");
-    }
-  }, [isError, isSuccess, user, message, navigate]);
+  // Display loading spinner based on loading state
+  if (signUpLoading) {
+    return <h1>Loading...</h1>;
+  }
 
   return (
     <div>

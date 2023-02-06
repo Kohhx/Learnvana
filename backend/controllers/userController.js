@@ -21,6 +21,7 @@ exports.signupUser = asyncHandler(async (req, res) => {
   const userExists = await User.findOne({ email });
 
   if (userExists) {
+    console.log("User already exist!")
     res.status(400);
     throw new Error("User already exist!");
   }
@@ -55,6 +56,7 @@ exports.signupUser = asyncHandler(async (req, res) => {
 exports.loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
+  console.log("Login in")
   // Validation
   if (!email || !password) {
     res.status(400);
@@ -62,7 +64,7 @@ exports.loginUser = asyncHandler(async (req, res) => {
   }
 
   // Find if user already exists
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email }).populate("studentprofiles instructorprofile");
 
   if (!user) {
     res.status(400);
@@ -76,6 +78,7 @@ exports.loginUser = asyncHandler(async (req, res) => {
       _id: user._id,
       email: user.email,
       role: user.role,
+      profiles: user.role == "instructor" ? user.instructorprofile : user.studentsprofile,
       token: generateToken(user._id),
     });
   } else {
@@ -84,41 +87,38 @@ exports.loginUser = asyncHandler(async (req, res) => {
   }
 });
 
+// // export user to be logged in
+// exports.loginUser = asyncHandler(async (req, res) => {
+//   const { email, password } = req.body;
 
-// export user to be logged in
-exports.loginUser = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
+//   // Validation
+//   if (!email || !password) {
+//     res.status(400);
+//     throw new Error("Please include all fields");
+//   }
 
-  // Validation
-  if (!email || !password) {
-    res.status(400);
-    throw new Error("Please include all fields");
-  }
+//   // Find if user already exists
+//   const user = await User.findOne({ email });
 
-  // Find if user already exists
-  const user = await User.findOne({ email });
+//   if (!user) {
+//     res.status(400);
+//     throw new Error("No such user. Please create an account");
+//   }
 
-  if (!user) {
-    res.status(400);
-    throw new Error("No such user. Please create an account");
-  }
-
-  const passwordIsValid = await bcrypt.compare(password, user.password);
-  console.log(passwordIsValid);
-  if (passwordIsValid) {
-    res.status(201).json({
-      _id: user._id,
-      email: user.email,
-      role: user.role,
-      token: generateToken(user._id),
-    });
-  } else {
-    res.status(400);
-    throw new Error("Incorrect credentials. Try again");
-  }
-});
-
-
+//   const passwordIsValid = await bcrypt.compare(password, user.password);
+//   console.log(passwordIsValid);
+//   if (passwordIsValid) {
+//     res.status(201).json({
+//       _id: user._id,
+//       email: user.email,
+//       role: user.role,
+//       token: generateToken(user._id),
+//     });
+//   } else {
+//     res.status(400);
+//     throw new Error("Incorrect credentials. Try again");
+//   }
+// });
 
 // Utility Functions
 // Generate Token
