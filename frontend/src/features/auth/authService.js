@@ -18,23 +18,6 @@ const signUp = async (userData) => {
   return response.data;
 };
 
-// Register user: student profile function (Aysnc)
-const UserStudentProfile = async (profileData, token) => {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-  const response = await axios.post(
-    API_STUDENT_PROFILE_URL,
-    profileData,
-    config
-  );
-  if (response.data) {
-    return response.data;
-  }
-};
-
 // login user
 const login = async (userData) => {
   const response = await axios.post(API_LOGIN_URL, userData);
@@ -53,7 +36,6 @@ const logout = () => {
 // Put all the function into authService object before exporting
 const authService = {
   signUp,
-  UserStudentProfile,
   login,
   logout,
 };

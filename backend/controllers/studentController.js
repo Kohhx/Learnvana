@@ -5,7 +5,7 @@ const User = require("../models/user");
 // @desc create a new student
 // @route /api/student/create
 // @access user
-exports.createStudent= asyncHandler(async (req, res) => {
+exports.createStudent = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user.id);
 
   if (!user) {
@@ -13,9 +13,11 @@ exports.createStudent= asyncHandler(async (req, res) => {
     throw new Error("User not logged in");
   }
 
-  if (!user.role === "student" && !user.role === "guardian"){
+  if (!user.role === "student" && !user.role === "guardian") {
     res.status(400);
-    throw new Error("Only guardian or student account can create student profile");
+    throw new Error(
+      "Only guardian or student account can create student profile"
+    );
   }
 
   if (user.role == "student" && user.studentprofiles.length > 0) {
@@ -23,27 +25,37 @@ exports.createStudent= asyncHandler(async (req, res) => {
     throw new Error("Student account can only create 1 student profile");
   }
 
-  const { first_name, last_name, age, gender, email, contact, avatar} = req.body;
+  const { first_name, last_name, age, gender, email, contact, avatar } =
+    req.body;
 
   if (!first_name || !last_name || !age || !gender) {
     res.status(400);
     throw new Error("Please include all fields");
   }
 
-  const student = await Student.create({
-    first_name,
-    last_name,
-    age,
-    gender,
-    email,
-    contact: contact || null,
-    avatar: avatar || null,
-  })
+  try {
+    const student = await Student.create({
+      first_name,
+      last_name,
+      age,
+      gender,
+      email,
+      contact: contact || null,
+      avatar: avatar || null,
+    });
+  } catch (error) {
+    res.status(400);
+    throw new Error(error);
+  }
 
   user.studentprofiles.push(student);
-  await user.save();
-  // const user1 = await User.findById(req.user.id).populate("studentprofiles");
-  // console.log(user1)
+
+  try {
+    await user.save();
+  } catch (error) {
+    res.status(400);
+    throw new Error(error);
+  }
 
   res.status(200).json({
     _id: student._id,
@@ -54,6 +66,5 @@ exports.createStudent= asyncHandler(async (req, res) => {
     email: student.email,
     contact: student.contact,
     avatar: student.avatar,
-  })
-
+  });
 });
