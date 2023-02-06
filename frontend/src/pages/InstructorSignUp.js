@@ -6,7 +6,7 @@ import Select from "../components/Select";
 import { FaUser } from "react-icons/fa";
 import Validator from "../utilities/Validator";
 import { toast } from "react-toastify";
-import { UserInstructorProfile } from "../features/auth/authSlice";
+import { UserInstructorProfile } from "../features/instructor/instructorSlice";
 import useThunk from "../hooks/useThunkHook";
 import useForm from "../hooks/useFormHook";
 
