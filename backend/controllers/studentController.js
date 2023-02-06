@@ -25,7 +25,7 @@ exports.createStudent= asyncHandler(async (req, res) => {
 
   const { first_name, last_name, age, gender, email, contact, avatar} = req.body;
 
-  if (!first_name || !last_name || !age || !gender || !email) {
+  if (!first_name || !last_name || !age || !gender) {
     res.status(400);
     throw new Error("Please include all fields");
   }

@@ -26,14 +26,14 @@ const studentSchema = mongoose.Schema(
     },
     email: {
       type: String,
-      unique: true,
+      // unique: true,
       validate: {
         validator: (email) => {
           return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
         },
         message: "Please enter a valid email",
       },
-      required: [true, "Please enter an email"],
+      // required: [true, "Please enter an email"],
     },
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     classes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Class" }],
