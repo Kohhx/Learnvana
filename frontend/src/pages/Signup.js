@@ -52,9 +52,10 @@ const Signup = () => {
       if (user.role === "instructor") {
         navigate("/users/signup/instructor");
       }
-      
-        if (user.role === "student") {
+
+      if (user.role === "student") {
         navigate("/users/signup/student");
+      }
     }
   }, [signUpSuccess, navigate, user]);
 
@@ -80,7 +81,6 @@ const Signup = () => {
     };
     doSignup(newUser);
   };
-
 
   // Display loading spinner based on loading state
   if (signUpLoading) {
