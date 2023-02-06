@@ -75,9 +75,15 @@ export const classSlice = createSlice({
   initialState,
   reducers: {
     reset: (state) => initialState,
+    resetStates: (state) => {
+      state.isLoading = false;
+      state.isError = false;
+      state.isSuccess = false;
+    }
   },
   extraReducers: (builder) => {
     builder
+    // Create Class
       .addCase(newClass.pending, (state) => {
         state.isLoading = true;
       })
@@ -90,15 +96,35 @@ export const classSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
       })
+
+      // Get Instructor Classes
+      .addCase(getInstructorClasses.pending, (state, action) => {
+        state.isLoading = true;
+      })
       .addCase(getInstructorClasses.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
         state.classes = action.payload;
       })
+      .addCase(getInstructorClasses.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+
+      // Get one instructor class
+      .addCase(getInstructorClass.pending, (state, action) => {
+        state.isLoading = true;
+      })
       .addCase(getInstructorClass.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
         state.oneClass = action.payload;
+      })
+      .addCase(getInstructorClass.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
       });
   },
 });

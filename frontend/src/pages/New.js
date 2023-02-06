@@ -8,39 +8,13 @@ import Validator from "../utilities/Validator";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
 import { newClass, reset } from "../features/class/classSlice";
-
-// Reducer function
-const formReducer = (state, action) => {
-  switch (action.type) {
-    case "INPUT_CHANGE":
-      let formIsValid = true;
-      for (const inputId in state.inputs) {
-        if (inputId === action.id) {
-          formIsValid = formIsValid && action.payload.isValid;
-        } else {
-          formIsValid = formIsValid && state.inputs[inputId].isValid;
-        }
-      }
-      return {
-        ...state,
-        inputs: {
-          ...state.inputs,
-          [action.id]: {
-            value: action.payload.value,
-            isValid: action.payload.isValid,
-          },
-        },
-        formisValid: formIsValid,
-      };
-
-    default:
-      return state;
-  }
-};
+import useThunk from "../hooks/useThunkHook";
+import useForm from "../hooks/useFormHook";
 
 const New = () => {
-  const formInitialState = {
-    inputs: {
+  // Use form hook for form handling
+  const [formState, formHandler] = useForm(
+    {
       title: {
         value: "",
         isValid: false,
@@ -62,20 +36,21 @@ const New = () => {
         isValid: false,
       },
     },
-    formisValid: false,
-  };
+    false
+  );
 
-  const [formState, dispatch] = useReducer(formReducer, formInitialState);
   const classDispatch = useDispatch();
   const navigate = useNavigate();
-  const { classes, isLoading, isError, classCreateSuccess, message } =
-    useSelector((state) => state.class);
+  const { classes } = useSelector((state) => state.class);
+  const { user } = useSelector((state) => state.auth);
 
-  // Handle all changes from all input and get back value and validity
-  // Must use call back or go into infinite loop
-  const formHandler = useCallback((input) => {
-    dispatch({ type: "INPUT_CHANGE", payload: input.payload, id: input.id });
-  }, []);
+  // Use Thunk hook for createAsyncThunk instructor profile create function
+  const [
+    doCreateClassProfile,
+    CreateClassLoading,
+    CreateClassSuccess,
+    CreateClassError,
+  ] = useThunk(newClass);
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -99,17 +74,15 @@ const New = () => {
   };
 
   useEffect(() => {
-    if (isError) {
-      toast.error(message);
-    }
-    console.log(classCreateSuccess);
-    if (classCreateSuccess) {
-      console.log("class created");
-      // classDispatch(reset())
+    if (CreateClassSuccess) {
       navigate("/classes/dashboard");
-      classDispatch(reset());
     }
-  }, [isError, classCreateSuccess, message, navigate, classDispatch]);
+  }, [navigate, CreateClassSuccess]);
+
+  // Display loading spinner based on loading state
+  if (CreateClassLoading) {
+    return <h1>Loading...</h1>;
+  }
 
   return (
     <div>
