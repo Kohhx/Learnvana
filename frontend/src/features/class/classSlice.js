@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import classService from "../class/classService";
+import { toast } from "react-toastify";
 
 // Create the initial state for auth
 const initialState = {
@@ -26,6 +27,7 @@ export const newClass = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
+        toast.error(message)
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -45,6 +47,7 @@ export const getInstructorClasses = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
+        toast.error(message)
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -64,6 +67,7 @@ export const getInstructorClass = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
+        toast.error(message)
       return thunkAPI.rejectWithValue(message);
     }
   }
