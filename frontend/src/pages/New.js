@@ -69,8 +69,8 @@ const New = () => {
       images: formState.inputs.images.value,
       address: formState.inputs.address.value,
     };
-
-    classDispatch(newClass(newClassData));
+    doCreateClassProfile(newClassData);
+    // classDispatch(newClass(newClassData));s
   };
 
   useEffect(() => {
