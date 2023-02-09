@@ -9,10 +9,12 @@ import StudentSignUp from "./pages/StudentSignUp";
 import ProtectedRoute from "./routing/ProtectedRoute";
 import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
-import New from "./pages/New";
+import NewClass from "./pages/NewClass";
+import NewLesson from "./pages/NewLesson";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import InstructorClass from "./pages/InstructorClass"
+import InstructorLesson from "./pages/InstructorLesson"
 
 const App = () => {
   return (
@@ -33,10 +35,12 @@ const App = () => {
               <Route path="/classes/dashboard" element={<Dashboard />} />
             </Route>
             <Route element={<ProtectedRoute />}>
-              <Route path="/classes/new" element={<New />} />
+              <Route path="/classes/new" element={<NewClass />} />
             </Route>
             <Route element={<ProtectedRoute />}>
               <Route path="/classes/:classId" element={<InstructorClass/>} />
+              <Route path="/classes/:classId/lessons/new" element={<NewLesson />} />
+              <Route path="/classes/:classId/:lessonId" element={<InstructorLesson/>} />
             </Route>
           </Routes>
         </div>

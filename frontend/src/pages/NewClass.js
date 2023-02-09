@@ -11,7 +11,7 @@ import { newClass, reset } from "../features/class/classSlice";
 import useThunk from "../hooks/useThunkHook";
 import useForm from "../hooks/useFormHook";
 
-const New = () => {
+const NewClass = () => {
   // Use form hook for form handling
   const [formState, formHandler] = useForm(
     {
@@ -150,4 +150,4 @@ const New = () => {
   );
 };
 
-export default New;
+export default NewClass;
