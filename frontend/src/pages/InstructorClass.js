@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { reset, getInstructorClass } from "../features/class/classSlice";
 import Hamburger from "../components/Shared/Hamburger";
-import "../components/Shared/Hamburger.css"
+import "../components/Shared/Hamburger.css";
 
 const InstructorClass = () => {
+  const [isOpen, setIsOpen] = useState(false);
   let { classId } = useParams();
   const classDispatch = useDispatch();
   const { oneClass, isSuccess, isLoading } = useSelector(
@@ -26,10 +27,17 @@ const InstructorClass = () => {
 
   return (
     <div>
-      <div className="bg-orange-300 h-12 w-screen p-2">
-      <Hamburger />
+      <div className="flex">
+        {isOpen && <div className="h-screen w-[13%] bg-orange-400"></div>}
+        <div>
+          <Hamburger
+            classNames="m-2"
+            isOpen={isOpen}
+            onClick={() => setIsOpen(!isOpen)}
+          />
+          {oneClass.title}
+        </div>
       </div>
-      <div>{oneClass.title}</div>
     </div>
   );
 };
