@@ -69,6 +69,7 @@ const StudentSignUp = () => {
       age: formState.inputs.age.value,
       gender: formState.inputs.gender.value,
       contact: formState.inputs.contact.value,
+      email: user.email,
     };
     doCreateStudentProfile(newStudentProfile);
   };

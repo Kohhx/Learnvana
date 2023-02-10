@@ -3,8 +3,13 @@ import axios from "axios";
 const PROXY = "http://localhost:5000";
 
 const API_NEW_CLASS_URL = PROXY.concat("/api/classes/create");
-const API_GET_INSTRUCTOR_CLASSES_URL = PROXY.concat("/api/classes/instructor-classes");
-let API_GET_INSTRUCTOR_CLASS_URL = PROXY.concat("/api/classes/instructor-classes/");
+const API_GET_INSTRUCTOR_CLASSES_URL = PROXY.concat(
+  "/api/classes/instructor-classes"
+);
+let API_GET_INSTRUCTOR_CLASS_URL = PROXY.concat(
+  "/api/classes/instructor-classes/"
+);
+let API_RESQUEST_JOIN_CLASS_URL = PROXY.concat("/api/classes/");
 
 // post new class
 const newClass = async (classData, token) => {
@@ -40,7 +45,30 @@ const getInstructorClass = async (classId, token) => {
     },
   };
 
-  const response = await axios.get(`${API_GET_INSTRUCTOR_CLASS_URL}${classId}`, config);
+  const response = await axios.get(
+    `${API_GET_INSTRUCTOR_CLASS_URL}${classId}`,
+    config
+  );
+  if (response.data) {
+    return response.data;
+  }
+};
+
+// Send request to join class
+const sendRequestToJoinClass = async (classStudentData, token) => {
+  const { classId } = classStudentData;
+  console.log("Front request to join 2")
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.post(
+    `${API_RESQUEST_JOIN_CLASS_URL}${classId}/request`,
+    classStudentData,
+    config
+  );
   if (response.data) {
     return response.data;
   }
@@ -51,6 +79,7 @@ const classService = {
   newClass,
   getInstructorClasses,
   getInstructorClass,
+  sendRequestToJoinClass,
 };
 
 export default classService;

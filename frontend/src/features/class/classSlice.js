@@ -73,6 +73,27 @@ export const getInstructorClass = createAsyncThunk(
   }
 );
 
+// Get Student request to join class
+export const sendRequestToJoinClass = createAsyncThunk(
+  "class/studentRequestToJoinClass",
+  async (classStudentData, thunkAPI) => {
+    try {
+      console.log("Front request to join")
+      const token = thunkAPI.getState().auth.user.token;
+      return await classService.sendRequestToJoinClass(classStudentData, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+        toast.error(message)
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 // Create classSlice
 export const classSlice = createSlice({
   name: "class",
@@ -129,7 +150,20 @@ export const classSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
-      });
+      })
+
+        // Get request to join class
+        .addCase(sendRequestToJoinClass.pending, (state, action) => {
+          state.isLoading = true;
+        })
+        .addCase(sendRequestToJoinClass.fulfilled, (state, action) => {
+          state.isLoading = false;
+          state.isSuccess = true;
+        })
+        .addCase(sendRequestToJoinClass.rejected, (state, action) => {
+          state.isLoading = false;
+          state.isError = true;
+        });
   },
 });
 

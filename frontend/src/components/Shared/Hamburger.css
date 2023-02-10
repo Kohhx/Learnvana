@@ -1,5 +1,4 @@
 .hamburger-icon {
-  width: clamp(35px, 2%, 2%);
   width: 35px;
   height: 35px;
   border: 2px black solid;

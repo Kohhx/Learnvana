@@ -163,7 +163,8 @@ exports.createClass = asyncHandler(async (req, res) => {
 // @route /api/classes/:class_id/request
 // @access private
 exports.addPendingUserToClass = asyncHandler(async (req, res) => {
-  const studentId = req.body.id;
+  console.log("Start adding student request")
+  const studentId = req.body.studentId;
   const classId = req.params.classId;
 
   console.log(studentId);
@@ -177,6 +178,11 @@ exports.addPendingUserToClass = asyncHandler(async (req, res) => {
     throw new Error("User not logged in");
   }
 
+  if (user.role !== "student") {
+    res.status(400);
+    throw new Error("Only student can sign up for classes");
+  }
+
   if (!student) {
     res.status(400);
     throw new Error("No student found");
@@ -187,11 +193,19 @@ exports.addPendingUserToClass = asyncHandler(async (req, res) => {
     throw new Error("No class found");
   }
 
+
+  const pendings = classFound.pending;
+  const existingPending = pendings.find( pending => pending.toString() === studentId)
+  if (existingPending) {
+    res.status(400);
+    throw new Error("Student is already in the pending list. Wait for instructor to approve.");
+  }
+
   classFound.pending.push(student);
 
   try {
     await classFound.save();
-    const updatedClass = await Class.findbyId(classId);
+    console.log("Request sent. Pending approval")
     res.status(200).json({
       message: "Request sent. Pending approval",
     });
