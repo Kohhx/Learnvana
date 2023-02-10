@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { useParams, Outlet } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { reset, getInstructorClass } from "../features/class/classSlice";
+
+import React, { useEffect, useState } from 'react'
+import { useParams, NavLink } from "react-router-dom"
+import { useSelector, useDispatch } from "react-redux"
+import { reset, getInstructorClass } from "../features/instructor/instructorSlice"
+import Button from "../components/Button";
+import useThunk from '../hooks/useThunkHook';
 import Hamburger from "../components/Shared/Hamburger";
 import { CSSTransition } from "react-transition-group";
 import ClassSidebar from "../components/Shared/ClassSidebar";
@@ -11,22 +14,27 @@ import LessonCreate from "./LessonCreate";
 const InstructorClass = () => {
   const [isOpen, setIsOpen] = useState(false);
   let { classId } = useParams();
-  const classDispatch = useDispatch();
-  const { oneClass, isSuccess, isLoading } = useSelector(
-    (state) => state.class
-  );
+
+  const { instructorClass } = useSelector((state) => state.instructor);
+
+  const [
+    doGetInstructorClasses,
+    getInstructorLoading,
+    getInstructorSuccess,
+    getInstructorError,
+  ] = useThunk(getInstructorClass);
+
+  // useEffect(() => {
+  //   return () => {
+  //     if (isSuccess) {
+  //       classDispatch(reset());
+  //     }
+  //   };
+  // }, [isSuccess,classDispatch]);
 
   useEffect(() => {
-    return () => {
-      if (isSuccess) {
-        classDispatch(reset());
-      }
-    };
-  }, [isSuccess, classDispatch]);
-
-  useEffect(() => {
-    classDispatch(getInstructorClass(classId));
-  }, [classDispatch]);
+    doGetInstructorClasses(classId);
+  }, [doGetInstructorClasses, classId]);
 
   // Side Bar config
   const sideBarConfig = [
@@ -51,7 +59,10 @@ const InstructorClass = () => {
             isOpen={isOpen}
             onClick={() => setIsOpen(!isOpen)}
           />
-          <Outlet />
+          {instructorClass.title}
+          <Button primary rounded><NavLink to={`/instructors/classes/${classId}/lessons`}>Create Lesson</NavLink></Button>
+             <Outlet />
+
         </div>
       </div>
     </div>

@@ -8,13 +8,15 @@ import InstructorSignUp from "./pages/InstructorSignUp";
 import StudentSignUp from "./pages/StudentSignUp";
 import ProtectedRoute from "./routing/ProtectedRoute";
 import Index from "./pages/Index";
-import Dashboard from "./pages/Dashboard";
-import New from "./pages/New";
+import InstructorDashboard from "./pages/InstructorDashboard";
+import NewClass from "./pages/NewClass";
+import Lessons from "./pages/Lessons";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import InstructorClass from "./pages/InstructorClass";
 import ClassInvite from "./pages/ClassInvite";
-import LessonCreate from "./pages/LessonCreate";
+import InstructorClass from "./pages/InstructorClass"
+import InstructorLesson from "./pages/InstructorLesson"
+
 
 const App = () => {
   return (
@@ -39,28 +41,19 @@ const App = () => {
             {/* Classes */}
             <Route path="/classes" element={<Index />} />
             <Route element={<ProtectedRoute />}>
-              <Route path="/classes/dashboard" element={<Dashboard />} />
-            </Route>
-            <Route element={<ProtectedRoute />}>
-              <Route path="/classes/new" element={<New />} />
-            </Route>
-            {/* <Route element={<ProtectedRoute />}>
-              <Route path="/classes/:classId" element={<InstructorClass/>} />
-            </Route> */}
-
-            {/* Example of nested route with layout */}
-            <Route element={<ProtectedRoute />}>
-              <Route path="/classes/:classId" element={<InstructorClass />}>
-                <Route path="lesson/new" element={<LessonCreate/>} />
-              </Route>
-            </Route>
-
-            <Route element={<ProtectedRoute />}>
-              <Route
-                path="/classes/:classId/request"
+              <Route path="/instructors" >
+                <Route path="dashboard" element={<InstructorDashboard />} />
+                <Route path="classes/new" element={<NewClass />} />
+                <Route path="classes/:classId" element={<InstructorClass/>} />
+                <Route path="classes/:classId/lessons" element={<Lessons/>} />
+                <Route path="classes/:classId/:lessonId" element={<InstructorLesson/>} />
+                 <Route
+                path="classes/:classId/request"
                 element={<ClassInvite />}
               />
+              </Route>
             </Route>
+            <Route path="*" element={<div>404 page not found</div>} />
           </Routes>
         </div>
       </Router>

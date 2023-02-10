@@ -1,85 +1,58 @@
-import axios from "axios";
 
-const PROXY = "http://localhost:5000";
+// import axios from "axios";
 
-const API_NEW_CLASS_URL = PROXY.concat("/api/classes/create");
-const API_GET_INSTRUCTOR_CLASSES_URL = PROXY.concat(
-  "/api/classes/instructor-classes"
-);
-let API_GET_INSTRUCTOR_CLASS_URL = PROXY.concat(
-  "/api/classes/instructor-classes/"
-);
-let API_RESQUEST_JOIN_CLASS_URL = PROXY.concat("/api/classes/");
+// const PROXY = "http://localhost:5000";
 
-// post new class
-const newClass = async (classData, token) => {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-  const response = await axios.post(API_NEW_CLASS_URL, classData, config);
-  if (response.data) {
-    return response.data;
-  }
-};
+// const API_NEW_CLASS_URL = PROXY.concat("/api/classes/create");
+// const API_GET_INSTRUCTOR_CLASSES_URL = PROXY.concat("/api/classes/instructor-classes");
+// let API_GET_INSTRUCTOR_CLASS_URL = PROXY.concat("/api/classes/instructor-classes/");
 
-// Get all instructor Class
-const getInstructorClasses = async (token) => {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-  const response = await axios.get(API_GET_INSTRUCTOR_CLASSES_URL, config);
-  if (response.data) {
-    return response.data;
-  }
-};
+// // post new class
+// const newClass = async (classData, token) => {
+//   const config = {
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//   };
+//   const response = await axios.post(API_NEW_CLASS_URL, classData, config);
+//   if (response.data) {
+//     return response.data;
+//   }
+// };
 
-// Get one instructor Class
-const getInstructorClass = async (classId, token) => {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
+// // Get all instructor Class
+// const getInstructorClasses = async (token) => {
+//   const config = {
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//   };
+//   const response = await axios.get(API_GET_INSTRUCTOR_CLASSES_URL, config);
+//   if (response.data) {
+//     return response.data;
+//   }
+// };
 
-  const response = await axios.get(
-    `${API_GET_INSTRUCTOR_CLASS_URL}${classId}`,
-    config
-  );
-  if (response.data) {
-    return response.data;
-  }
-};
+// // Get one instructor Class
+// const getInstructorClass = async (classId, token) => {
+//   const config = {
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//   };
 
-// Send request to join class
-const sendRequestToJoinClass = async (classStudentData, token) => {
-  const { classId } = classStudentData;
-  console.log("Front request to join 2")
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
+//   const response = await axios.get(`${API_GET_INSTRUCTOR_CLASS_URL}${classId}`, config);
+//   if (response.data) {
+//     return response.data;
+//   }
+// };
 
-  const response = await axios.post(
-    `${API_RESQUEST_JOIN_CLASS_URL}${classId}/request`,
-    classStudentData,
-    config
-  );
-  if (response.data) {
-    return response.data;
-  }
-};
+// // Put all the function into authService object before exporting
+// const classService = {
+//   newClass,
+//   getInstructorClasses,
+//   getInstructorClass,
+// };
 
-// Put all the function into authService object before exporting
-const classService = {
-  newClass,
-  getInstructorClasses,
-  getInstructorClass,
-  sendRequestToJoinClass,
-};
+// export default classService;
 
-export default classService;
