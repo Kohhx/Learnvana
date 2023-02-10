@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react'
-import { useParams, NavLink } from "react-router-dom"
+import { useParams, NavLink, Outlet } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import { reset, getInstructorClass } from "../features/instructor/instructorSlice"
 import Button from "../components/Button";
@@ -38,8 +38,8 @@ const InstructorClass = () => {
 
   // Side Bar config
   const sideBarConfig = [
-    { name: "Invite Link", link: `/classes/${classId}/request` },
-    { name: "Create Lessons", link: `/classes/${classId}/lesson/new` },
+    { name: "Invite Link", link: `/instructors/classes/${classId}/request` },
+    { name: "Create Lessons", link: `/instructors/classes/${classId}/lessons` },
   ];
 
   return (
@@ -61,8 +61,7 @@ const InstructorClass = () => {
           />
           {instructorClass.title}
           <Button primary rounded><NavLink to={`/instructors/classes/${classId}/lessons`}>Create Lesson</NavLink></Button>
-             <Outlet />
-
+          <Outlet />
         </div>
       </div>
     </div>
