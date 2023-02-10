@@ -13,8 +13,10 @@ import NewClass from "./pages/NewClass";
 import Lessons from "./pages/Lessons";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ClassInvite from "./pages/ClassInvite";
 import InstructorClass from "./pages/InstructorClass"
 import InstructorLesson from "./pages/InstructorLesson"
+
 
 const App = () => {
   return (
@@ -24,12 +26,19 @@ const App = () => {
           <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
+
+            {/* User Login */}
             <Route path="/users/login" element={<Login />} />
             <Route path="/users/signup" element={<Signup />} />
             <Route element={<ProtectedRoute />}>
-              <Route path="/users/signup/instructor" element={<InstructorSignUp />} />
+              <Route
+                path="/users/signup/instructor"
+                element={<InstructorSignUp />}
+              />
               <Route path="/users/signup/student" element={<StudentSignUp />} />
             </Route>
+
+            {/* Classes */}
             <Route path="/classes" element={<Index />} />
             <Route element={<ProtectedRoute />}>
               <Route path="/instructors" >
@@ -38,6 +47,10 @@ const App = () => {
                 <Route path="classes/:classId" element={<InstructorClass/>} />
                 <Route path="classes/:classId/lessons" element={<Lessons/>} />
                 <Route path="classes/:classId/:lessonId" element={<InstructorLesson/>} />
+                 <Route
+                path="classes/:classId/request"
+                element={<ClassInvite />}
+              />
               </Route>
             </Route>
             <Route path="*" element={<div>404 page not found</div>} />

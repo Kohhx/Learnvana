@@ -7,7 +7,9 @@ import Button from "../components/Button";
 import useThunk from '../hooks/useThunkHook';
 import Hamburger from "../components/Shared/Hamburger";
 import { CSSTransition } from "react-transition-group";
-import "../components/Shared/Hamburger.css";
+import ClassSidebar from "../components/Shared/ClassSidebar";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import LessonCreate from "./LessonCreate";
 
 const InstructorClass = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,16 +36,22 @@ const InstructorClass = () => {
     doGetInstructorClasses(classId);
   }, [doGetInstructorClasses, classId]);
 
+  // Side Bar config
+  const sideBarConfig = [
+    { name: "Invite Link", link: `/classes/${classId}/request` },
+    { name: "Create Lessons", link: `/classes/${classId}/lesson/new` },
+  ];
+
   return (
     <div>
       <div className="flex">
         <CSSTransition
           in={isOpen}
           timeout={200}
-          classNames="fade"
+          classNames="fade" // Classes for css transition in index.css
           unmountOnExit
         >
-          <div className="h-screen w-[13%] bg-orange-400"></div>
+          <ClassSidebar sideBarConfig={sideBarConfig} />
         </CSSTransition>
         <div>
           <Hamburger
@@ -53,6 +61,8 @@ const InstructorClass = () => {
           />
           {instructorClass.title}
           <Button primary rounded><NavLink to={`/instructors/classes/${classId}/lessons`}>Create Lesson</NavLink></Button>
+             <Outlet />
+
         </div>
       </div>
     </div>

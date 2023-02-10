@@ -7,6 +7,7 @@ const User = require("../models/user");
 // @access user
 exports.createStudent = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user.id);
+  console.log(user);
 
   if (!user) {
     res.status(400);
@@ -33,8 +34,11 @@ exports.createStudent = asyncHandler(async (req, res) => {
     throw new Error("Please include all fields");
   }
 
+  console.log("REQBODY", req.body);
+
+  let student;
   try {
-    const student = await Student.create({
+    student = await Student.create({
       first_name,
       last_name,
       age,
@@ -48,6 +52,8 @@ exports.createStudent = asyncHandler(async (req, res) => {
     throw new Error(error);
   }
 
+
+
   user.studentprofiles.push(student);
 
   try {
@@ -56,6 +62,7 @@ exports.createStudent = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error(error);
   }
+
 
   res.status(200).json({
     _id: student._id,

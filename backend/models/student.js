@@ -33,7 +33,7 @@ const studentSchema = mongoose.Schema(
         },
         message: "Please enter a valid email",
       },
-      // required: [true, "Please enter an email"],
+      required: [true, "Please enter an email"],
     },
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     classes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Class" }],
