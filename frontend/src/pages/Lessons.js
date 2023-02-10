@@ -153,7 +153,7 @@ const Lessons = () => {
           formHandler={formHandler}
         ></Input>
         <Button primary rounded>
-          Create lesson
+          Create lesson now
         </Button>
       </form>
     </div>
