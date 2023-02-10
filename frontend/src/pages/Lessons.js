@@ -7,11 +7,11 @@ import { FaUser } from "react-icons/fa";
 import Validator from "../utilities/Validator";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
-import { newLesson, reset } from "../features/lesson/lessonSlice";
+import { newLesson, reset } from "../features/instructor/instructorSlice";
 import useThunk from "../hooks/useThunkHook";
 import useForm from "../hooks/useFormHook";
 
-const NewLesson = () => {
+const Lessons = () => {
   // Use form hook for form handling
   const [formState, formHandler] = useForm(
     {
@@ -44,10 +44,8 @@ const NewLesson = () => {
   );
 
   let { classId } = useParams();
-  const classDispatch = useDispatch();
   const navigate = useNavigate();
-  const { classes } = useSelector((state) => state.class);
-  const { user } = useSelector((state) => state.auth);
+
 
   // Use Thunk hook for createAsyncThunk instructor profile create function
   const [
@@ -74,6 +72,7 @@ const NewLesson = () => {
       date: formState.inputs.date.value,
       time: formState.inputs.time.value,
       images: formState.inputs.images.value,
+      classId
     };
     doCreateLessonProfile(newLessonData);
     // classDispatch(newClass(newClassData));s
@@ -81,7 +80,7 @@ const NewLesson = () => {
 
   useEffect(() => {
     if (CreateLessonSuccess) {
-      navigate(`/classes/${classId}`);
+      navigate(`/instructor/classes/${classId}`);
     }
   }, [navigate, CreateLessonSuccess]);
 
@@ -161,4 +160,4 @@ const NewLesson = () => {
   );
 };
 
-export default NewLesson;
+export default Lessons;

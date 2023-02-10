@@ -7,6 +7,8 @@ const useThunkHook = (thunk) => {
   const [isSuccess, setIsSuccess] = useState(false);
   const dispatch = useDispatch();
 
+  // run thunk is called back and not run yet
+
   const runThunk = useCallback(
     (...args) => {
       setIsLoading(true);

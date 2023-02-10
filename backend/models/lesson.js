@@ -7,8 +7,8 @@ const lessonSchema = mongoose.Schema({
   },
   content: String,
   objective: String,
-  date: Date,
-  time: Date,
+  date: String,
+  time: String,
   images: [{ type: String }],
 },
 {

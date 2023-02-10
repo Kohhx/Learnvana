@@ -8,9 +8,9 @@ import InstructorSignUp from "./pages/InstructorSignUp";
 import StudentSignUp from "./pages/StudentSignUp";
 import ProtectedRoute from "./routing/ProtectedRoute";
 import Index from "./pages/Index";
-import Dashboard from "./pages/Dashboard";
+import InstructorDashboard from "./pages/InstructorDashboard";
 import NewClass from "./pages/NewClass";
-import NewLesson from "./pages/NewLesson";
+import Lessons from "./pages/Lessons";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import InstructorClass from "./pages/InstructorClass"
@@ -32,16 +32,15 @@ const App = () => {
             </Route>
             <Route path="/classes" element={<Index />} />
             <Route element={<ProtectedRoute />}>
-              <Route path="/classes/dashboard" element={<Dashboard />} />
+              <Route path="/instructors" >
+                <Route path="dashboard" element={<InstructorDashboard />} />
+                <Route path="classes/new" element={<NewClass />} />
+                <Route path="classes/:classId" element={<InstructorClass/>} />
+                <Route path="classes/:classId/lessons" element={<Lessons/>} />
+                <Route path="classes/:classId/:lessonId" element={<InstructorLesson/>} />
+              </Route>
             </Route>
-            <Route element={<ProtectedRoute />}>
-              <Route path="/classes/new" element={<NewClass />} />
-            </Route>
-            <Route element={<ProtectedRoute />}>
-              <Route path="/classes/:classId" element={<InstructorClass/>} />
-              <Route path="/classes/:classId/lessons/new" element={<NewLesson />} />
-              <Route path="/classes/:classId/:lessonId" element={<InstructorLesson/>} />
-            </Route>
+            <Route path="*" element={<div>404 page not found</div>} />
           </Routes>
         </div>
       </Router>

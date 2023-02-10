@@ -6,7 +6,7 @@ const Classitem = ({ classData }) => {
 
   return (
     <div>
-      <Link to={`/classes/${_id}`}>{title}</Link>
+      <Link to={`/instructors/classes/${_id}`}>{title}</Link>
     </div>
   );
 };

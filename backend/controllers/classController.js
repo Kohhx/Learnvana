@@ -91,6 +91,7 @@ exports.getInstructorClasses = asyncHandler(async (req, res) => {
 // @route /api/classes/create
 // @access private
 exports.createClass = asyncHandler(async (req, res) => {
+  console.log("test to see")
   const { title, status, images, address } = req.body;
 
   const user = await User.findById(req.user.id);

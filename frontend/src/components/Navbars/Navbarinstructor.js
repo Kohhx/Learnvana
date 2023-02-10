@@ -11,12 +11,12 @@ const NavbarInstructor = ({activeStyle}) => {
         </NavLink>
       </li>
       <li>
-        <NavLink to="/classes/new" style={activeStyle}>
+        <NavLink to="/instructors/classes/new" style={activeStyle}>
           Create Class
         </NavLink>
       </li>
       <li>
-        <NavLink to="/classes/dashboard" style={activeStyle}>
+        <NavLink to="/instructors/dashboard" style={activeStyle}>
           Dashboard
         </NavLink>
       </li>

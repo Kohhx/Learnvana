@@ -11,6 +11,8 @@ exports.getInstructorLesson = asyncHandler(async (req, res) => {
   console.log("/api/classes/instructor-classes/:classId/instructor-lessons/:lessonId");
   const classId = req.params.classId;
   const lessonId = req.params.lessonId;
+  // const {classId, lessonId} = req.params;
+  // javascript destructruting
 
   let classFound;
   try {
@@ -55,10 +57,6 @@ exports.getInstructorLesson = asyncHandler(async (req, res) => {
     throw new Error("Class does not belong to this instructor");
   }
 
-  if (!lessonFound.class.toString() === classFound._id.toString()) {
-    res.status(400);
-    throw new Error("lesson does not belong to this instructor");
-  }
 
   console.log(lessonFound);
 
@@ -79,9 +77,13 @@ exports.getInstructorLessons = asyncHandler(async (req, res) => {
   }
 
   const user = await User.findById(req.user.id);
-  const instructor = await Instructor.findById(user.instructorprofile).populate(
-    { path: 'classes', select: 'lessons' }
-  );
+  // const instructor = await Instructor.findById(user.instructorprofile).populate(
+  //   { "classes" }
+  // );
+  //
+
+
+
 
   if (!user) {
     res.status(400);
@@ -113,12 +115,23 @@ exports.getInstructorLessons = asyncHandler(async (req, res) => {
 });
 
 exports.createLesson = asyncHandler(async (req, res) => {
-  const { title, status, images, address } = req.body;
+  const { title, content, objective, date, time, images } = req.body;
+  console.log("lesson",req.body)
+
+  const { classId } = req.params
+
+  let classFound;
+  try {
+    classFound = await Class.findById(classId);
+  } catch (error) {
+    res.status(400);
+    throw new Error(error);
+  }
 
   const user = await User.findById(req.user.id);
   const instructor = await Instructor.findById(user.instructorprofile);
 
-  console.log(instructor);
+  console.log("sadasd",instructor);
 
   // Validation
   if (!title) {
@@ -150,26 +163,47 @@ exports.createLesson = asyncHandler(async (req, res) => {
     );
   }
 
-  // Create Lesson
-  let newLesson;
-  try {
-    newLesson = await Lesson.create({
-      title,
-      content,
-      objective,
-      date,
-      time,
-      images,
-    });
-  } catch (error) {
-    res.status(500);
-    throw new Error("Something went wrong");
+  if (!classFound) {
+    res.status(400);
+    throw new Error(
+      "No such class"
+    );
   }
+
+  if (classFound.instructor.toString() !== instructor._id.toString()) {
+    res.status(400);
+    throw new Error("Class does not belong to this instructor");
+  }
+
+  // Create Lesson
+  const newLesson = {
+    title,
+    content,
+    objective,
+    date,
+    time,
+    images,
+  };
+
+  // no model
+  // try {
+  //   newLesson = await Lesson.create({
+  //     title,
+  //     content,
+  //     objective,
+  //     date,
+  //     time,
+  //     images,
+  //   });
+  // } catch (error) {
+  //   res.status(500);
+  //   throw new Error("Something went wrong");
+  // }
 
   // Add lesson to instructor
   try {
-    instructor.classes.lessons.push(newLesson);
-    await instructor.save();
+    classFound.lessons.push(newLesson);
+    await classFound.save();
   } catch (error) {
     res.status(500);
     throw new Error("Something went wrong with adding classes to instructor");

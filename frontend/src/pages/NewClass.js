@@ -7,7 +7,7 @@ import { FaUser } from "react-icons/fa";
 import Validator from "../utilities/Validator";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
-import { newClass, reset } from "../features/class/classSlice";
+import { newClass, reset } from "../features/instructor/instructorSlice";
 import useThunk from "../hooks/useThunkHook";
 import useForm from "../hooks/useFormHook";
 
@@ -39,10 +39,7 @@ const NewClass = () => {
     false
   );
 
-  const classDispatch = useDispatch();
   const navigate = useNavigate();
-  const { classes } = useSelector((state) => state.class);
-  const { user } = useSelector((state) => state.auth);
 
   // Use Thunk hook for createAsyncThunk instructor profile create function
   const [
@@ -70,12 +67,11 @@ const NewClass = () => {
       address: formState.inputs.address.value,
     };
     doCreateClassProfile(newClassData);
-    // classDispatch(newClass(newClassData));s
   };
 
   useEffect(() => {
     if (CreateClassSuccess) {
-      navigate("/classes/dashboard");
+      navigate("/instructors/dashboard");
     }
   }, [navigate, CreateClassSuccess]);
 
