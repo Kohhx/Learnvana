@@ -1,11 +1,14 @@
 const mongoose = require("mongoose");
 
 const lessonSchema = mongoose.Schema({
-  title: String,
+  title: {
+    type: String,
+    required: true,
+  },
   content: String,
   objective: String,
-  date: Date,
-  time: Date,
+  date: String,
+  time: String,
   images: [{ type: String }],
 },
 {

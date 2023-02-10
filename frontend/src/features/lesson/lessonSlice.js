@@ -1,25 +1,25 @@
 // import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-// import classService from "../class/classService";
+// import lessonService from "../lesson/lessonService";
 // import { toast } from "react-toastify";
 
-// // Create the initial state for auth
+// // Create the initial state for lesson
 // const initialState = {
-//   classes: [],
-//   oneClass: {},
+//   lessons: [],
+//   oneLesson: {},
 //   isError: false,
 //   isSuccess: false,
-//   classCreateSuccess: false,
+//   lessonCreateSuccess: false,
 //   isLoading: false,
 //   message: "",
 // };
 
-// // Create new class
-// export const newClass = createAsyncThunk(
-//   "class/create",
-//   async (classData, thunkAPI) => {
+// // Create new lesson
+// export const newLesson = createAsyncThunk(
+//   "lesson/create",
+//   async (lessonData, thunkAPI) => {
 //     try {
 //       const token = thunkAPI.getState().auth.user.token;
-//       return await classService.newClass(classData, token);
+//       return await lessonService.newLesson(lessonData, token);
 //     } catch (error) {
 //       const message =
 //         (error.response &&
@@ -33,33 +33,13 @@
 //   }
 // );
 
-// // Get Instructor classes
-// export const getInstructorClasses = createAsyncThunk(
-//   "class/getAllInstructor",
-//   async (_, thunkAPI) => {
-//     try {
-//       const token = thunkAPI.getState().auth.user.token;
-//       return await classService.getInstructorClasses(token);
-//     } catch (error) {
-//       const message =
-//         (error.response &&
-//           error.response.data &&
-//           error.response.data.message) ||
-//         error.message ||
-//         error.toString();
-//         toast.error(message)
-//       return thunkAPI.rejectWithValue(message);
-//     }
-//   }
-// );
-
-// // Get One Instructor class
-// export const getInstructorClass = createAsyncThunk(
-//   "class/getOneInstructor",
+// // Get Instructor lessons
+// export const getInstructorLessons = createAsyncThunk(
+//   "lesson/getAllInstructor",
 //   async (classId, thunkAPI) => {
 //     try {
 //       const token = thunkAPI.getState().auth.user.token;
-//       return await classService.getInstructorClass(classId, token);
+//       return await lessonService.getInstructorLessons(classId, token);
 //     } catch (error) {
 //       const message =
 //         (error.response &&
@@ -73,9 +53,29 @@
 //   }
 // );
 
-// // Create classSlice
-// export const classSlice = createSlice({
-//   name: "class",
+// // Get One Instructor lesson
+// export const getInstructorLesson = createAsyncThunk(
+//   "lesson/getOneInstructor",
+//   async (lessonId, thunkAPI) => {
+//     try {
+//       const token = thunkAPI.getState().auth.user.token;
+//       return await lessonService.getInstructorClass(lessonId, token);
+//     } catch (error) {
+//       const message =
+//         (error.response &&
+//           error.response.data &&
+//           error.response.data.message) ||
+//         error.message ||
+//         error.toString();
+//         toast.error(message)
+//       return thunkAPI.rejectWithValue(message);
+//     }
+//   }
+// );
+
+// // Create lessonSlice
+// export const lessonSlice = createSlice({
+//   name: "lesson",
 //   initialState,
 //   reducers: {
 //     reset: (state) => initialState,
@@ -87,45 +87,45 @@
 //   },
 //   extraReducers: (builder) => {
 //     builder
-//     // Create Class
-//       .addCase(newClass.pending, (state) => {
+//     // Create lesson
+//       .addCase(newLesson.pending, (state) => {
 //         state.isLoading = true;
 //       })
-//       .addCase(newClass.fulfilled, (state, action) => {
+//       .addCase(newLesson.fulfilled, (state, action) => {
 //         state.isLoading = false;
-//         state.classCreateSuccess = true;
+//         state.lessonCreateSuccess = true;
 //       })
-//       .addCase(newClass.rejected, (state, action) => {
+//       .addCase(newLesson.rejected, (state, action) => {
 //         state.isLoading = false;
 //         state.isError = true;
 //         state.message = action.payload;
 //       })
 
-//       // Get Instructor Classes
-//       .addCase(getInstructorClasses.pending, (state, action) => {
+//       // Get Instructor Lesssons
+//       .addCase(getInstructorLessons.pending, (state, action) => {
 //         state.isLoading = true;
 //       })
-//       .addCase(getInstructorClasses.fulfilled, (state, action) => {
+//       .addCase(getInstructorLessons.fulfilled, (state, action) => {
 //         state.isLoading = false;
 //         state.isSuccess = true;
-//         state.classes = action.payload;
+//         state.lessons = action.payload;
 //       })
-//       .addCase(getInstructorClasses.rejected, (state, action) => {
+//       .addCase(getInstructorLessons.rejected, (state, action) => {
 //         state.isLoading = false;
 //         state.isError = true;
 //         state.message = action.payload;
 //       })
 
-//       // Get one instructor class
-//       .addCase(getInstructorClass.pending, (state, action) => {
+//       // Get one instructor lesson
+//       .addCase(getInstructorLesson.pending, (state, action) => {
 //         state.isLoading = true;
 //       })
-//       .addCase(getInstructorClass.fulfilled, (state, action) => {
+//       .addCase(getInstructorLesson.fulfilled, (state, action) => {
 //         state.isLoading = false;
 //         state.isSuccess = true;
-//         state.oneClass = action.payload;
+//         state.oneLesson = action.payload;
 //       })
-//       .addCase(getInstructorClass.rejected, (state, action) => {
+//       .addCase(getInstructorLesson.rejected, (state, action) => {
 //         state.isLoading = false;
 //         state.isError = true;
 //         state.message = action.payload;
@@ -133,5 +133,5 @@
 //   },
 // });
 
-// export const { reset } = classSlice.actions;
-// export default classSlice.reducer;
+// export const { reset } = lessonSlice.actions;
+// export default lessonSlice.reducer;
