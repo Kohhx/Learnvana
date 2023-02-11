@@ -85,7 +85,7 @@ exports.loginUser = asyncHandler(async (req, res) => {
       profiles:
         user.role == "instructor"
           ? user.instructorprofile
-          : user.studentsprofile,
+          : user.studentprofiles[0],
       token: generateToken(user._id),
     });
   } else {

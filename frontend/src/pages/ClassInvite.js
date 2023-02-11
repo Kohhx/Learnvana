@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Button from "../components/Button";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -7,6 +7,7 @@ import useThunk from "../hooks/useThunkHook";
 
 const ClassInvite = () => {
   const navigate = useNavigate();
+  const [isSent, setIsSent] = useState(false);
   const { user } = useSelector((state) => state.auth);
   let { classId } = useParams();
 
@@ -26,11 +27,18 @@ const ClassInvite = () => {
     doSendRequestToJoin(studentClassData);
   };
 
+  useEffect(() => {
+    if (sendRequestToJoinSuccess) {
+      setIsSent(true);
+    }
+  }, [sendRequestToJoinSuccess]);
+
   return (
     <div>
       {/* Add a modal here. Use create portal */}
       <Button onClick={joinSubmitHandler}>Join Class</Button>
       <Button onClick={() => navigate("/")}>Back to home</Button>
+      {isSent && <div>Resquest to join class sent!</div>}
     </div>
   );
 };
