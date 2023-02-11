@@ -1,7 +1,6 @@
+import axios from "axios";
 
-// import axios from "axios";
-
-// const PROXY = "http://localhost:5000";
+const PROXY = "http://localhost:5000";
 
 // const API_NEW_CLASS_URL = PROXY.concat("/api/classes/create");
 // const API_GET_INSTRUCTOR_CLASSES_URL = PROXY.concat("/api/classes/instructor-classes");
@@ -47,12 +46,32 @@
 //   }
 // };
 
-// // Put all the function into authService object before exporting
-// const classService = {
-//   newClass,
-//   getInstructorClasses,
-//   getInstructorClass,
-// };
+// Send request to join a class
 
-// export default classService;
+const sendRequestToJoinClass = async (ids, token) => {
+  const { classId } = ids;
+  const API_STUDENT_REQUEST_JOIN_CLASS = PROXY.concat(
+    `/api/classes/${classId}/request`
+  );
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
 
+  const response = await axios.post(
+    API_STUDENT_REQUEST_JOIN_CLASS,
+    ids,
+    config
+  );
+  if (response.data) {
+    return response.data;
+  }
+};
+
+// Put all the function into authService object before exporting
+const classService = {
+  sendRequestToJoinClass,
+};
+
+export default classService;

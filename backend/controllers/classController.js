@@ -7,7 +7,7 @@ const Class = require("../models/class");
 const User = require("../models/user");
 
 // @desc Get one instructor class
-// @route /api/classes/instructor-classes/:classId
+// @route /api/instructors/classes/:classId
 // @access private
 exports.getInstructorClass = asyncHandler(async (req, res) => {
   console.log("/api/classes/instructor-classes/:classId");
@@ -54,7 +54,7 @@ exports.getInstructorClass = asyncHandler(async (req, res) => {
 });
 
 // @desc Get all instructor classes
-// @route /api/classes/instructor-classes
+// @route /api/instructors/classes
 // @access private
 exports.getInstructorClasses = asyncHandler(async (req, res) => {
   console.log("/api/classes/instructor-classes");
@@ -88,7 +88,7 @@ exports.getInstructorClasses = asyncHandler(async (req, res) => {
 });
 
 // @desc Instructor can create a class
-// @route /api/classes/create
+// @route /api/instructors/classes/create
 // @access private
 exports.createClass = asyncHandler(async (req, res) => {
   console.log("test to see")
@@ -165,8 +165,8 @@ exports.createClass = asyncHandler(async (req, res) => {
 // @access private
 exports.addPendingUserToClass = asyncHandler(async (req, res) => {
   console.log("Start adding student request")
-  const studentId = req.body.studentId;
-  const classId = req.params.classId;
+  const { studentId } = req.body;
+  const { classId } = req.params;
 
   console.log(studentId);
 

@@ -37,25 +37,21 @@ const App = () => {
               <Route path="/users/signup/student" element={<StudentSignUp />} />
             </Route>
 
-            {/* Classes */}
-            {/* <Route path="/classes" element={<Index />} /> */}
-
             <Route element={<ProtectedRoute />}>
+              {/* Classes */}
+              <Route path="/classes/:classId">
+                <Route path="request" element={<ClassInvite />} />
+              </Route>
+
+              {/* Instructor */}
               <Route path="/instructors">
                 <Route path="dashboard" element={<InstructorDashboard />} />
                 <Route path="classes/new" element={<NewClass />} />
                 <Route path="classes/:classId" element={<InstructorClass />}>
-                  <Route
-                    path="lessons"
-                    element={<Lessons />}
-                  />
+                  <Route path="lessons" element={<Lessons />} />
                   <Route
                     path="lessons/:lessonId"
                     element={<InstructorLesson />}
-                  />
-                  <Route
-                    path="request"
-                    element={<ClassInvite />}
                   />
                 </Route>
               </Route>
