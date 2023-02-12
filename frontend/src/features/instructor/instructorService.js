@@ -71,7 +71,6 @@ const getInstructorClass = async (classId, token) => {
 };
 
 
-
 const API_GET_INSTRUCTOR_LESSONS_URL = PROXY.concat('/api/instructors/classes/:classId/lessons');
 let API_GET_INSTRUCTOR_LESSON_URL = PROXY.concat("/api/instructors/classes/:classId/lessons/");
 
@@ -120,6 +119,21 @@ const getInstructorLesson = async (ids, token) => {
   }
 };
 
+// Get one instructor pending students list
+const getInstructorClassPendingStudents= async (classId, token) => {
+  const URL = PROXY.concat(`/api/instructors/classes/${classId}/pending`);
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.get(URL, config);
+  if (response.data) {
+    return response.data;
+  }
+};
+
 
 // Put all the function into authService object before exporting
 const instructorService = {
@@ -130,6 +144,7 @@ const instructorService = {
   newLesson,
   getInstructorLessons,
   getInstructorLesson,
+  getInstructorClassPendingStudents,
 }
 
 export default instructorService;

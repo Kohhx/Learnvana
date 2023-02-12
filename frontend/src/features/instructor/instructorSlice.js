@@ -10,6 +10,7 @@ const initialState = {
   instructorClass: {},
   classLessons: [],
   classLesson: {},
+  pendingStudents: [],
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -43,7 +44,6 @@ export const UserInstructorProfile = createAsyncThunk(
   }
 );
 
-
 // CLASSES
 
 // Create new class
@@ -60,7 +60,7 @@ export const newClass = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-        toast.error(message)
+      toast.error(message);
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -80,7 +80,7 @@ export const getInstructorClasses = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-        toast.error(message)
+      toast.error(message);
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -100,12 +100,11 @@ export const getInstructorClass = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-        toast.error(message)
+      toast.error(message);
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
-
 
 //LESSONS
 
@@ -123,7 +122,7 @@ export const newLesson = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-        toast.error(message)
+      toast.error(message);
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -143,7 +142,7 @@ export const getClassLessons = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-        toast.error(message)
+      toast.error(message);
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -163,7 +162,30 @@ export const getClassLesson = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-        toast.error(message)
+      toast.error(message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// Get instructor class pending students
+export const getInstructorClassPendingStudents = createAsyncThunk(
+  "instructor/getClassPendingStudents",
+  async (classId, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await instructorService.getInstructorClassPendingStudents(
+        classId,
+        token
+      );
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      toast.error(message);
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -281,6 +303,21 @@ export const instructorSlice = createSlice({
         state.classLesson = action.payload;
       })
       .addCase(getClassLesson.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+
+      // Get instructor class pending students
+      .addCase(getInstructorClassPendingStudents.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(getInstructorClassPendingStudents.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.pendingStudents = action.payload;
+      })
+      .addCase(getInstructorClassPendingStudents.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

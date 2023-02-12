@@ -16,6 +16,8 @@ import "react-toastify/dist/ReactToastify.css";
 import ClassInvite from "./pages/ClassInvite";
 import InstructorClass from "./pages/InstructorClass";
 import InstructorLesson from "./pages/InstructorLesson";
+import InstructorClassPendingStudents from "./pages/InstructorClassPendingStudents";
+import ClassLayout from "./components/Layouts/ClassLayout";
 
 const App = () => {
   return (
@@ -47,15 +49,23 @@ const App = () => {
               <Route path="/instructors">
                 <Route path="dashboard" element={<InstructorDashboard />} />
                 <Route path="classes/new" element={<NewClass />} />
-                <Route path="classes/:classId" element={<InstructorClass />}>
+
+                <Route path="classes/:classId" element={<ClassLayout />}>
                   <Route path="lessons" element={<Lessons />} />
                   <Route
                     path="lessons/:lessonId"
                     element={<InstructorLesson />}
                   />
+                   <Route
+                    path="pending"
+                    element={<InstructorClassPendingStudents />}
+                  />
                 </Route>
+
               </Route>
             </Route>
+
+
             <Route path="*" element={<div>404 page not found</div>} />
           </Routes>
         </div>

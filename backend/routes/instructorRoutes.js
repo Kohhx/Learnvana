@@ -27,6 +27,9 @@ router.get('/classes/:classId', protect, classController.getInstructorClass)
 // User add pending user routes route
 router.post('/:classId/request', protect, classController.addPendingUserToClass)
 
+// Instructor get pending students for class - GET
+router.get('/classes/:classId/pending', protect, classController.getPendingStudentFromClass)
+
 
 // LESSONS
 

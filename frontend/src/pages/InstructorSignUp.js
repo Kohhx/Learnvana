@@ -9,10 +9,14 @@ import { toast } from "react-toastify";
 import { UserInstructorProfile } from "../features/instructor/instructorSlice";
 import useThunk from "../hooks/useThunkHook";
 import useForm from "../hooks/useFormHook";
+import { useSelector } from "react-redux"
 
 const InstructorSignUp = () => {
   // Initalize navigate
   const navigate = useNavigate();
+
+  // Get User state
+  const { user } = useSelector( state => state.auth)
 
   // Use form hook for form handling
   const [formState, formHandler] = useForm(
@@ -72,6 +76,7 @@ const InstructorSignUp = () => {
       last_name: formState.inputs.last_name.value,
       age: formState.inputs.age.value,
       gender: formState.inputs.gender.value,
+      email: user.email,
       experience: formState.inputs.experience.value,
     };
     doCreateInstructorProfile(newInstructorProfile);
