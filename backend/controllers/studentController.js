@@ -52,8 +52,6 @@ exports.createStudent = asyncHandler(async (req, res) => {
     throw new Error(error);
   }
 
-
-
   user.studentprofiles.push(student);
 
   try {
