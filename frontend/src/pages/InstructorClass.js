@@ -38,8 +38,9 @@ const InstructorClass = () => {
 
   // Side Bar config
   const sideBarConfig = [
-    { name: "Invite Link", link: `/instructors/classes/${classId}/request` },
+    { name: "Invite Link", link: `/classes/${classId}/request` },
     { name: "Create Lessons", link: `/instructors/classes/${classId}/lessons` },
+    { name: "Pending Students", link: `/instructors/classes/${classId}/pending` },
   ];
 
   return (
@@ -60,7 +61,6 @@ const InstructorClass = () => {
             onClick={() => setIsOpen(!isOpen)}
           />
           {instructorClass.title}
-          <Button primary rounded><NavLink to={`/instructors/classes/${classId}/lessons`}>Create Lesson</NavLink></Button>
           <Outlet />
         </div>
       </div>

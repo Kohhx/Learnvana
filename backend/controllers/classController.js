@@ -1,4 +1,5 @@
 const asyncHandler = require("express-async-handler");
+const validation = require("../utility/validation");
 
 // Import Model
 const Student = require("../models/student");
@@ -91,7 +92,7 @@ exports.getInstructorClasses = asyncHandler(async (req, res) => {
 // @route /api/instructors/classes/create
 // @access private
 exports.createClass = asyncHandler(async (req, res) => {
-  console.log("test to see")
+  console.log("test to see");
   const { title, status, images, address } = req.body;
 
   const user = await User.findById(req.user.id);
@@ -164,7 +165,7 @@ exports.createClass = asyncHandler(async (req, res) => {
 // @route /api/classes/:class_id/request
 // @access private
 exports.addPendingUserToClass = asyncHandler(async (req, res) => {
-  console.log("Start adding student request")
+  console.log("Start adding student request");
   const { studentId } = req.body;
   const { classId } = req.params;
 
@@ -194,19 +195,22 @@ exports.addPendingUserToClass = asyncHandler(async (req, res) => {
     throw new Error("No class found");
   }
 
-
   const pendings = classFound.pending;
-  const existingPending = pendings.find( pending => pending.toString() === studentId)
+  const existingPending = pendings.find(
+    (pending) => pending.toString() === studentId
+  );
   if (existingPending) {
     res.status(400);
-    throw new Error("Student is already in the pending list. Wait for instructor to approve.");
+    throw new Error(
+      "Student is already in the pending list. Wait for instructor to approve."
+    );
   }
 
   classFound.pending.push(student);
 
   try {
     await classFound.save();
-    console.log("Request sent. Pending approval")
+    console.log("Request sent. Pending approval");
     res.status(200).json({
       message: "Request sent. Pending approval",
     });
@@ -214,4 +218,22 @@ exports.addPendingUserToClass = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("Error occured");
   }
+});
+
+// @desc Get list of pending student request to class
+// @route /api/instructors/classes/:class_id/pending
+// @access private
+exports.getPendingStudentFromClass = asyncHandler(async (req, res, next) => {
+  const { classId } = req.params;
+
+  const user = await User.findById(req.user.id);
+  const classFound = await Class.findById(classId).populate("pending");
+
+  // Validate
+  validation.validateUser(user, res, next);
+  validation.validateRole(user, "instructor", res, next);
+  validation.validateClassBelongsInstructor(user, classFound, res, next);
+
+  // return pending students
+  res.status(201).json(classFound.pending);
 });
