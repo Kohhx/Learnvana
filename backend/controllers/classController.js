@@ -195,6 +195,15 @@ exports.addPendingUserToClass = asyncHandler(async (req, res) => {
     throw new Error("No class found");
   }
 
+  const studentsInClass = classFound.students;
+  const existingStudent = studentsInClass.find(
+    (studentInClass) => studentInClass.toString() === studentId
+  );
+  if (existingStudent) {
+    res.status(400);
+    throw new Error("Student is already enrolled in the class.");
+  }
+
   const pendings = classFound.pending;
   const existingPending = pendings.find(
     (pending) => pending.toString() === studentId
@@ -236,4 +245,99 @@ exports.getPendingStudentFromClass = asyncHandler(async (req, res, next) => {
 
   // return pending students
   res.status(201).json(classFound.pending);
+});
+
+// @desc Approve student into class
+// @route /api/instructors/classes/:class_id/approve
+// @access private
+exports.approveStudentFromClass = asyncHandler(async (req, res, next) => {
+  const { classId } = req.params;
+  const { studentId } = req.body;
+  const user = await User.findById(req.user.id);
+  const classFound = await Class.findById(classId).populate("pending");
+  const student = await Student.findById(studentId);
+
+  // Validate
+  validation.validateUser(user, res, next);
+  validation.validateRole(user, "instructor", res, next);
+  validation.validateClassBelongsInstructor(user, classFound, res, next);
+  validation.validateExistent(student, 400, "No student found", res, next);
+
+  // Ensure that student is in pending list
+  const finddStudent = classFound.pending.find(
+    (pendingStudent) => pendingStudent._id.toString() == student._id.toString()
+  );
+  if (!finddStudent) {
+    res.status(500);
+    throw new Error("No student in pending list");
+  }
+
+  // Insert into class list
+  try {
+    classFound.students.push(student);
+    await classFound.save();
+  } catch (error) {
+    res.status(500);
+    throw new Error("Error saving class with new student");
+  }
+
+  // Remove from student from pending
+  try {
+    await Class.updateOne(
+      { _id: classId },
+      { $pullAll: { pending: [student] } }
+    );
+  } catch (error) {
+    res.status(500);
+    throw new Error("Error updating class pending list");
+  }
+
+  // return pending students
+  res.status(201).json({
+    message: "Successfully added student to class and removed from pending",
+    studentId,
+  });
+});
+
+// @desc Reject student into class
+// @route /api/instructors/classes/:class_id/reject
+// @access private
+exports.rejectStudentFromClass = asyncHandler(async (req, res, next) => {
+  const { classId } = req.params;
+  const { studentId } = req.body;
+  const user = await User.findById(req.user.id);
+  const classFound = await Class.findById(classId).populate("pending");
+  const student = await Student.findById(studentId);
+
+  // Validate
+  validation.validateUser(user, res, next);
+  validation.validateRole(user, "instructor", res, next);
+  validation.validateClassBelongsInstructor(user, classFound, res, next);
+  validation.validateExistent(student, 400, "No student found", res, next);
+
+  // Ensure that student is in pending list
+  const finddStudent = classFound.pending.find(
+    (pendingStudent) => pendingStudent._id.toString() == student._id.toString()
+  );
+  if (!finddStudent) {
+    res.status(500);
+    throw new Error("No student in pending list");
+  }
+
+  // Remove from student from pending
+  try {
+    await Class.updateOne(
+      { _id: classId },
+      { $pullAll: { pending: [student] } }
+    );
+  } catch (error) {
+    res.status(500);
+    throw new Error("Error updating class pending list");
+  }
+
+  // return pending students
+  res.status(201).json({
+    message: "Successfully rejected and removed from pending",
+    studentId,
+  });
 });

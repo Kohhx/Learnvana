@@ -2,9 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const ClassSidebar = ({ sideBarConfig }) => {
-  const sideBarLinksContent = sideBarConfig.map((config) => {
+  const sideBarLinksContent = sideBarConfig.map((config, index) => {
     return (
-      <li className="mb-2">
+      <li className="mb-2" key={index}>
         <Link to={config.link}>{config.name}</Link>
       </li>
     );

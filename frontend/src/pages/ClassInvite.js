@@ -36,11 +36,13 @@ const ClassInvite = () => {
       studentId: user.profiles._id,
     };
     doSendRequestToJoin(studentClassData);
+    setIsModalIsOpen(false)
   };
 
   useEffect(() => {
     if (sendRequestToJoinSuccess) {
       setIsSent(true);
+
     }
   }, [sendRequestToJoinSuccess]);
 

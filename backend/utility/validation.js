@@ -6,6 +6,14 @@ exports.validateUser = (user, res, next) => {
   return next;
 };
 
+exports.validateExistent = (obj, errorNumber, message, res, next) => {
+  if (!obj) {
+    res.status(errorNumber);
+    return next(new Error(message));
+  }
+  return next;
+};
+
 exports.validateRole = (user, role, res, next) => {
   if (user.role !== role) {
     res.status(400);
