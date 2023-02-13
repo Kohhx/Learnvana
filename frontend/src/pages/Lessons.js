@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import NewLesson from "../components/NewLesson";
+import Hide from "../components/Hide"
 import Lessonitem from "../components/Lessonitem"
 import { useSelector, useDispatch } from "react-redux";
 import { getClassLessons, reset } from "../features/instructor/instructorSlice";
@@ -30,7 +31,10 @@ const Lessons = () => {
   return (
     <div>
       {allLessons}
-      <NewLesson></NewLesson>
+      <Hide>
+        <NewLesson></NewLesson>
+      </Hide>
+
     </div>
   );
 };
