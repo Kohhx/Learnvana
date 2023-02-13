@@ -230,7 +230,7 @@ exports.addPendingUserToClass = asyncHandler(async (req, res) => {
 });
 
 // @desc Get list of pending student request to class
-// @route /api/instructors/classes/:class_id/pending
+// @route /api/instructors/classes/:class_id/students/pending
 // @access private
 exports.getPendingStudentFromClass = asyncHandler(async (req, res, next) => {
   const { classId } = req.params;
@@ -248,7 +248,7 @@ exports.getPendingStudentFromClass = asyncHandler(async (req, res, next) => {
 });
 
 // @desc Approve student into class
-// @route /api/instructors/classes/:class_id/approve
+// @route /api/instructors/classes/:class_id/students/approve
 // @access private
 exports.approveStudentFromClass = asyncHandler(async (req, res, next) => {
   const { classId } = req.params;
@@ -300,7 +300,7 @@ exports.approveStudentFromClass = asyncHandler(async (req, res, next) => {
 });
 
 // @desc Reject student into class
-// @route /api/instructors/classes/:class_id/reject
+// @route /api/instructors/classes/:class_id/students/reject
 // @access private
 exports.rejectStudentFromClass = asyncHandler(async (req, res, next) => {
   const { classId } = req.params;
@@ -358,4 +358,47 @@ exports.getAllStudentsFromClass = asyncHandler(async (req, res, next) => {
   console.log("4")
   // return pending students
   res.status(201).json(classFound.students);
+});
+
+// @desc Delete student from class
+// @route /api/instructors/classes/:class_id/students/delete
+// @access private
+exports.deleteStudentFromClass = asyncHandler(async (req, res, next) => {
+  const { classId } = req.params;
+  const { studentId } = req.body;
+  const user = await User.findById(req.user.id);
+  const classFound = await Class.findById(classId).populate("students");
+  const student = await Student.findById(studentId);
+
+  // Validate
+  validation.validateUser(user, res, next);
+  validation.validateRole(user, "instructor", res, next);
+  validation.validateClassBelongsInstructor(user, classFound, res, next);
+  validation.validateExistent(student, 400, "No student found", res, next);
+
+  // Ensure that student is in class list
+  const finddStudent = classFound.students.find(
+    (classStudent) => classStudent._id.toString() == student._id.toString()
+  );
+  if (!finddStudent) {
+    res.status(500);
+    throw new Error("No student in class list");
+  }
+
+  // Remove from student from pending
+  try {
+    await Class.updateOne(
+      { _id: classId },
+      { $pullAll: { students: [student] } }
+    );
+  } catch (error) {
+    res.status(500);
+    throw new Error("Error updating class list");
+  }
+
+  // return student id that has been deleted
+  res.status(201).json({
+    message: "Successfully student from class list",
+    studentId,
+  });
 });

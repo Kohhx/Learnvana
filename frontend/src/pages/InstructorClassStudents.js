@@ -4,6 +4,7 @@ import useThunk from "../hooks/useThunkHook";
 import {
   reset,
   getStudentsFromClass,
+  deleteStudentFromClass,
 } from "../features/instructor/instructorSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
@@ -21,6 +22,13 @@ const InstructorClassStudents = () => {
     getStudentsFromClassError,
   ] = useThunk(getStudentsFromClass);
 
+  const [
+    doDeleteStudentFromClass,
+    deleteStudentFromClassLoading,
+    deleteStudentFromClassSuccess,
+    deleteStudentFromClassError,
+  ] = useThunk(deleteStudentFromClass);
+
   useEffect(() => {
     doGetStudentsFromClass(classId);
     return () => {
@@ -28,14 +36,14 @@ const InstructorClassStudents = () => {
     };
   }, [doGetStudentsFromClass, classId, instructorDispatch]);
 
-  // Remove Stduent Handler
+  // Remove Student Handler
   const removeStudentHandler = (studentId) => {
     console.log("Reject Student: ", studentId);
     const dataIn = {
       classId,
       studentId,
     };
-    // doRejectStudentToClass(dataIn);
+    doDeleteStudentFromClass(dataIn);
   };
 
   const classStudentList = classStudents.map((student, index) => (

@@ -133,7 +133,9 @@ const getInstructorLesson = async (ids, token) => {
 
 // Get one instructor pending students list
 const getInstructorClassPendingStudents = async (classId, token) => {
-  const URL = PROXY.concat(`/api/instructors/classes/${classId}/pending`);
+  const URL = PROXY.concat(
+    `/api/instructors/classes/${classId}/students/pending`
+  );
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -149,7 +151,9 @@ const getInstructorClassPendingStudents = async (classId, token) => {
 // Get approve student into class
 const approveStudentToClass = async (ids, token) => {
   const { classId } = ids;
-  const URL = PROXY.concat(`/api/instructors/classes/${classId}/approve`);
+  const URL = PROXY.concat(
+    `/api/instructors/classes/${classId}/students/approve`
+  );
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -165,7 +169,9 @@ const approveStudentToClass = async (ids, token) => {
 // Get reject student into class
 const rejectStudentToClass = async (ids, token) => {
   const { classId } = ids;
-  const URL = PROXY.concat(`/api/instructors/classes/${classId}/reject`);
+  const URL = PROXY.concat(
+    `/api/instructors/classes/${classId}/students/reject`
+  );
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -180,7 +186,6 @@ const rejectStudentToClass = async (ids, token) => {
 
 // Get all students from class
 const getStudentsFromClass = async (classId, token) => {
-  console.log("2")
   const URL = PROXY.concat(`/api/instructors/classes/${classId}/students`);
   const config = {
     headers: {
@@ -194,7 +199,23 @@ const getStudentsFromClass = async (classId, token) => {
   }
 };
 
+// Get reject student into class
+const deleteStudentFromClass = async (ids, token) => {
+  const { classId } = ids;
+  const URL = PROXY.concat(
+    `/api/instructors/classes/${classId}/students/delete`
+  );
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
 
+  const response = await axios.post(URL, ids, config);
+  if (response.data) {
+    return response.data;
+  }
+};
 
 // Put all the function into authService object before exporting
 const instructorService = {
@@ -208,7 +229,8 @@ const instructorService = {
   getInstructorClassPendingStudents,
   approveStudentToClass,
   rejectStudentToClass,
-  getStudentsFromClass
+  getStudentsFromClass,
+  deleteStudentFromClass,
 };
 
 export default instructorService;

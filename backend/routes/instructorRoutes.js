@@ -45,21 +45,21 @@ router.post(
 
 // Instructor get pending students for class - GET
 router.get(
-  "/classes/:classId/pending",
+  "/classes/:classId/students/pending",
   protect,
   classController.getPendingStudentFromClass
 );
 
 // Instructor approve student to class - POST
 router.post(
-  "/classes/:classId/approve",
+  "/classes/:classId/students/approve",
   protect,
   classController.approveStudentFromClass
 );
 
 // Instructor reject student from class - POST
 router.post(
-  "/classes/:classId/reject",
+  "/classes/:classId/students/reject",
   protect,
   classController.rejectStudentFromClass
 );
@@ -69,6 +69,13 @@ router.get(
   "/classes/:classId/students",
   protect,
   classController.getAllStudentsFromClass
+);
+
+// Instructor delete student from class student list - DELETE
+router.post(
+  "/classes/:classId/students/delete",
+  protect,
+  classController.deleteStudentFromClass
 );
 
 /**
