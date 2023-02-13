@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import useThunk from "../hooks/useThunkHook";
 import {
   getInstructorClassPendingStudents,
+  approveStudentToClass,
+  rejectStudentToClass,
   reset,
 } from "../features/instructor/instructorSlice";
 import { useSelector, useDispatch } from "react-redux";
@@ -21,6 +23,20 @@ const InstructorClassPendingStudents = () => {
     GetPendingStudentsError,
   ] = useThunk(getInstructorClassPendingStudents);
 
+  const [
+    doApproveStudentToClass,
+    approveStudentToClassLoading,
+    approveStudentToClassSuccess,
+    approveStudentToClassError,
+  ] = useThunk(approveStudentToClass);
+
+  const [
+    doRejectStudentToClass,
+    rejectStudentToClassLoading,
+    rejectStudentToClassSuccess,
+    rejectStudentToClassError,
+  ] = useThunk(rejectStudentToClass);
+
   useEffect(() => {
     doGetPendingStudents(classId);
     return () => {
@@ -29,37 +45,45 @@ const InstructorClassPendingStudents = () => {
   }, [doGetPendingStudents, classId, instructorDispatch]);
 
   // Accept Handler
-  const acceptStudentHandler = (studentId) => {
-    console.log("Accept Student: ",studentId);
+  const approveStudentHandler = (studentId) => {
+    console.log("Accept Student: ", studentId);
+    const dataIn = {
+      classId,
+      studentId,
+    };
+    doApproveStudentToClass(dataIn);
   };
 
   // Reject Handler
   const rejectStudentHandler = (studentId) => {
-    console.log("Reject Student: ",studentId);
+    console.log("Reject Student: ", studentId);
+    const dataIn = {
+      classId,
+      studentId,
+    };
+    doRejectStudentToClass(dataIn);
   };
 
   const pendingStudentList = pendingStudents.map((student, index) => (
-    <div className="w-4/6 mx-auto mt-4">
-      <div className="flex flex-item items-center w-full">
-        <div className="grow">
-          <h1>
-            {index + 1}
-            {`)`} Student Name: {student.first_name} {student.last_name}
-          </h1>
-        </div>
-        <div className="flex gap-2">
-          <Button primary onClick={() => acceptStudentHandler(student._id)}>
-            Accept
-          </Button>
-          <Button danger onClick={() => rejectStudentHandler(student._id)}>
-            Reject
-          </Button>
-        </div>
+    <div className="flex flex-item items-center w-full mb-3" key={index}>
+      <div className="grow">
+        <h1>
+          {index + 1}
+          {`)`} Student Name: {student.first_name} {student.last_name}
+        </h1>
+      </div>
+      <div className="flex gap-2">
+        <Button primary onClick={() => approveStudentHandler(student._id, "accept")}>
+          Accept
+        </Button>
+        <Button danger onClick={() => rejectStudentHandler(student._id, "reject")}>
+          Reject
+        </Button>
       </div>
     </div>
   ));
 
-  return <>{pendingStudentList}</>;
+  return <div className="w-4/6 mx-auto mt-4">{pendingStudentList}</div>;
 };
 
 export default InstructorClassPendingStudents;

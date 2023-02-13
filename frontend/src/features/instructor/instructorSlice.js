@@ -191,6 +191,52 @@ export const getInstructorClassPendingStudents = createAsyncThunk(
   }
 );
 
+// Get instructor approve student into class
+export const approveStudentToClass = createAsyncThunk(
+  "instructor/approveStudentToClass",
+  async (ids, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await instructorService.approveStudentToClass(
+        ids,
+        token
+      );
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      toast.error(message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// Get instructor approve student into class
+export const rejectStudentToClass = createAsyncThunk(
+  "instructor/rejectStudentToClass",
+  async (ids, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await instructorService.rejectStudentToClass(
+        ids,
+        token
+      );
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      toast.error(message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 // Create instructorSlice
 export const instructorSlice = createSlice({
   name: "instructor",
@@ -318,6 +364,36 @@ export const instructorSlice = createSlice({
         state.pendingStudents = action.payload;
       })
       .addCase(getInstructorClassPendingStudents.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+
+      // Approve students to class
+      .addCase(approveStudentToClass.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(approveStudentToClass.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.pendingStudents = state.pendingStudents.filter( student => student._id !== action.payload.studentId)
+      })
+      .addCase(approveStudentToClass.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+
+      // Reject students to class
+      .addCase(rejectStudentToClass.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(rejectStudentToClass.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.pendingStudents = state.pendingStudents.filter( student => student._id !== action.payload.studentId)
+      })
+      .addCase(rejectStudentToClass.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

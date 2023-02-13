@@ -64,20 +64,28 @@ const getInstructorClass = async (classId, token) => {
     },
   };
 
-  const response = await axios.get(`${API_GET_INSTRUCTOR_CLASS_URL}${classId}`, config);
+  const response = await axios.get(
+    `${API_GET_INSTRUCTOR_CLASS_URL}${classId}`,
+    config
+  );
   if (response.data) {
     return response.data;
   }
 };
 
-
-const API_GET_INSTRUCTOR_LESSONS_URL = PROXY.concat('/api/instructors/classes/:classId/lessons');
-let API_GET_INSTRUCTOR_LESSON_URL = PROXY.concat("/api/instructors/classes/:classId/lessons/");
+const API_GET_INSTRUCTOR_LESSONS_URL = PROXY.concat(
+  "/api/instructors/classes/:classId/lessons"
+);
+let API_GET_INSTRUCTOR_LESSON_URL = PROXY.concat(
+  "/api/instructors/classes/:classId/lessons/"
+);
 
 // post new lesson
 const newLesson = async (lessonData, token) => {
-  const { classId } = lessonData
-  const API_NEW_LESSON_URL = PROXY.concat(`/api/instructors/classes/${classId}/lessons/create`);
+  const { classId } = lessonData;
+  const API_NEW_LESSON_URL = PROXY.concat(
+    `/api/instructors/classes/${classId}/lessons/create`
+  );
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -91,7 +99,9 @@ const newLesson = async (lessonData, token) => {
 
 // Get all instructor Lessons
 const getInstructorLessons = async (classId, token) => {
-  const API_GET_INSTRUCTOR_LESSONS_URL = PROXY.concat(`/api/instructors/classes/${classId}/lessons`);
+  const API_GET_INSTRUCTOR_LESSONS_URL = PROXY.concat(
+    `/api/instructors/classes/${classId}/lessons`
+  );
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -105,8 +115,10 @@ const getInstructorLessons = async (classId, token) => {
 
 // Get one instructor Lesson
 const getInstructorLesson = async (ids, token) => {
-  const {classId, lessonId} = ids
-  const API_GET_INSTRUCTOR_LESSON_URL = PROXY.concat(`/api/instructors/classes/${classId}/lessons/${lessonId}`);
+  const { classId, lessonId } = ids;
+  const API_GET_INSTRUCTOR_LESSON_URL = PROXY.concat(
+    `/api/instructors/classes/${classId}/lessons/${lessonId}`
+  );
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -120,7 +132,7 @@ const getInstructorLesson = async (ids, token) => {
 };
 
 // Get one instructor pending students list
-const getInstructorClassPendingStudents= async (classId, token) => {
+const getInstructorClassPendingStudents = async (classId, token) => {
   const URL = PROXY.concat(`/api/instructors/classes/${classId}/pending`);
   const config = {
     headers: {
@@ -134,6 +146,37 @@ const getInstructorClassPendingStudents= async (classId, token) => {
   }
 };
 
+// Get approve student into class
+const approveStudentToClass = async (ids, token) => {
+  const { classId } = ids;
+  const URL = PROXY.concat(`/api/instructors/classes/${classId}/approve`);
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.post(URL, ids, config);
+  if (response.data) {
+    return response.data;
+  }
+};
+
+// Get reject student into class
+const rejectStudentToClass = async (ids, token) => {
+  const { classId } = ids;
+  const URL = PROXY.concat(`/api/instructors/classes/${classId}/reject`);
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.post(URL, ids, config);
+  if (response.data) {
+    return response.data;
+  }
+};
 
 // Put all the function into authService object before exporting
 const instructorService = {
@@ -145,6 +188,8 @@ const instructorService = {
   getInstructorLessons,
   getInstructorLesson,
   getInstructorClassPendingStudents,
-}
+  approveStudentToClass,
+  rejectStudentToClass,
+};
 
 export default instructorService;
