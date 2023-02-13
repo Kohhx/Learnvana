@@ -17,6 +17,10 @@ const ClassLayout = () => {
       name: "Pending Students",
       link: `/instructors/classes/${classId}/pending`,
     },
+    {
+      name: "Students Lists",
+      link: `/instructors/classes/${classId}/students`,
+    },
   ];
 
   return (

@@ -18,6 +18,7 @@ import InstructorClass from "./pages/InstructorClass";
 import InstructorLesson from "./pages/InstructorLesson";
 import InstructorClassPendingStudents from "./pages/InstructorClassPendingStudents";
 import ClassLayout from "./components/Layouts/ClassLayout";
+import InstructorClassStudents from "./pages/InstructorClassStudents";
 
 const App = () => {
   return (
@@ -51,6 +52,7 @@ const App = () => {
                 <Route path="classes/new" element={<NewClass />} />
 
                 <Route path="classes/:classId" element={<ClassLayout />}>
+                  <Route path="students" element={<InstructorClassStudents />} />
                   <Route path="lessons" element={<Lessons />} />
                   <Route
                     path="lessons/:lessonId"

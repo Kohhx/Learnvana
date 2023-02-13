@@ -73,17 +73,28 @@ const InstructorClassPendingStudents = () => {
         </h1>
       </div>
       <div className="flex gap-2">
-        <Button primary onClick={() => approveStudentHandler(student._id, "accept")}>
+        <Button
+          primary
+          onClick={() => approveStudentHandler(student._id, "accept")}
+        >
           Accept
         </Button>
-        <Button danger onClick={() => rejectStudentHandler(student._id, "reject")}>
+        <Button
+          danger
+          onClick={() => rejectStudentHandler(student._id, "reject")}
+        >
           Reject
         </Button>
       </div>
     </div>
   ));
 
-  return <div className="w-4/6 mx-auto mt-4">{pendingStudentList}</div>;
+  return (
+    <div className="w-4/6 mx-auto mt-4">
+      <h1 className="mb-5 text-center font-bold ">Pending Students</h1>
+      {pendingStudentList}
+    </div>
+  );
 };
 
 export default InstructorClassPendingStudents;
