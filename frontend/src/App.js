@@ -29,6 +29,11 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
 
+            {/**
+             * =================================================================
+             *  Public Routes
+             * =================================================================
+             */}
             {/* User Login */}
             <Route path="/users/login" element={<Login />} />
             <Route path="/users/signup" element={<Signup />} />
@@ -40,11 +45,17 @@ const App = () => {
               <Route path="/users/signup/student" element={<StudentSignUp />} />
             </Route>
 
+            {/**
+             * =================================================================
+             *  Private Routes
+             * =================================================================
+             */}
             <Route element={<ProtectedRoute />}>
               {/* Classes */}
               <Route path="/classes/:classId">
                 <Route path="request" element={<ClassInvite />} />
               </Route>
+              {/* End */}
 
               {/* Instructor */}
               <Route path="/instructors">
@@ -52,23 +63,31 @@ const App = () => {
                 <Route path="classes/new" element={<NewClass />} />
 
                 <Route path="classes/:classId" element={<ClassLayout />}>
-                  <Route path="students" element={<InstructorClassStudents />} />
+                  <Route path="students">
+                    <Route index element={<InstructorClassStudents />} />
+                    <Route
+                    path="pending"
+                    element={<InstructorClassPendingStudents />}
+                  />
+                  </Route>
                   <Route path="lessons" element={<Lessons />} />
                   <Route
                     path="lessons/:lessonId"
                     element={<InstructorLesson />}
                   />
-                   <Route
-                    path="pending"
-                    element={<InstructorClassPendingStudents />}
-                  />
                 </Route>
-
               </Route>
+              {/* End */}
             </Route>
 
-
+            {/**
+             * =================================================================
+             *  404 Cannot be found page
+             * =================================================================
+             */}
+            {/* 404 Page */}
             <Route path="*" element={<div>404 page not found</div>} />
+            {/* End */}
           </Routes>
         </div>
       </Router>

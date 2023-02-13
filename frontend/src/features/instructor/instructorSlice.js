@@ -243,10 +243,32 @@ export const getStudentsFromClass = createAsyncThunk(
   "instructor/getAllStudentFromClass",
   async (classId, thunkAPI) => {
     try {
-      console.log("1")
       const token = thunkAPI.getState().auth.user.token;
       return await instructorService.getStudentsFromClass(
         classId,
+        token
+      );
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      toast.error(message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// Delete a student from  class
+export const deleteStudentFromClass = createAsyncThunk(
+  "instructor/deleteStudentFromClass",
+  async (ids, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await instructorService.deleteStudentFromClass(
+        ids,
         token
       );
     } catch (error) {
@@ -434,6 +456,21 @@ export const instructorSlice = createSlice({
         state.classStudents = action.payload;
       })
       .addCase(getStudentsFromClass.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+
+       // Delete a student from class
+       .addCase(deleteStudentFromClass.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteStudentFromClass.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.classStudents = state.classStudents.filter( student => student._id !== action.payload.studentId)
+      })
+      .addCase(deleteStudentFromClass.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
