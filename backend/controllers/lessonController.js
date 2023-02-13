@@ -77,13 +77,11 @@ exports.getInstructorLessons = asyncHandler(async (req, res) => {
   }
 
   const user = await User.findById(req.user.id);
+  const instructor = await Instructor.findById(user.instructorprofile);
   // const instructor = await Instructor.findById(user.instructorprofile).populate(
   //   { "classes" }
   // );
   //
-
-
-
 
   if (!user) {
     res.status(400);

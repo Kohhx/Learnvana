@@ -98,7 +98,7 @@ const newLesson = async (lessonData, token) => {
 };
 
 // Get all instructor Lessons
-const getInstructorLessons = async (classId, token) => {
+const getClassLessons = async (classId, token) => {
   const API_GET_INSTRUCTOR_LESSONS_URL = PROXY.concat(
     `/api/instructors/classes/${classId}/lessons`
   );
@@ -114,7 +114,7 @@ const getInstructorLessons = async (classId, token) => {
 };
 
 // Get one instructor Lesson
-const getInstructorLesson = async (ids, token) => {
+const getClassLesson = async (ids, token) => {
   const { classId, lessonId } = ids;
   const API_GET_INSTRUCTOR_LESSON_URL = PROXY.concat(
     `/api/instructors/classes/${classId}/lessons/${lessonId}`
@@ -224,8 +224,8 @@ const instructorService = {
   getInstructorClasses,
   getInstructorClass,
   newLesson,
-  getInstructorLessons,
-  getInstructorLesson,
+  getClassLessons,
+  getClassLesson,
   getInstructorClassPendingStudents,
   approveStudentToClass,
   rejectStudentToClass,
