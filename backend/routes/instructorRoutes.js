@@ -5,16 +5,29 @@ const classController = require("../controllers/classController");
 const lessonController = require("../controllers/lessonController");
 const { protect } = require("../middlewares/authMiddleware");
 
-// INSTRUCTOR
+/**
+ * =============================================================================
+ *                                INSTRUCTOR
+ * =============================================================================
+ */
+
+/**
+ * =============================================================================
+ *  PROFILE
+ * =============================================================================
+ */
 
 // Create instructor
 router.post("/create", protect, instructorController.createInstructor);
 
-// CLASSES
-
+/**
+ * =============================================================================
+ *  CLASSES
+ * =============================================================================
+ */
 // create new class route
-// to use req.user in middle ware, you have to go through middleware { protect } and check if
-// req.user exist, only after, can you use req.user globally
+// to use req.user in middle ware, you have to go through middleware { protect }
+// and check if req.user exist, only after, can you use req.user globally
 router.post("/classes/create", protect, classController.createClass);
 
 // Get instructor classes
@@ -51,7 +64,18 @@ router.post(
   classController.rejectStudentFromClass
 );
 
-// LESSONS
+// Instructor get student list from class - GET
+router.get(
+  "/classes/:classId/students",
+  protect,
+  classController.getAllStudentsFromClass
+);
+
+/**
+ * =============================================================================
+ *  LESSONS
+ * =============================================================================
+ */
 
 // create new lesson route
 router.post(
