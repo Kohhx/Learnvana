@@ -32,6 +32,7 @@ const Table = ({ data, config }) => {
     return <tr key={i}>{rowContent}</tr>;
   });
 
+
   return (
     <table className="table-auto border-spacing-2 mx-auto">
       <thead>
