@@ -1,28 +1,31 @@
 import React, { useEffect } from 'react'
 import { useParams } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
-import { reset, getInstructorLesson } from "../features/lesson/lessonSlice"
+import { getClassLesson } from "../features/instructor/instructorSlice"
+import useThunk from '../hooks/useThunkHook'
 
 const InstructorLesson = () => {
-  let { lessonId } = useParams();
-  const lessonDispatch = useDispatch();
-  const { oneLesson, isSuccess, isLoading } = useSelector((state) => state.lesson);
+  const ids = useParams();
+  console.log("all retreived ids",ids)
+  const { classLesson } = useSelector((state) => state.instructor);
+
+  const [
+    dogetClassLesson,
+    getLessonLoading,
+    getLessonSuccess,
+    getLessonError,
+  ] = useThunk(getClassLesson);
 
   useEffect(() => {
-    return () => {
-      if (isSuccess) {
-        lessonDispatch(reset());
-      }
-    };
-  }, [isSuccess,lessonDispatch]);
-
-  useEffect(() => {
-    lessonDispatch(getInstructorLesson(lessonId));
-  }, [lessonDispatch]);
+    dogetClassLesson(ids);
+  }, [dogetClassLesson, ids]);
 
 
   return (
-    <div>{oneLesson.title}</div>
+    <div>
+      <p>{classLesson.title}</p>
+      <p>sssssssss</p>
+    </div>
   )
 }
 

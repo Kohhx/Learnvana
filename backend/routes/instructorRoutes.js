@@ -91,18 +91,18 @@ router.post(
   lessonController.createLesson
 );
 
-// Get instructor lessons
+// Get all lessons from a class
 router.get(
   "/classes/:classId/lessons",
   protect,
-  lessonController.getInstructorLessons
+  lessonController.getClassLessons
 );
 
-// Get one instructor class
+// Get one lesson from a class
 router.get(
   "/classes/:classId/lessons/:lessonId",
   protect,
-  lessonController.getInstructorLesson
+  lessonController.getClassLesson
 );
 
 module.exports = router;

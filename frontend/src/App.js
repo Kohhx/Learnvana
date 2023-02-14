@@ -73,10 +73,7 @@ const App = () => {
                   />
                   </Route>
                   <Route path="lessons" element={<Lessons />} />
-                  <Route
-                    path="lessons/:lessonId"
-                    element={<InstructorLesson />}
-                  />
+                  <Route path="lessons/:lessonId" element={<InstructorLesson />} />
                 </Route>
               </Route>
               {/* End */}

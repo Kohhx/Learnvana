@@ -152,10 +152,10 @@ export const getClassLessons = createAsyncThunk(
 // Get One Instructor lesson
 export const getClassLesson = createAsyncThunk(
   "instructor/getLesson",
-  async (lessonId, thunkAPI) => {
+  async (ids, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      return await instructorService.getClassLesson(lessonId, token);
+      return await instructorService.getClassLesson(ids, token);
     } catch (error) {
       const message =
         (error.response &&
