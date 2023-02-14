@@ -23,7 +23,6 @@ const Navbar = () => {
     isActive ? { color: "red" } : undefined;
 
   // Select nav content based on login and roles
-
   let navContent;
   if (user) {
     switch (user.role) {
@@ -42,17 +41,11 @@ const Navbar = () => {
     navContent = <Navbarpublic activeStyle={activeStyle} />;
   }
 
-  const logoutContent = (
-    <li>
-      <button onClick={handleClick}>Logout</button>
-    </li>
-  );
-
-    // Dropdown config
-    const dropdownConfig = [
-      { name: "Update user", link: `/users/update` },
-      { name: "Logout", button: <button onClick={handleClick}>Logout</button> },
-    ];
+  // Dropdown config
+  const dropdownConfig = [
+    { name: "Update user", link: `/users/update` },
+    { name: "Logout", button: <button onClick={handleClick}>Logout</button> },
+  ];
 
   return (
     <div className="w-screen h-16 bg-gray-500 px-7 flex items-center">
@@ -61,14 +54,15 @@ const Navbar = () => {
       </div>
       <ul className="flex gap-4">
         {navContent}
-        {user && logoutContent}
-        <DropDown configs={dropdownConfig}>
-          <img
-            className="rounded-full w-[30px] h-[30px]"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTugu0kegXOT1Gh1sgDVHvYjkGW29w19Hl9gQ&usqp=CAU"
-            alt=""
-          />
-        </DropDown>
+        {user && (
+          <DropDown configs={dropdownConfig}>
+            <img
+              className="rounded-full w-[30px] h-[30px]"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTugu0kegXOT1Gh1sgDVHvYjkGW29w19Hl9gQ&usqp=CAU"
+              alt=""
+            />
+          </DropDown>
+        )}
       </ul>
     </div>
   );
