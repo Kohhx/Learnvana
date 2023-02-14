@@ -22,19 +22,31 @@ const Input = ({
   });
 
   const changehandler = (event) => {
-    const [isInputValid, validatorMessages] = Validator.validate(
-      event.target.value,
-      validators
-    );
+    if (event.target.type === "file") {
+      const [isInputValid, validatorMessages] = Validator.validate(
+        event.target.files[0],
+        validators
+      );
 
-    setInputState((state) => ({
-      ...inputState,
-      value: event.target.value,
-      isValid: isInputValid,
-      errorMessages: validatorMessages,
-    }));
+      setInputState((state) => ({
+        ...inputState,
+        value: event.target.files[0],
+        isValid: isInputValid,
+        errorMessages: validatorMessages,
+      }));
+    } else {
+      const [isInputValid, validatorMessages] = Validator.validate(
+        event.target.value,
+        validators
+      );
 
-
+      setInputState((state) => ({
+        ...inputState,
+        value: event.target.value,
+        isValid: isInputValid,
+        errorMessages: validatorMessages,
+      }));
+    }
   };
 
   useEffect(() => {
@@ -43,9 +55,9 @@ const Input = ({
       payload: {
         value: inputState.value,
         isValid: inputState.isValid,
-      }
+      },
     });
-  },[inputState, formHandler, id])
+  }, [inputState, formHandler, id]);
 
   const focusHandler = () => {
     setInputState((state) => ({
@@ -58,16 +70,22 @@ const Input = ({
   const errorClasses = "text-red-500";
   let errors = null;
   if (!disableErrorMessages) {
-    errors = errorMessage
-      ? <p className={errorClasses}>{errorMessage}</p>
-
-      : inputState.errorMessages.map((message,i) => <p id={i} className={errorClasses}>- {message}</p>);
+    errors = errorMessage ? (
+      <p className={errorClasses}>{errorMessage}</p>
+    ) : (
+      inputState.errorMessages.map((message, i) => (
+        <p id={i} className={errorClasses}>
+          - {message}
+        </p>
+      ))
+    );
   }
 
   // Build Classes for input
-  const classes = classNames("border block mb-2",rest.className);
+  const classes = classNames("border block mb-2", rest.className);
 
   // Inject form content here
+
   let formContent = (
     <input
       type={type}
@@ -78,6 +96,18 @@ const Input = ({
       placeholder={placeholder}
     />
   );
+
+  if (type === "file") {
+    formContent = (
+      <input
+        type={type}
+        className={classes}
+        onChange={changehandler}
+        onFocus={focusHandler}
+        placeholder={placeholder}
+      />
+    );
+  }
 
   if (textarea) {
     formContent = <textarea name="" id="" cols="30" rows="10"></textarea>;
