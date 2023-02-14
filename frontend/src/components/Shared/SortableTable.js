@@ -4,7 +4,7 @@ import Table from "./Table";
 const SortableTable = (props) => {
   const [sortOrder, setSortOrder] = useState(null);
   const [sortBy, setSortBy] = useState(null);
-  const { config, data } = props;
+  const { config, data, index } = props;
 
   const handleClick = (label) => {
     if (sortOrder === null) {
@@ -65,6 +65,11 @@ const SortableTable = (props) => {
         return (valueA - valueB) * reverseOrder;
       }
     });
+  }
+
+  if (index) {
+
+
   }
   return (
     <>

@@ -65,6 +65,12 @@ const InstructorClassStudents = () => {
 
   const tableConfig = [
     {
+      label: "Index",
+      render: (i) => i,
+      index: true,
+      // sortValue: (rowData) => rowData.first_name,
+    },
+    {
       label: "First Name",
       render: (rowData) => rowData.first_name,
       // sortValue: (rowData) => rowData.first_name,
@@ -98,7 +104,7 @@ const InstructorClassStudents = () => {
 
   if (classStudents.length === 0) {
     return (
-      <div className="flex items-center justify-center w-screen">
+      <div className="flex items-center justify-center w-screen h-screen">
         <h1>No students enrolled in class</h1>
       </div>
     );
@@ -107,7 +113,7 @@ const InstructorClassStudents = () => {
   return (
     <div className="w-4/6 mx-auto mt-4">
       <h1 className="mb-5 text-center font-bold ">Class Student List</h1>
-      <SortableTable data={classStudents} config={tableConfig} />
+      <SortableTable index data={classStudents} config={tableConfig} />
     </div>
   );
 };
