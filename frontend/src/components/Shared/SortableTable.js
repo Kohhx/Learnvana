@@ -67,9 +67,9 @@ const SortableTable = (props) => {
     });
   }
   return (
-    <div>
+    <>
       <Table {...props} config={updatedConfig} data={sortData} />
-    </div>
+    </>
   );
 };
 

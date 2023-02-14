@@ -7,14 +7,14 @@ const Table = ({ data, config }) => {
     if (dataCol.header) {
       return <Fragment key={i}>{dataCol.header()}</Fragment>;
     }
-    return <th key={i}>{dataCol.label}</th>;
+    return <th key={i} >{dataCol.label}</th>;
   });
 
   // Create body content
   const tableBodyContent = data.map((dataRow, i) => {
     const rowContent = config.map((dataCol, j) => {
       return (
-        <td key={j} className="p-2">
+        <td key={j} className="px-10">
           {dataCol.render(dataRow)}
         </td>
       );
@@ -23,7 +23,7 @@ const Table = ({ data, config }) => {
   });
 
   return (
-    <table className="table-auto border-spacing-2">
+    <table className="table-auto border-spacing-2 mx-auto">
       <thead>
         <tr className="border-b-2">{headerContent}</tr>
       </thead>
