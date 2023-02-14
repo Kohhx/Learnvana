@@ -9,7 +9,6 @@ import Hamburger from "../components/Shared/Hamburger";
 import { CSSTransition } from "react-transition-group";
 import ClassSidebar from "../components/Shared/ClassSidebar";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import LessonCreate from "./LessonCreate";
 
 const InstructorClass = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,14 +22,6 @@ const InstructorClass = () => {
     getInstructorSuccess,
     getInstructorError,
   ] = useThunk(getInstructorClass);
-
-  // useEffect(() => {
-  //   return () => {
-  //     if (isSuccess) {
-  //       classDispatch(reset());
-  //     }
-  //   };
-  // }, [isSuccess,classDispatch]);
 
   useEffect(() => {
     doGetInstructorClasses(classId);
