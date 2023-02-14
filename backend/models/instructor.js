@@ -20,7 +20,12 @@ const instructorSchema = mongoose.Schema(
       description: " Must be either male of female",
       required: true,
     },
-    avatar: String,
+    // avatar: String,
+    avatar: {
+      type: Object,
+      url: String,
+      public_id: String,
+    },
     contact: {
       type: Number,
     },
