@@ -22,7 +22,7 @@ const Button = ({
       "border-gray-900 bg-gray-900 text-white": secondary,
       "border-green-500 bg-green-500 text-white": success,
       "border-yellow-400 bg-yellow-400 text-white": warning,
-      "border-red-500 bg-red-500 text-white": danger,
+      "border-red-500 bg-red-500 text-white hover:bg-red-400 hover:border-red-500": danger,
       "rounded-full": rounded,
       "bg-white": outline,
       "text-blue-500": outline && primary,
