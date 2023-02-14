@@ -19,6 +19,7 @@ import InstructorLesson from "./pages/InstructorLesson";
 import InstructorClassPendingStudents from "./pages/InstructorClassPendingStudents";
 import ClassLayout from "./components/Layouts/ClassLayout";
 import InstructorClassStudents from "./pages/InstructorClassStudents";
+import UpdateUser from "./pages/UpdateUser";
 
 const App = () => {
   return (
@@ -38,6 +39,7 @@ const App = () => {
             <Route path="/users/login" element={<Login />} />
             <Route path="/users/signup" element={<Signup />} />
             <Route element={<ProtectedRoute />}>
+            <Route path="/users/update" element={<UpdateUser />} />
               <Route
                 path="/users/signup/instructor"
                 element={<InstructorSignUp />}

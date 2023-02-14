@@ -24,14 +24,6 @@ const InstructorClass = () => {
     getInstructorError,
   ] = useThunk(getInstructorClass);
 
-  // useEffect(() => {
-  //   return () => {
-  //     if (isSuccess) {
-  //       classDispatch(reset());
-  //     }
-  //   };
-  // }, [isSuccess,classDispatch]);
-
   useEffect(() => {
     doGetInstructorClasses(classId);
   }, [doGetInstructorClasses, classId]);
