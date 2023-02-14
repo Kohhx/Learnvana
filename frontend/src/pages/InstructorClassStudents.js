@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import Button from "../components/Button";
 import SortableTable from "../components/Shared/SortableTable";
+import DotLoader from "react-spinners/DotLoader";
 
 const InstructorClassStudents = () => {
   const instructorDispatch = useDispatch();
@@ -46,22 +47,6 @@ const InstructorClassStudents = () => {
     };
     doDeleteStudentFromClass(dataIn);
   };
-
-  const classStudentList = classStudents.map((student, index) => (
-    <div className="flex flex-item items-center w-full mb-3" key={index}>
-      <div className="grow">
-        <h1>
-          {index + 1}
-          {`)`} Student Name: {student.first_name} {student.last_name}
-        </h1>
-      </div>
-      <div className="flex gap-2">
-        <Button danger onClick={() => removeStudentHandler(student._id)}>
-          Delete
-        </Button>
-      </div>
-    </div>
-  ));
 
   const tableConfig = [
     {
@@ -102,9 +87,23 @@ const InstructorClassStudents = () => {
     },
   ];
 
+  if (getStudentsFromClassLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen w-4/6 mx-auto mt-4">
+        <DotLoader
+          size={120}
+          color="#36d7b7"
+          loading={getStudentsFromClassLoading}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      </div>
+    );
+  }
+
   if (classStudents.length === 0) {
     return (
-      <div className="flex items-center justify-center w-screen h-screen">
+      <div className="flex items-center justify-center h-screen w-4/6 mx-auto mt-4">
         <h1>No students enrolled in class</h1>
       </div>
     );
