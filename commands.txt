@@ -2,6 +2,7 @@
 npm init
 git init
 npm install express dotenv mongoose colors bcryptjs express-async-handler jsonwebtoken concurrently
+npm install --save multer
 npm install -D nodemon
 
 // Create React App
@@ -9,3 +10,5 @@ npx create-react-app frontend --template redux
 
 // In front end
 npm install react-router-dom react-toastify axios react-icons classnames prop-types
+npm i react-spinners
+npm install react-transition-group@1.x --save
