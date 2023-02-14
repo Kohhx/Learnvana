@@ -67,10 +67,7 @@ const SortableTable = (props) => {
     });
   }
 
-  if (index) {
 
-
-  }
   return (
     <>
       <Table {...props} config={updatedConfig} data={sortData} />
