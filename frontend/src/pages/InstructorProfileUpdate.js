@@ -1,21 +1,34 @@
 import React, { useCallback, useReducer, useEffect, useState } from "react";
 import Button from "../components/Button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams} from "react-router-dom";
 import Input from "../components/Input";
 import Validator from "../utilities/Validator";
 import { toast } from "react-toastify";
 import useThunk from "../hooks/useThunkHook";
 import useForm from "../hooks/useFormHook";
 import { useSelector } from "react-redux";
+import { updateInstructorProfile } from "../features/instructor/instructorSlice";
 
-const UpdateUser = () => {
+const InstructorProfileUpdate = () => {
   const [fileState, setFileState] = useState();
+
+  // Get instructor ID from params
+  const { instructorId }= useParams();
+
 
   // Initalize navigate
   const navigate = useNavigate();
 
   // Get User state
   const { user } = useSelector((state) => state.auth);
+
+  // Use Thunk hook for createAsyncThunk to update instructor profile create function
+  const [
+    doUpdateInstructorProfile,
+    updateInstructorProfileLoading,
+    updateInstructorProfileSuccess,
+    updateInstructorProfileError,
+  ] = useThunk(updateInstructorProfile);
 
   // Use form hook for form handling
   const [formState, formHandler] = useForm(
@@ -54,6 +67,7 @@ const UpdateUser = () => {
 
     // If all pass then we submit login form to backend
     const newInstructorProfile = {
+      instructorId,
       first_name: formState.inputs.first_name.value,
       last_name: formState.inputs.last_name.value,
       age: formState.inputs.age.value,
@@ -62,7 +76,7 @@ const UpdateUser = () => {
       avatar: formState.inputs.avatar.value,
     };
 
-    console.log(newInstructorProfile)
+    doUpdateInstructorProfile(newInstructorProfile)
   };
   return (
     <div>
@@ -71,7 +85,7 @@ const UpdateUser = () => {
         <p>Fill in profile details</p>
       </div>
       <form onSubmit={updateUserSubmitHandler}>
-      <Input
+        <Input
           id="avatar"
           type="file"
           label="Avatar Image"
@@ -120,4 +134,4 @@ const UpdateUser = () => {
   );
 };
 
-export default UpdateUser;
+export default InstructorProfileUpdate;

@@ -217,6 +217,26 @@ const deleteStudentFromClass = async (ids, token) => {
   }
 };
 
+// Update instructor profile
+const updateInstructorProfile = async (newInstructorProfile, token) => {
+  console.log("2")
+  const { instructorId } =newInstructorProfile;
+  const URL = PROXY.concat(
+    `/api/instructors/${instructorId}/update`
+  );
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.post(URL, newInstructorProfile, config);
+  if (response.data) {
+    return response.data;
+  }
+};
+
 // Put all the function into authService object before exporting
 const instructorService = {
   UserInstructorProfile,
@@ -231,6 +251,7 @@ const instructorService = {
   rejectStudentToClass,
   getStudentsFromClass,
   deleteStudentFromClass,
+  updateInstructorProfile,
 };
 
 export default instructorService;

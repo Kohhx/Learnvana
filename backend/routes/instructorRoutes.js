@@ -20,6 +20,9 @@ const { protect } = require("../middlewares/authMiddleware");
 // Create instructor
 router.post("/create", protect, instructorController.createInstructor);
 
+// Update instructor profile
+router.post("/:instructorId/update", protect, instructorController.updateInstructorProfile);
+
 /**
  * =============================================================================
  *  CLASSES

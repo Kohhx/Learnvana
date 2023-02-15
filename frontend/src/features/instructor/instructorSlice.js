@@ -198,10 +198,7 @@ export const approveStudentToClass = createAsyncThunk(
   async (ids, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      return await instructorService.approveStudentToClass(
-        ids,
-        token
-      );
+      return await instructorService.approveStudentToClass(ids, token);
     } catch (error) {
       const message =
         (error.response &&
@@ -221,10 +218,7 @@ export const rejectStudentToClass = createAsyncThunk(
   async (ids, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      return await instructorService.rejectStudentToClass(
-        ids,
-        token
-      );
+      return await instructorService.rejectStudentToClass(ids, token);
     } catch (error) {
       const message =
         (error.response &&
@@ -244,10 +238,7 @@ export const getStudentsFromClass = createAsyncThunk(
   async (classId, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      return await instructorService.getStudentsFromClass(
-        classId,
-        token
-      );
+      return await instructorService.getStudentsFromClass(classId, token);
     } catch (error) {
       const message =
         (error.response &&
@@ -267,8 +258,29 @@ export const deleteStudentFromClass = createAsyncThunk(
   async (ids, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      return await instructorService.deleteStudentFromClass(
-        ids,
+      return await instructorService.deleteStudentFromClass(ids, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      toast.error(message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// Update instructor profile
+export const updateInstructorProfile = createAsyncThunk(
+  "instructor/updateInstructorProfile",
+  async (newInstructorProfile, thunkAPI) => {
+    try {
+      console.log("1")
+      const token = thunkAPI.getState().auth.user.token;
+      return await instructorService.updateInstructorProfile(
+        newInstructorProfile,
         token
       );
     } catch (error) {
@@ -423,7 +435,9 @@ export const instructorSlice = createSlice({
       .addCase(approveStudentToClass.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.pendingStudents = state.pendingStudents.filter( student => student._id !== action.payload.studentId)
+        state.pendingStudents = state.pendingStudents.filter(
+          (student) => student._id !== action.payload.studentId
+        );
       })
       .addCase(approveStudentToClass.rejected, (state, action) => {
         state.isLoading = false;
@@ -438,7 +452,9 @@ export const instructorSlice = createSlice({
       .addCase(rejectStudentToClass.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.pendingStudents = state.pendingStudents.filter( student => student._id !== action.payload.studentId)
+        state.pendingStudents = state.pendingStudents.filter(
+          (student) => student._id !== action.payload.studentId
+        );
       })
       .addCase(rejectStudentToClass.rejected, (state, action) => {
         state.isLoading = false;
@@ -461,16 +477,35 @@ export const instructorSlice = createSlice({
         state.message = action.payload;
       })
 
-       // Delete a student from class
-       .addCase(deleteStudentFromClass.pending, (state, action) => {
+      // Delete a student from class
+      .addCase(deleteStudentFromClass.pending, (state, action) => {
         state.isLoading = true;
       })
       .addCase(deleteStudentFromClass.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.classStudents = state.classStudents.filter( student => student._id !== action.payload.studentId)
+        state.classStudents = state.classStudents.filter(
+          (student) => student._id !== action.payload.studentId
+        );
       })
       .addCase(deleteStudentFromClass.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+
+      // Update  instructor profile
+      .addCase(updateInstructorProfile.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(updateInstructorProfile.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        const user = JSON.parse(localStorage.getItem("user"));
+        user.profiles = action.payload;
+        localStorage.setItem("user", JSON.stringify(user));
+      })
+      .addCase(updateInstructorProfile.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

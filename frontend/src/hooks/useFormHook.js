@@ -25,6 +25,8 @@ const formReducer = (state, action) => {
         },
         formisValid: formIsValid,
       };
+    case "RESET":
+      return action.payload;
 
     default:
       return state;
@@ -42,6 +44,16 @@ const useFormHook = (formInitialState, formInitialValidity) => {
   const useFormHandler = useCallback((input) => {
     dispatch({ type: "INPUT_CHANGE", payload: input.payload, id: input.id });
   }, []);
+
+  const resetFormState = useCallback(() => {
+    dispatch({
+      type: "RESET",
+      payload: {
+        inputs: formInitialState,
+        formisValid: formInitialValidity,
+      },
+    });
+  });
 
   return [formState, useFormHandler];
 };

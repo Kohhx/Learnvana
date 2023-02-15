@@ -29,3 +29,11 @@ exports.validateClassBelongsInstructor = (user, instructorClass, res, next) => {
   }
   return next;
 };
+
+exports.validateProfileBelongsToUser = (user, profile, res, next) => {
+  if (user._id.toString() !== profile.user.toString()) {
+    res.status(400);
+    return next(new Error(`Profile does not belong to user`));
+  }
+  return next;
+};
