@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import Button from "../components/Button";
+import Button from "../../components/Button";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { sendRequestToJoinClass } from "../features/class/classSlice";
-import useThunk from "../hooks/useThunkHook";
-import Modal from "../components/Shared/Modal";
+import { sendRequestToJoinClass } from "../../features/class/classSlice";
+import useThunk from "../../hooks/useThunkHook";
+import Modal from "../../components/Shared/Modal";
 import { toast } from "react-toastify";
 
 const ClassInvite = () => {

@@ -73,3 +73,32 @@ exports.createStudent = asyncHandler(async (req, res) => {
     avatar: student.avatar,
   });
 });
+
+exports.getStudentClasses = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user.id);
+  const student = await Student.findById(user.studentprofiles).populate(
+    "classes"
+  );
+  if (!user) {
+    res.status(400);
+    throw new Error("No user found");
+  }
+
+  if (user.role !== "student") {
+    res.status(400);
+    throw new Error("User is not a student");
+  }
+
+  if (!student) {
+    res.status(400);
+    throw new Error(
+      "No student profile created. Create student profile first"
+    );
+  }
+
+  const studentClasses = student.classes;
+
+  console.log(studentClasses);
+
+  res.status(201).json(studentClasses);
+});

@@ -58,11 +58,12 @@ app.get("/", (req, res) => {
 app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/classes", require("./routes/classRoutes"));
 // app.use("/api/classes", require("./routes/lessonRoutes"));
-app.use("/api/students", require("./routes/studentRoutes"));
-
 
 // instructor routes
 app.use("/api/instructors", require("./routes/instructorRoutes"));
+
+// student routes
+app.use("/api/students", require("./routes/studentRoutes"));
 
 
 

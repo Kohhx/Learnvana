@@ -11,7 +11,7 @@ const Navbarstudent = ({activeStyle}) => {
         </NavLink>
       </li>
       <li>
-        <NavLink to="/classes/dashboard" style={activeStyle}>
+        <NavLink to="/students/dashboard" style={activeStyle}>
           Dashboard
         </NavLink>
       </li>

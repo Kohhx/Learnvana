@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import Button from "../components/Button";
+import Button from "../../components/Button";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getInstructorClasses, reset } from "../features/instructor/instructorSlice";
-import Classitem from "../components/Classitem"
-import useThunk from "../hooks/useThunkHook";
+import { getInstructorClasses, reset } from "../../features/instructor/instructorSlice";
+import Classitem from "../../components/Classitem"
+import useThunk from "../../hooks/useThunkHook";
 
 const InstructorDashboard = () => {
   const { instructorClasses } = useSelector((state) => state.instructor);

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import { useParams } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
-import { getClassLesson } from "../features/instructor/instructorSlice"
-import useThunk from '../hooks/useThunkHook'
+import { getClassLesson } from "../../features/instructor/instructorSlice"
+import useThunk from '../../hooks/useThunkHook'
 
 const InstructorLesson = () => {
   const ids = useParams();

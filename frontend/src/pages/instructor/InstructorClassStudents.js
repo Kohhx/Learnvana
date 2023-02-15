@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import useThunk from "../hooks/useThunkHook";
+import useThunk from "../../hooks/useThunkHook";
 import {
   reset,
   getStudentsFromClass,
   deleteStudentFromClass,
-} from "../features/instructor/instructorSlice";
+} from "../../features/instructor/instructorSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import Button from "../components/Button";
-import SortableTable from "../components/Shared/SortableTable";
+import Button from "../../components/Button";
+import SortableTable from "../../components/Shared/SortableTable";
 import DotLoader from "react-spinners/DotLoader";
 
 const InstructorClassStudents = () => {

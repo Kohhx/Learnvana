@@ -1,25 +1,32 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+// GENERAL IMPORT
+import ProtectedRoute from "./routing/ProtectedRoute";
+import ClassLayout from "./components/Layouts/ClassLayout";
 import Navbar from "./components/Navbars/Navbar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import InstructorSignUp from "./pages/InstructorSignUp";
-import StudentSignUp from "./pages/StudentSignUp";
-import ProtectedRoute from "./routing/ProtectedRoute";
-import Index from "./pages/Index";
-import InstructorDashboard from "./pages/InstructorDashboard";
-import NewClass from "./pages/NewClass";
-import Lessons from "./pages/Lessons";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import ClassInvite from "./pages/ClassInvite";
-import InstructorClass from "./pages/InstructorClass";
-import InstructorLesson from "./pages/InstructorLesson";
-import InstructorClassPendingStudents from "./pages/InstructorClassPendingStudents";
-import ClassLayout from "./components/Layouts/ClassLayout";
-import InstructorClassStudents from "./pages/InstructorClassStudents";
-import InstructorProfileUpdate from "./pages/InstructorProfileUpdate";
+
+// INSTRUCTOR IMPORT
+import InstructorSignUp from "./pages/instructor/InstructorSignUp";
+import InstructorCreateClass from "./pages/instructor/InstructorCreateClass";
+import InstructorDashboard from "./pages/instructor/InstructorDashboard";
+import InstructorLessons from "./pages/instructor/InstructorLessons";
+import InstructorLesson from "./pages/instructor/InstructorLesson";
+import InstructorClassInvite from "./pages/instructor/InstructorClassInvite";
+import InstructorClassPendingStudents from "./pages/instructor/InstructorClassPendingStudents";
+import InstructorClassStudents from "./pages/instructor/InstructorClassStudents";
+import InstructorProfileUpdate from "./pages/instructor/InstructorProfileUpdate";
+
+// STUDENTS IMPORT
+import StudentSignUp from "./pages/students/StudentSignUp";
+import StudentDashboard from "./pages/students/StudentDashboard";
+
+// GUARDIANS IMPORT
 import GuardianCreateStudents from "./pages/GuardianCreateStudents"
 
 const App = () => {
@@ -55,7 +62,7 @@ const App = () => {
             <Route element={<ProtectedRoute />}>
               {/* Classes */}
               <Route path="/classes/:classId">
-                <Route path="request" element={<ClassInvite />} />
+                <Route path="request" element={<InstructorClassInvite />} />
               </Route>
               {/* End */}
 
@@ -67,7 +74,7 @@ const App = () => {
                   element={<InstructorProfileUpdate />}
                 />
                 <Route path="dashboard" element={<InstructorDashboard />} />
-                <Route path="classes/new" element={<NewClass />} />
+                <Route path="classes/new" element={<InstructorCreateClass />} />
 
                 <Route path="classes/:classId" element={<ClassLayout />}>
                   <Route path="students">
@@ -77,7 +84,7 @@ const App = () => {
                       element={<InstructorClassPendingStudents />}
                     />
                   </Route>
-                  <Route path="lessons" element={<Lessons />} />
+                  <Route path="lessons" element={<InstructorLessons />} />
                   <Route path="lessons/:lessonId" element={<InstructorLesson />} />
                 </Route>
               </Route>
@@ -86,6 +93,7 @@ const App = () => {
               {/* Students */}
               <Route path="/students">
                 <Route path="signup" element={<StudentSignUp />} />
+                <Route path="dashboard" element={<StudentDashboard />} />
               </Route>
               {/* End */}
 
