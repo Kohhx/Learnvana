@@ -1,22 +1,19 @@
-import React, { useCallback, useReducer, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Input from "../components/Input";
-import Button from "../components/Button";
-import Select from "../components/Select";
+import Input from "../../components/Input";
+import Button from "../../components/Button";
+import Select from "../../components/Select";
 import { FaUser } from "react-icons/fa";
-import Validator from "../utilities/Validator";
+import Validator from "../../utilities/Validator";
 import { toast } from "react-toastify";
-import { UserInstructorProfile } from "../features/instructor/instructorSlice";
-import useThunk from "../hooks/useThunkHook";
-import useForm from "../hooks/useFormHook";
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux";
+import { UserStudentProfile } from "../../features/student/studentSlice";
+import useThunk from "../../hooks/useThunkHook";
+import useForm from "../../hooks/useFormHook";
 
-const InstructorSignUp = () => {
+const StudentSignUp = () => {
   // Initalize navigate
   const navigate = useNavigate();
-
-  // Get User state
-  const { user } = useSelector( state => state.auth)
 
   // Use form hook for form handling
   const [formState, formHandler] = useForm(
@@ -37,7 +34,7 @@ const InstructorSignUp = () => {
         value: "",
         isValid: false,
       },
-      experience: {
+      contact: {
         value: "",
         isValid: false,
       },
@@ -47,20 +44,15 @@ const InstructorSignUp = () => {
 
   // Use Thunk hook for createAsyncThunk instructor profile create function
   const [
-    doCreateInstructorProfile,
-    createInstructorProfileLoading,
-    createInstructorProfileSuccess,
-    createInstructorProfileError,
-  ] = useThunk(UserInstructorProfile);
+    doCreateStudentProfile,
+    createStudentProfileLoading,
+    createStudentProfileSuccess,
+    createStudentProfileError,
+  ] = useThunk(UserStudentProfile);
 
-  // Use effect to naviagte upon success
-  useEffect(() => {
-    if (createInstructorProfileSuccess) {
-      navigate("/");
-    }
-  }, [createInstructorProfileSuccess, navigate]);
+  const authDispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
 
-  // Form Handlers
   const submitHandler = (event) => {
     event.preventDefault();
     console.log(formState);
@@ -71,19 +63,25 @@ const InstructorSignUp = () => {
     }
 
     // If all pass then we submit login form to backend
-    const newInstructorProfile = {
+    const newStudentProfile = {
       first_name: formState.inputs.first_name.value,
       last_name: formState.inputs.last_name.value,
       age: formState.inputs.age.value,
       gender: formState.inputs.gender.value,
+      contact: formState.inputs.contact.value,
       email: user.email,
-      experience: formState.inputs.experience.value,
     };
-    doCreateInstructorProfile(newInstructorProfile);
+    doCreateStudentProfile(newStudentProfile);
   };
 
+  useEffect(() => {
+    if (createStudentProfileSuccess) {
+      navigate("/");
+    }
+  }, [createStudentProfileSuccess, navigate]);
+
   // Display loading spinner based on loading state
-  if (createInstructorProfileLoading) {
+  if (createStudentProfileLoading) {
     return <h1>...isLoading</h1>;
   }
 
@@ -91,7 +89,7 @@ const InstructorSignUp = () => {
     <div>
       <div className="text-center">
         <h1>
-          <FaUser className="inline mr-3" /> Instructor Profile
+          <FaUser className="inline mr-3" /> Student Profile
         </h1>
         <p>Fill in profile details</p>
       </div>
@@ -130,10 +128,10 @@ const InstructorSignUp = () => {
           formHandler={formHandler}
         />
         <Input
-          id="experience"
-          type="experience"
-          label="Experience"
-          placeholder="Share your experience"
+          id="contact"
+          type="contact"
+          label="Contact Number"
+          placeholder="Contact number"
           validators={[Validator.VALIDATOR_REQUIRE()]}
           formHandler={formHandler}
         ></Input>
@@ -145,4 +143,4 @@ const InstructorSignUp = () => {
   );
 };
 
-export default InstructorSignUp;
+export default StudentSignUp;

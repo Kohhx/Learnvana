@@ -1,15 +1,15 @@
 import React, { useCallback, useReducer, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Input from "../components/Input";
-import Button from "../components/Button";
-import Select from "../components/Select";
+import Input from "../../components/Input";
+import Button from "../../components/Button";
+import Select from "../../components/Select";
 import { FaUser } from "react-icons/fa";
-import Validator from "../utilities/Validator";
+import Validator from "../../utilities/Validator";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
-import { newClass, reset } from "../features/instructor/instructorSlice";
-import useThunk from "../hooks/useThunkHook";
-import useForm from "../hooks/useFormHook";
+import { newClass, reset } from "../../features/instructor/instructorSlice";
+import useThunk from "../../hooks/useThunkHook";
+import useForm from "../../hooks/useFormHook";
 
 const NewClass = () => {
   // Use form hook for form handling

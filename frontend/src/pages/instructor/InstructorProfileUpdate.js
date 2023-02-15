@@ -1,13 +1,13 @@
 import React, { useCallback, useReducer, useEffect, useState } from "react";
-import Button from "../components/Button";
+import Button from "../../components/Button";
 import { useNavigate, useParams} from "react-router-dom";
-import Input from "../components/Input";
-import Validator from "../utilities/Validator";
+import Input from "../../components/Input";
+import Validator from "../../utilities/Validator";
 import { toast } from "react-toastify";
-import useThunk from "../hooks/useThunkHook";
-import useForm from "../hooks/useFormHook";
+import useThunk from "../../hooks/useThunkHook";
+import useForm from "../../hooks/useFormHook";
 import { useSelector } from "react-redux";
-import { updateInstructorProfile } from "../features/instructor/instructorSlice";
+import { updateInstructorProfile } from "../../features/instructor/instructorSlice";
 
 const InstructorProfileUpdate = () => {
   const [fileState, setFileState] = useState();
