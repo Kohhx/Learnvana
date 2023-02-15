@@ -12,7 +12,7 @@ const ClassLayout = () => {
   // Side Bar config
   const sideBarConfig = [
     { name: "Invite Link", link: `/classes/${classId}/request` },
-    { name: "Create Lessons", link: `/instructors/classes/${classId}/lessons` },
+    { name: "Lessons", link: `/instructors/classes/${classId}/lessons` },
     {
       name: "Pending Students",
       link: `/instructors/classes/${classId}/students/pending`,

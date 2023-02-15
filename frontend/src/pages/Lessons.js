@@ -24,6 +24,7 @@ const Lessons = () => {
     doGetClassLessons(classId);
   }, [doGetClassLessons, classId]);
 
+  // console.log(classLessons)
   console.log(classLessons)
   const allLessons = classLessons.map((singleLesson,i) => <Lessonitem key={i} lessonData={singleLesson} classId={classId}/> );
 

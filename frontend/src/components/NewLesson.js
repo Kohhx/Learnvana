@@ -152,7 +152,7 @@ const NewLesson = () => {
           validators={[Validator.VALIDATOR_REQUIRE()]}
           formHandler={formHandler}
         ></Input>
-        <Button primary rounded>
+        <Button secondary rounded>
           Add lesson
         </Button>
       </form>
