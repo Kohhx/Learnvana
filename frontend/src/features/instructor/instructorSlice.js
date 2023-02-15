@@ -364,6 +364,8 @@ export const instructorSlice = createSlice({
       .addCase(newLesson.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
+        state.classLessons = [...state.classLessons,action.payload]
+        // dont mutate(.push), use destructure^ (make new array and add in)
       })
       .addCase(newLesson.rejected, (state, action) => {
         state.isLoading = false;

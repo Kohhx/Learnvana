@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Button from "../components/Button";
 
 const Hide = ({ children }) => {
 
@@ -14,7 +15,7 @@ const Hide = ({ children }) => {
   return (
     <div className="component-container">
       {show && children}
-      <button onClick={toggleShow}>{buttonText}</button>
+      <Button primary rounded onClick={toggleShow}>{buttonText}</Button>
     </div>
   )
 }
