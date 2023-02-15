@@ -42,10 +42,46 @@ const Navbar = () => {
   }
 
   // Dropdown config
-  const dropdownConfig = [
-    { name: "Update user", link: `/users/update` },
-    { name: "Logout", button: <button onClick={handleClick}>Logout</button> },
-  ];
+  let dropdownConfig = {};
+  if (user) {
+    if (user.role === "instructor") {
+      dropdownConfig = [
+        { name: "Update user", link: `/users/update` },
+        {
+          name: "Instructor Profile",
+          link: `/instructors/update`,
+        },
+        {
+          name: "Logout",
+          button: <button onClick={handleClick}>Logout</button>,
+        },
+      ];
+    } else if (user.role === "student") {
+      dropdownConfig = [
+        { name: "Update user", link: `/users/update` },
+        {
+          name: "Student Profile",
+          link: `/students/update`,
+        },
+        {
+          name: "Logout",
+          button: <button onClick={handleClick}>Logout</button>,
+        },
+      ];
+    } else {
+      dropdownConfig = [
+        { name: "Update user", link: `/users/update` },
+        {
+          name: "Students Profile",
+          link: `/guardians/update`,
+        },
+        {
+          name: "Logout",
+          button: <button onClick={handleClick}>Logout</button>,
+        },
+      ];
+    }
+  }
 
   return (
     <div className="w-screen h-16 bg-gray-500 px-7 flex items-center">

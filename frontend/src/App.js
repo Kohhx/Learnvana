@@ -19,7 +19,8 @@ import InstructorLesson from "./pages/InstructorLesson";
 import InstructorClassPendingStudents from "./pages/InstructorClassPendingStudents";
 import ClassLayout from "./components/Layouts/ClassLayout";
 import InstructorClassStudents from "./pages/InstructorClassStudents";
-import UpdateUser from "./pages/UpdateUser";
+import InstructorProfileUpdate from "./pages/InstructorProfileUpdate";
+import GuardianCreateStudents from "./pages/GuardianCreateStudents"
 
 const App = () => {
   return (
@@ -39,7 +40,6 @@ const App = () => {
             <Route path="/users/login" element={<Login />} />
             <Route path="/users/signup" element={<Signup />} />
             <Route element={<ProtectedRoute />}>
-            <Route path="/users/update" element={<UpdateUser />} />
               <Route
                 path="/users/signup/instructor"
                 element={<InstructorSignUp />}
@@ -61,6 +61,11 @@ const App = () => {
 
               {/* Instructor */}
               <Route path="/instructors">
+                <Route path="signup" element={<InstructorSignUp />} />
+                <Route
+                  path="update"
+                  element={<InstructorProfileUpdate />}
+                />
                 <Route path="dashboard" element={<InstructorDashboard />} />
                 <Route path="classes/new" element={<NewClass />} />
 
@@ -68,17 +73,29 @@ const App = () => {
                   <Route path="students">
                     <Route index element={<InstructorClassStudents />} />
                     <Route
-                    path="pending"
-                    element={<InstructorClassPendingStudents />}
-                  />
+                      path="pending"
+                      element={<InstructorClassPendingStudents />}
+                    />
                   </Route>
                   <Route path="lessons" element={<Lessons />} />
                   <Route path="lessons/:lessonId" element={<InstructorLesson />} />
                 </Route>
               </Route>
               {/* End */}
-            </Route>
 
+              {/* Students */}
+              <Route path="/students">
+                <Route path="signup" element={<StudentSignUp />} />
+              </Route>
+              {/* End */}
+
+              {/* Students */}
+              <Route path="/guardians">
+                <Route path="signup" element={<GuardianCreateStudents />} />
+              </Route>
+              {/* End */}
+
+            </Route>
             {/**
              * =================================================================
              *  404 Cannot be found page

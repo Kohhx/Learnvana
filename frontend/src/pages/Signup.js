@@ -50,11 +50,15 @@ const Signup = () => {
     if (signUpSuccess) {
       // if instructor, navigate to instructor fill in form
       if (user.role === "instructor") {
-        navigate("/users/signup/instructor");
+        navigate("/instructors/signup");
       }
 
       if (user.role === "student") {
-        navigate("/users/signup/student");
+        navigate("/students/signup");
+      }
+
+      if (user.role === "guardian") {
+        navigate("/guardians/signup");
       }
     }
   }, [signUpSuccess, navigate, user]);
