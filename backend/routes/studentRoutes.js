@@ -6,4 +6,8 @@ const { protect } = require("../middlewares/authMiddleware")
 // Create student
 router.post('/create', protect, studentController.createStudent)
 
+// get student classes
+router.get('/classes', protect, studentController.getStudentClasses)
+
+
 module.exports = router;

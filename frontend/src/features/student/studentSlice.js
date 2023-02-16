@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 const initialState = {
   student: null,
   students: [],
+  studentClasses: [],
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -35,7 +36,27 @@ export const UserStudentProfile = createAsyncThunk(
   }
 );
 
-// Create instructorSlice
+// Get Student classes
+export const getStudentClasses = createAsyncThunk(
+  "student/getClasses",
+  async (_, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await studentService.getStudentClasses(token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      toast.error(message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// Create studentSlice
 export const studentSlice = createSlice({
   name: "student",
   initialState,
@@ -62,7 +83,22 @@ export const studentSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
-      });
+      })
+
+       // Get Instructor Classes
+      .addCase(getStudentClasses.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(getStudentClasses.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.studentClasses = action.payload;
+      })
+      .addCase(getStudentClasses.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
   },
 });
 
