@@ -79,7 +79,6 @@ export const authSlice = createSlice({
       state.isSuccess = false;
     },
     updateProfile: (state, action) => {
-      console.log("Happening")
       state.user.profiles = action.payload;
     }
   },

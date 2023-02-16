@@ -64,6 +64,8 @@ app.use("/api/students", require("./routes/studentRoutes"));
 // instructor routes
 app.use("/api/instructors", require("./routes/instructorRoutes"));
 
+// Guardian routes
+app.use("/api/guardians", require("./routes/guardianRoutes"));
 
 
 /**

@@ -68,7 +68,7 @@ exports.loginUser = asyncHandler(async (req, res) => {
     "studentprofiles instructorprofile"
   );
 
-  console.log(user)
+  console.log(user);
 
   if (!user) {
     res.status(400);
@@ -85,7 +85,9 @@ exports.loginUser = asyncHandler(async (req, res) => {
       profiles:
         user.role == "instructor"
           ? user.instructorprofile
-          : user.studentprofiles[0],
+          : user.role == "student"
+          ? user.studentprofiles[0]
+          : user.studentprofiles,
       token: generateToken(user._id),
     });
   } else {
