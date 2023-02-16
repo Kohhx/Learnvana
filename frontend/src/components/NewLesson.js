@@ -13,7 +13,7 @@ import useForm from "../hooks/useFormHook";
 
 const NewLesson = () => {
   // Use form hook for form handling
-  const [formState, formHandler] = useForm(
+  const {formState, useFormHandler} = useForm(
     {
       title: {
         value: "",
@@ -105,7 +105,7 @@ const NewLesson = () => {
           placeholder="Enter title"
           // errorMessage="Please enter a valid email"
           validators={[Validator.VALIDATOR_REQUIRE()]}
-          formHandler={formHandler}
+          formHandler={useFormHandler}
         ></Input>
         <Input
           id="content"
@@ -114,7 +114,7 @@ const NewLesson = () => {
           placeholder="Enter content"
           // errorMessage="Please enter a valid email"
           validators={[Validator.VALIDATOR_REQUIRE()]}
-          formHandler={formHandler}
+          formHandler={useFormHandler}
         ></Input>
         <Input
           id="objective"
@@ -123,7 +123,7 @@ const NewLesson = () => {
           placeholder="Enter objective"
           // errorMessage="Please enter a valid password"
           validators={[Validator.VALIDATOR_REQUIRE()]}
-          formHandler={formHandler}
+          formHandler={useFormHandler}
         ></Input>
         <Input
           id="date"
@@ -132,7 +132,7 @@ const NewLesson = () => {
           placeholder="Enter date"
           // errorMessage="Please enter a valid password"
           validators={[Validator.VALIDATOR_REQUIRE()]}
-          formHandler={formHandler}
+          formHandler={useFormHandler}
         ></Input>
         <Input
           id="time"
@@ -141,7 +141,7 @@ const NewLesson = () => {
           placeholder="Enter time"
           // errorMessage="Please enter a valid password"
           validators={[Validator.VALIDATOR_REQUIRE()]}
-          formHandler={formHandler}
+          formHandler={useFormHandler}
         ></Input>
         <Input
           id="images"
@@ -150,7 +150,7 @@ const NewLesson = () => {
           placeholder="Attach images"
           // errorMessage="Please enter a valid password"
           validators={[Validator.VALIDATOR_REQUIRE()]}
-          formHandler={formHandler}
+          formHandler={useFormHandler}
         ></Input>
         <Button secondary rounded>
           Add lesson

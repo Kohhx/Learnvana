@@ -16,7 +16,7 @@ const StudentSignUp = () => {
   const navigate = useNavigate();
 
   // Use form hook for form handling
-  const [formState, formHandler] = useForm(
+  const {formState, useFormHandler} = useForm(
     {
       first_name: {
         value: "",
@@ -101,7 +101,7 @@ const StudentSignUp = () => {
           placeholder="Enter first_name"
           // errorMessage="Please enter a valid email"
           validators={[Validator.VALIDATOR_REQUIRE()]}
-          formHandler={formHandler}
+          formHandler={useFormHandler}
         ></Input>
         <Input
           id="last_name"
@@ -110,7 +110,7 @@ const StudentSignUp = () => {
           placeholder="Enter last_name"
           // errorMessage="Please enter a valid password"
           validators={[Validator.VALIDATOR_REQUIRE()]}
-          formHandler={formHandler}
+          formHandler={useFormHandler}
         ></Input>
         <Input
           id="age"
@@ -118,14 +118,14 @@ const StudentSignUp = () => {
           label="Age"
           placeholder="Enter age"
           validators={[Validator.VALIDATOR_REQUIRE()]}
-          formHandler={formHandler}
+          formHandler={useFormHandler}
         ></Input>
         <Select
           id="gender"
           label="Gender"
           options={["male", "female"]}
           validators={[Validator.VALIDATOR_CONTAIN(["male", "female"])]}
-          formHandler={formHandler}
+          formHandler={useFormHandler}
         />
         <Input
           id="contact"
@@ -133,7 +133,7 @@ const StudentSignUp = () => {
           label="Contact Number"
           placeholder="Contact number"
           validators={[Validator.VALIDATOR_REQUIRE()]}
-          formHandler={formHandler}
+          formHandler={useFormHandler}
         ></Input>
         <Button primary rounded>
           Confirm
