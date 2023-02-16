@@ -151,7 +151,6 @@ const GuardianCreateStudents = () => {
         </h1>
         <p>Fill in profile details</p>
       </div>
-      {/* <form onSubmit={addStudentHandler}> */}
       <InputV2
         id="first_name"
         type="text"
@@ -232,7 +231,6 @@ const GuardianCreateStudents = () => {
           Add Student
         </Button>
       )}
-      {/* </form> */}
     </div>
   );
 

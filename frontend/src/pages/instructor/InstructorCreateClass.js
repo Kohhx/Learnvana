@@ -13,7 +13,7 @@ import useForm from "../../hooks/useFormHook";
 
 const NewClass = () => {
   // Use form hook for form handling
-  const [formState, formHandler] = useForm(
+  const {formState, useFormHandler} = useForm(
     {
       title: {
         value: "",
@@ -96,7 +96,7 @@ const NewClass = () => {
           placeholder="Enter title"
           // errorMessage="Please enter a valid email"
           validators={[Validator.VALIDATOR_REQUIRE()]}
-          formHandler={formHandler}
+          formHandler={useFormHandler}
         ></Input>
         <Select
           id="status"
@@ -109,7 +109,7 @@ const NewClass = () => {
               "Closed",
             ]),
           ]}
-          formHandler={formHandler}
+          formHandler={useFormHandler}
         />
         <Input
           id="lessons"
@@ -118,7 +118,7 @@ const NewClass = () => {
           placeholder="e.g. 2"
           // errorMessage="Please enter a valid password"
           validators={[Validator.VALIDATOR_REQUIRE()]}
-          formHandler={formHandler}
+          formHandler={useFormHandler}
         ></Input>
         <Input
           id="images"
@@ -127,7 +127,7 @@ const NewClass = () => {
           placeholder="images"
           // errorMessage="Please enter a valid password"
           validators={[Validator.VALIDATOR_REQUIRE()]}
-          formHandler={formHandler}
+          formHandler={useFormHandler}
         ></Input>
         <Input
           id="address"
@@ -136,7 +136,7 @@ const NewClass = () => {
           placeholder="Address"
           // errorMessage="Please enter a valid password"
           validators={[Validator.VALIDATOR_REQUIRE()]}
-          formHandler={formHandler}
+          formHandler={useFormHandler}
         ></Input>
         <Button primary rounded>
           Confirm
