@@ -74,15 +74,15 @@ exports.updateInstructorProfile= asyncHandler(async (req, res) => {
   validation.validateRole(user, "instructor", res, next);
   validation.validateProfileBelongsToUser(user, "instructor", res, next);
 
-  if (!user) {
-    res.status(400);
-    throw new Error("User not logged in");
-  }
+  // if (!user) {
+  //   res.status(400);
+  //   throw new Error("User not logged in");
+  // }
 
-  if (!user.role === "instructor" ){
-    res.status(400);
-    throw new Error("Only instructor account can create instructor profile");
-  }
+  // if (!user.role === "instructor" ){
+  //   res.status(400);
+  //   throw new Error("Only instructor account can create instructor profile");
+  // }
 
   if (user.role === "instructor" && user.instructorprofile ) {
     res.status(400);

@@ -12,14 +12,25 @@ const Input = ({
   validators,
   disableErrorMessages,
   formHandler,
+  reset,
+  onChange,
+  value,
   ...rest
 }) => {
-  const [inputState, setInputState] = useState({
+  const initialState = {
     value: "",
     isValid: false,
     isFocus: false,
     errorMessages: [],
-  });
+  };
+
+  const [inputState, setInputState] = useState(initialState);
+  // const resetHandler = () => {
+  //   setInputState(initialState);
+  // };
+  useEffect(() => {
+      setInputState(initialState);
+  }, [reset]);
 
   const changehandler = (event) => {
     if (event.target.type === "file") {
@@ -81,6 +92,8 @@ const Input = ({
     );
   }
 
+  
+
   // Build Classes for input
   const classes = classNames("border block mb-2", rest.className);
 
@@ -89,9 +102,9 @@ const Input = ({
   let formContent = (
     <input
       type={type}
-      value={inputState.value}
+      value={value ? value : inputState.value}
       className={classes}
-      onChange={changehandler}
+      onChange={onChange ? onChange : changehandler}
       onFocus={focusHandler}
       placeholder={placeholder}
     />

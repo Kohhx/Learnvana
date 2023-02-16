@@ -16,7 +16,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   // Use form hook for form handling
-  const [formState, formHandler] = useForm(
+  const {formState, useFormHandler} = useForm(
     {
       email: {
         value: "",
@@ -85,7 +85,7 @@ const Login = () => {
             Validator.VALIDATOR_EMAIL(),
             Validator.VALIDATOR_REQUIRE(),
           ]}
-          formHandler={formHandler}
+          formHandler={useFormHandler}
         ></Input>
         <Input
           id="password"
@@ -97,7 +97,7 @@ const Login = () => {
             Validator.VALIDATOR_REQUIRE(),
             Validator.VALIDATOR_MINLENGTH(6),
           ]}
-          formHandler={formHandler}
+          formHandler={useFormHandler}
         ></Input>
         <Button primary rounded>
           Login

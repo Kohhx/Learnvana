@@ -12,3 +12,4 @@ npx create-react-app frontend --template redux
 npm install react-router-dom react-toastify axios react-icons classnames prop-types
 npm i react-spinners
 npm install react-transition-group@1.x --save
+npm install uuid
