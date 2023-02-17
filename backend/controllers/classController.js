@@ -281,6 +281,15 @@ exports.approveStudentFromClass = asyncHandler(async (req, res, next) => {
     throw new Error("Error saving class with new student");
   }
 
+  // Insert class into student
+  try {
+    student.classes.push(classFound);
+    await student.save();
+  } catch (error) {
+    res.status(500);
+    throw new Error("Error saving class into student");
+  }
+
   // Remove from student from pending
   try {
     await Class.updateOne(
@@ -346,7 +355,7 @@ exports.rejectStudentFromClass = asyncHandler(async (req, res, next) => {
 // @route /api/instructors/classes/:class_id/students
 // @access private
 exports.getAllStudentsFromClass = asyncHandler(async (req, res, next) => {
-  console.log("3")
+  console.log("3");
   const { classId } = req.params;
   const user = await User.findById(req.user.id);
   const classFound = await Class.findById(classId).populate("students");
@@ -355,7 +364,7 @@ exports.getAllStudentsFromClass = asyncHandler(async (req, res, next) => {
   validation.validateUser(user, res, next);
   validation.validateRole(user, "instructor", res, next);
   validation.validateClassBelongsInstructor(user, classFound, res, next);
-  console.log("4")
+  console.log("4");
   // return pending students
   res.status(201).json(classFound.students);
 });

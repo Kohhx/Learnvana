@@ -11,7 +11,7 @@ const Navbarguardian = ({activeStyle}) => {
         </NavLink>
       </li>
       <li>
-        <NavLink to="/classes/dashboard" style={activeStyle}>
+        <NavLink to="/guardians/dashboard" style={activeStyle}>
           Dashboard
         </NavLink>
       </li>

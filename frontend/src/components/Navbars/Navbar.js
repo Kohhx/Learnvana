@@ -91,7 +91,7 @@ const Navbar = () => {
       <ul className="flex gap-4">
         {navContent}
         {user && (
-          <DropDown configs={dropdownConfig}>
+          <DropDown configs={dropdownConfig} className="absolute right-0 top-10 w-[250px] rounded-md bg-orange-300 p-4">
             <img
               className="rounded-full w-[30px] h-[30px]"
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTugu0kegXOT1Gh1sgDVHvYjkGW29w19Hl9gQ&usqp=CAU"
