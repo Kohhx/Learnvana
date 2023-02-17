@@ -62,7 +62,7 @@ exports.createStudent = asyncHandler(async (req, res) => {
   }
 
 
-  res.status(200).json({
+  res.status(200).json([{
     _id: student._id,
     first_name: student.first_name,
     last_name: student.last_name,
@@ -71,7 +71,7 @@ exports.createStudent = asyncHandler(async (req, res) => {
     email: student.email,
     contact: student.contact,
     avatar: student.avatar,
-  });
+  }]);
 });
 
 exports.getStudentClasses = asyncHandler(async (req, res) => {

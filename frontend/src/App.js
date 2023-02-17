@@ -27,7 +27,8 @@ import StudentSignUp from "./pages/students/StudentSignUp";
 import StudentDashboard from "./pages/students/StudentDashboard";
 
 // GUARDIANS IMPORT
-import GuardianCreateStudents from "./pages/GuardianCreateStudents"
+import GuardianCreateStudents from "./pages/guardian/GuardianCreateStudents"
+import GuardianDashboard from "./pages/guardian/GuardianDashboard";
 
 const App = () => {
   return (
@@ -97,9 +98,10 @@ const App = () => {
               </Route>
               {/* End */}
 
-              {/* Students */}
+              {/* Guardians */}
               <Route path="/guardians">
                 <Route path="signup" element={<GuardianCreateStudents />} />
+                <Route path="dashboard" element={<GuardianDashboard />} />
               </Route>
               {/* End */}
 

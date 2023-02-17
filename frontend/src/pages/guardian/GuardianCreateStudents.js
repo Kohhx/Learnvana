@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import Validator from "../utilities/Validator";
+import Validator from "../../utilities/Validator";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import InputV2 from "../components/InputV2";
-import Button from "../components/Button";
-import useThunk from "../hooks/useThunkHook";
-import useForm from "../hooks/useFormHook";
-import SelectV2 from "../components/SelectV2";
+import InputV2 from "../../components/InputV2";
+import Button from "../../components/Button";
+import useThunk from "../../hooks/useThunkHook";
+import useForm from "../../hooks/useFormHook";
+import SelectV2 from "../../components/SelectV2";
 import { FaUser } from "react-icons/fa";
-import { useSelector, useDispatch } from "react-redux";
-import { createGuardianStudents } from "../features/guardian/guardianSlice";
+import { useSelector } from "react-redux";
+import { createGuardianStudents } from "../../features/guardian/guardianSlice";
 import { v4 as uuidv4 } from "uuid";
 
 const GuardianCreateStudents = () => {
@@ -141,7 +141,11 @@ const GuardianCreateStudents = () => {
     doCreateGuardianStudents(studentList);
   };
 
-  // console.log(studentList);
+  useEffect(() => {
+    if (createGuardianStudentsSuccess) {
+      navigate("/guardians/dashboard");
+    }
+  }, [navigate, createGuardianStudentsSuccess]);
 
   const addStudentForm = (
     <div>
@@ -196,12 +200,19 @@ const GuardianCreateStudents = () => {
       <SelectV2
         id="gender"
         label="Gender"
-        options={["male", "female"]}
+        options={[
+          {
+            display: "male",
+            value: "male",
+          },
+          {
+            display: "female",
+            value: "female",
+          },
+        ]}
         onFocus={() => focusHandler("gender")}
         onChange={(e) =>
-          changeHandler(e, "gender", [
-            Validator.VALIDATOR_CONTAIN(["male", "female"]),
-          ])
+          changeHandler(e, "gender", [Validator.VALIDATOR_REQUIRE()])
         }
         value={formState.inputs.gender.value}
         isFocus={formState.inputs.gender.isFocus}

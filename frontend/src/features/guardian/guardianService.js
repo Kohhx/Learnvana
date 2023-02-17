@@ -21,9 +21,28 @@ const createGuardianStudents = async (newGuardianStudents, token) => {
   }
 };
 
+// Update Get all guardian students profile and info
+const getGuardianStudents = async (token) => {
+  const URL = PROXY.concat(
+    `/api/guardians/students`
+  );
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.get(URL, config);
+  if (response.data) {
+    return response.data;
+  }
+};
+
 // Put all the function into authService object before exporting
 const guardianService = {
   createGuardianStudents,
+  getGuardianStudents,
 };
 
 export default guardianService;

@@ -180,9 +180,9 @@ exports.addPendingUserToClass = asyncHandler(async (req, res) => {
     throw new Error("User not logged in");
   }
 
-  if (user.role !== "student") {
+  if (user.role !== "student" && user.role !== "guardian") {
     res.status(400);
-    throw new Error("Only student can sign up for classes");
+    throw new Error("Only student or guardian can sign up for classes");
   }
 
   if (!student) {

@@ -34,9 +34,9 @@ const SelectV2 = ({
   // Inject form content here
   const formContent = (
     <select className={classes} {...rest}>
-      <option value="nil">Select a {label}</option>
+      <option value="">Select a {label}</option>
       {options.map((option, i) => (
-        <option id={i} value={option} key={i}>{option}</option>
+        <option id={i} value={option.value} key={i}>{option.display}</option>
       ))}
     </select>
   );
