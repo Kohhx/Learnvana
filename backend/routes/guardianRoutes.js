@@ -9,10 +9,11 @@ const { protect } = require("../middlewares/authMiddleware");
  * =============================================================================
  */
 
-// Guardian Create students
+// Guardian Create students - POST
 router.post("/create", protect, guardianController.createStudents);
 
-
+// Guardian get all students - GET
+router.get("/students", protect, guardianController.getStudents);
 
 
 

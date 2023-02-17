@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
 
-const DropDown = ({ children, configs }) => {
+const DropDown = ({ children, configs, ...rest }) => {
   const dropdownDivEl = useRef();
   const [isOpen, setIsOpen] = useState();
   console.log(isOpen);
@@ -26,7 +26,8 @@ const DropDown = ({ children, configs }) => {
   console.log("Render");
 
   const dropdownContent = (
-    <div className="absolute right-0 top-10 w-[250px] rounded-md bg-orange-300 p-4">
+    // <div className="absolute right-0 top-10 w-[250px] rounded-md bg-orange-300 p-4">
+    <div className={rest.className} >
       <ul className="flex flex-col">
         {configs.map((config) => {
           let liContent;

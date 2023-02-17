@@ -39,6 +39,29 @@ export const createGuardianStudents = createAsyncThunk(
   }
 );
 
+// create instructor profile for instructor user
+export const getGuardianStudents = createAsyncThunk(
+  "guardian/getGuardianStudents",
+  async (_, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      const guardianStudentsData = await guardianService.getGuardianStudents(
+        token
+      );
+      return guardianStudentsData;
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      toast.error(message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 // Create guardian slice
 export const guardianSlice = createSlice({
   name: "guardian",
@@ -60,14 +83,27 @@ export const guardianSlice = createSlice({
       .addCase(createGuardianStudents.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        console.log("WWWw");
         const user = JSON.parse(localStorage.getItem("user"));
-        console.log("USER", user);
         user.profiles = action.payload;
         localStorage.setItem("user", JSON.stringify(user));
         state.guardianStudents = action.payload;
       })
       .addCase(createGuardianStudents.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+
+      // Get all students for guardians
+      .addCase(getGuardianStudents.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(getGuardianStudents.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.guardianStudents = action.payload;
+      })
+      .addCase(getGuardianStudents.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
