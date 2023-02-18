@@ -407,7 +407,7 @@ exports.deleteStudentFromClass = asyncHandler(async (req, res, next) => {
 
   // return student id that has been deleted
   res.status(201).json({
-    message: "Successfully student from class list",
+    message: "Successfully removed student from class list",
     studentId,
   });
 });

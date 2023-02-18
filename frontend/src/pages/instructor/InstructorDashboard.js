@@ -8,6 +8,8 @@ import useThunk from "../../hooks/useThunkHook";
 
 const InstructorDashboard = () => {
   const { instructorClasses } = useSelector((state) => state.instructor);
+  const { user } = useSelector((state) => state.auth);
+  const role = user.role
 
   const [
     doGetInstructorClasses,
@@ -29,7 +31,7 @@ const InstructorDashboard = () => {
     doGetInstructorClasses();
   }, [doGetInstructorClasses]);
 
-  const content = instructorClasses.map((singleClass,i) => <Classitem key={i} classData={singleClass}/> );
+  const content = instructorClasses.map((singleClass,i) => <Classitem key={i} classData={singleClass} role={role}/> );
 
 
   return (

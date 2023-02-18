@@ -36,11 +36,27 @@ const getStudentClasses = async (token) => {
   }
 };
 
+// Get all students from class
+const getStudentsFromClass = async (classId, token) => {
+  const URL = PROXY.concat(`/api/students/classes/${classId}/students`);
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.get(URL, config);
+  if (response.data) {
+    return response.data;
+  }
+};
+
 
 // Put all the function into authService object before exporting
 const studentService = {
   UserStudentProfile,
   getStudentClasses,
+  getStudentsFromClass,
 }
 
 export default studentService;

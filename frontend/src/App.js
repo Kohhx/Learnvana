@@ -5,13 +5,13 @@ import "react-toastify/dist/ReactToastify.css";
 
 // GENERAL IMPORT
 import ProtectedRoute from "./routing/ProtectedRoute";
-import ClassLayout from "./components/Layouts/ClassLayout";
 import Navbar from "./components/Navbars/Navbar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 
 // INSTRUCTOR IMPORT
+import InstructorClassLayout from "./components/Layouts/InstructorClassLayout";
 import InstructorSignUp from "./pages/instructor/InstructorSignUp";
 import InstructorCreateClass from "./pages/instructor/InstructorCreateClass";
 import InstructorDashboard from "./pages/instructor/InstructorDashboard";
@@ -23,8 +23,10 @@ import InstructorClassStudents from "./pages/instructor/InstructorClassStudents"
 import InstructorProfileUpdate from "./pages/instructor/InstructorProfileUpdate";
 
 // STUDENTS IMPORT
+import StudentClassLayout from "./components/Layouts/StudentClassLayout";
 import StudentSignUp from "./pages/students/StudentSignUp";
 import StudentDashboard from "./pages/students/StudentDashboard";
+import StudentClassmates from "./pages/students/StudentClassmates";
 
 // GUARDIANS IMPORT
 import GuardianCreateStudents from "./pages/guardian/GuardianCreateStudents"
@@ -76,8 +78,7 @@ const App = () => {
                 />
                 <Route path="dashboard" element={<InstructorDashboard />} />
                 <Route path="classes/new" element={<InstructorCreateClass />} />
-
-                <Route path="classes/:classId" element={<ClassLayout />}>
+                <Route path="classes/:classId" element={<InstructorClassLayout />}>
                   <Route path="students">
                     <Route index element={<InstructorClassStudents />} />
                     <Route
@@ -95,6 +96,11 @@ const App = () => {
               <Route path="/students">
                 <Route path="signup" element={<StudentSignUp />} />
                 <Route path="dashboard" element={<StudentDashboard />} />
+                <Route path="classes/:classId" element={<StudentClassLayout />}>
+                  <Route path="classmates" element={<StudentClassmates />} />
+                  <Route path="lessons" element={<InstructorLessons />} />
+                  <Route path="lessons/:lessonId" element={<InstructorLesson />} />
+                </Route>
               </Route>
               {/* End */}
 
