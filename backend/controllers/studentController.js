@@ -1,6 +1,9 @@
 const asyncHandler = require("express-async-handler");
-const Student = require("../models/student");
 const User = require("../models/user");
+const Student = require("../models/student");
+const Class = require("../models/class");
+
+
 
 // @desc create a new student
 // @route /api/student/create
@@ -101,4 +104,15 @@ exports.getStudentClasses = asyncHandler(async (req, res) => {
   console.log(studentClasses);
 
   res.status(201).json(studentClasses);
+});
+
+exports.getAllStudentsFromClass = asyncHandler(async (req, res) => {
+  console.log("3");
+  const { classId } = req.params;
+  const user = await User.findById(req.user.id);
+  const classFound = await Class.findById(classId).populate("students");
+
+
+  // return pending students
+  res.status(201).json(classFound.students);
 });

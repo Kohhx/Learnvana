@@ -31,7 +31,7 @@ const ClassInvite = () => {
 
   console.log(formState);
 
-  console.log(user.profiles);
+  console.log("check profile",user.profiles);
   // Get Names array
   const studentNames = user.profiles.map((student) => ({
     display: student.first_name,

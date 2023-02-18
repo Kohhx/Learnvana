@@ -9,6 +9,8 @@ import useThunk from "../../hooks/useThunkHook";
 const StudentDashboard = () => {
 
   const { studentClasses } = useSelector((state) => state.student)
+  const { user } = useSelector((state) => state.auth);
+  const role = user.role
 
   const [
     doGetStudentClasses,
@@ -22,7 +24,7 @@ const StudentDashboard = () => {
     doGetStudentClasses();
   }, [doGetStudentClasses]);
 
-  const classesDisplay = studentClasses.map((singleClass,i) => <Classitem key={i} classData={singleClass}/> );
+  const classesDisplay = studentClasses.map((singleClass,i) => <Classitem key={i} classData={singleClass} role={role}/> );
 
 
 

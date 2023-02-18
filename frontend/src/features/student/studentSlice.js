@@ -8,6 +8,7 @@ const initialState = {
   student: null,
   students: [],
   studentClasses: [],
+  classStudents: [],
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -43,6 +44,26 @@ export const getStudentClasses = createAsyncThunk(
     try {
       const token = thunkAPI.getState().auth.user.token;
       return await studentService.getStudentClasses(token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      toast.error(message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// Get all students from class
+export const getStudentsFromClass = createAsyncThunk(
+  "student/getAllStudentFromClass",
+  async (classId, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await studentService.getStudentsFromClass(classId, token);
     } catch (error) {
       const message =
         (error.response &&
@@ -95,6 +116,21 @@ export const studentSlice = createSlice({
         state.studentClasses = action.payload;
       })
       .addCase(getStudentClasses.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+
+      // Get all students from class
+      .addCase(getStudentsFromClass.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(getStudentsFromClass.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.classStudents = action.payload;
+      })
+      .addCase(getStudentsFromClass.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
