@@ -29,7 +29,7 @@ const InputV2 = ({
   }
 
   // Build Classes for input
-  const classes = classNames("border block mb-2", rest.className);
+  const classes = classNames("border block mb-2 w-full", rest.className);
 
   // Inject form content here
 

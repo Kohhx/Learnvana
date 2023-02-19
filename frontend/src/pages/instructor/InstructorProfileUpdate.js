@@ -11,13 +11,18 @@ import { useSelector } from "react-redux";
 import { updateInstructorProfile } from "../../features/instructor/instructorSlice";
 
 const InstructorProfileUpdate = () => {
-  const [fileState, setFileState] = useState();
+  // Get User state
+  const { user } = useSelector((state) => state.auth);
+
+  const previewUrlInitialState = user?.profiles?.avatar?.url
+    ? user.profiles.avatar.url
+    : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTugu0kegXOT1Gh1sgDVHvYjkGW29w19Hl9gQ&usqp=CAU";
+
+  const [file, setFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(previewUrlInitialState);
 
   // Initalize navigate
   const navigate = useNavigate();
-
-  // Get User state
-  const { user } = useSelector((state) => state.auth);
 
   // Get instructor ID from params
   const { _id: instructorId } = user.profiles;
@@ -88,7 +93,7 @@ const InstructorProfileUpdate = () => {
       email: user.profiles.email,
       experience: user.profiles.experience,
     };
-    console.log("Old", oldInstructorProfile);
+    // console.log("Old", oldInstructorProfile);
     fillHandler(oldInstructorProfile);
   }, []);
 
@@ -97,6 +102,18 @@ const InstructorProfileUpdate = () => {
       navigate("/");
     }
   }, [updateInstructorProfileSuccess]);
+
+  useEffect(() => {
+    if (!formState.inputs.avatar.value) {
+      return;
+    }
+    // console.log("File inputted");
+    const fileReader = new FileReader();
+    fileReader.onload = () => {
+      setPreviewUrl(fileReader.result);
+    };
+    fileReader.readAsDataURL(formState.inputs.avatar.value);
+  }, [formState.inputs.avatar.value]);
 
   const updateUserSubmitHandler = (event) => {
     event.preventDefault();
@@ -122,11 +139,15 @@ const InstructorProfileUpdate = () => {
 
     doUpdateInstructorProfile(newInstructorProfile);
   };
+
   return (
-    <div>
-      <div className="text-center">
+    <div className="border w-6/12 mx-auto p-6">
+      <div className="text-center  mb-5">
         <h1>Update Instructor Profile</h1>
         <p>Fill in profile details</p>
+      </div>
+      <div className="w-fit border mx-auto mb-3">
+        {previewUrl && <img src={previewUrl} alt="preview" />}
       </div>
       <form onSubmit={updateUserSubmitHandler}>
         <InputV2
@@ -215,9 +236,11 @@ const InstructorProfileUpdate = () => {
           isValid={formState.inputs.experience.isValid}
           errorMessages={formState.inputs.experience.messages}
         ></InputV2>
-        <Button primary rounded>
-          Update
-        </Button>
+        <div className="flex justify-end">
+          <Button primary rounded>
+            Update
+          </Button>
+        </div>
       </form>
     </div>
   );

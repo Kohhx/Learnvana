@@ -84,7 +84,7 @@ const Navbar = () => {
   }
 
   let avatarImgSRC = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTugu0kegXOT1Gh1sgDVHvYjkGW29w19Hl9gQ&usqp=CAU"
-  if (user?.role === "instructor" && user.profiles?.avatar.url) {
+  if (user?.role === "instructor" && user.profiles?.avatar?.url) {
     avatarImgSRC = user.profiles?.avatar.url;
   }
   console.log(avatarImgSRC)
