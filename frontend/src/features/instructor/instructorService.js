@@ -219,8 +219,24 @@ const deleteStudentFromClass = async (ids, token) => {
 
 // Update instructor profile
 const updateInstructorProfile = async (newInstructorProfile, token) => {
-  console.log("2")
-  const { instructorId } =newInstructorProfile;
+  const { instructorId } = newInstructorProfile;
+  console.log("2", instructorId)
+
+
+  // Make utility function to convert JSON to formdata
+  const convertObjToFormData = (obj) => {
+    let formData = new FormData();
+    for (let key in obj){
+      console.log("Key", key)
+      console.log("Value", obj[key])
+      formData.append(key, obj[key])
+    }
+
+    return formData
+  }
+
+  const newInstructorProfileFD = convertObjToFormData(newInstructorProfile)
+  console.log("FormData OUt",newInstructorProfileFD.get("avatar"))
   const URL = PROXY.concat(
     `/api/instructors/${instructorId}/update`
   );
@@ -228,10 +244,11 @@ const updateInstructorProfile = async (newInstructorProfile, token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
+      'Content-Type': 'multipart/form-data',
     },
   };
 
-  const response = await axios.post(URL, newInstructorProfile, config);
+  const response = await axios.post(URL, newInstructorProfileFD, config);
   if (response.data) {
     return response.data;
   }

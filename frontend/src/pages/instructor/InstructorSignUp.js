@@ -19,7 +19,7 @@ const InstructorSignUp = () => {
   const { user } = useSelector( state => state.auth)
 
   // Use form hook for form handling
-  const [formState, formHandler] = useForm(
+  const {formState, useFormHandler} = useForm(
     {
       first_name: {
         value: "",
@@ -103,7 +103,7 @@ const InstructorSignUp = () => {
           placeholder="Enter first_name"
           // errorMessage="Please enter a valid email"
           validators={[Validator.VALIDATOR_REQUIRE()]}
-          formHandler={formHandler}
+          formHandler={useFormHandler}
         ></Input>
         <Input
           id="last_name"
@@ -112,7 +112,7 @@ const InstructorSignUp = () => {
           placeholder="Enter last_name"
           // errorMessage="Please enter a valid password"
           validators={[Validator.VALIDATOR_REQUIRE()]}
-          formHandler={formHandler}
+          formHandler={useFormHandler}
         ></Input>
         <Input
           id="age"
@@ -120,14 +120,14 @@ const InstructorSignUp = () => {
           label="Age"
           placeholder="Enter age"
           validators={[Validator.VALIDATOR_REQUIRE()]}
-          formHandler={formHandler}
+          formHandler={useFormHandler}
         ></Input>
         <Select
           id="gender"
           label="Gender"
           options={["male", "female"]}
           validators={[Validator.VALIDATOR_CONTAIN(["male", "female"])]}
-          formHandler={formHandler}
+          formHandler={useFormHandler}
         />
         <Input
           id="experience"
@@ -135,7 +135,7 @@ const InstructorSignUp = () => {
           label="Experience"
           placeholder="Share your experience"
           validators={[Validator.VALIDATOR_REQUIRE()]}
-          formHandler={formHandler}
+          formHandler={useFormHandler}
         ></Input>
         <Button primary rounded>
           Confirm

@@ -4,7 +4,8 @@ const instructorController = require("../controllers/instructorController");
 const classController = require("../controllers/classController");
 const lessonController = require("../controllers/lessonController");
 const { protect } = require("../middlewares/authMiddleware");
-
+const { uploadImage } = require("../middlewares/multer")
+console.log("Upload", uploadImage)
 /**
  * =============================================================================
  *                                INSTRUCTOR
@@ -21,8 +22,10 @@ const { protect } = require("../middlewares/authMiddleware");
 router.post("/create", protect, instructorController.createInstructor);
 
 // Update instructor profile
-router.post("/:instructorId/update", protect, instructorController.updateInstructorProfile);
+router.post("/:instructorId/update", protect,uploadImage.single('avatar'), instructorController.updateInstructorProfile);
 
+// // Update instructor profile
+// router.post("/:instructorId/update", protect, uploadImage.single('avatar'), instructorController.updateInstructorProfile);
 /**
  * =============================================================================
  *  CLASSES

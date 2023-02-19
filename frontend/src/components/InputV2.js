@@ -10,6 +10,7 @@ const InputV2 = ({
   errorMessages,
   isFocus,
   isValid,
+  placeholder,
   ...rest
 }) => {
   // Build Error
@@ -32,14 +33,14 @@ const InputV2 = ({
 
   // Inject form content here
 
-  let formContent = <input type={type} className={classes} {...rest} />;
+  let formContent = <input type={type} placeholder={placeholder} className={classes} {...rest} />;
 
   if (type === "file") {
-    formContent = <input type={type} className={classes} {...rest} />;
+    formContent = <input type={type} placeholder={placeholder} className={classes} {...rest} />;
   }
 
-  if (textarea) {
-    formContent = <textarea name="" id="" cols="30" rows="10"></textarea>;
+  if (type === "textarea") {
+    formContent = <textarea className={classes} cols="30" rows="10" {...rest} >{rest.value}</textarea>;
   }
 
   return (

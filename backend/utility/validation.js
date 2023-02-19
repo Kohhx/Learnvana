@@ -33,6 +33,7 @@ exports.validateClassBelongsInstructor = (user, instructorClass, res, next) => {
 exports.validateProfileBelongsToUser = (user, profile, res, next) => {
   if (user._id.toString() !== profile.user.toString()) {
     res.status(400);
+    console.log(`Profile does not belong to user`)
     return next(new Error(`Profile does not belong to user`));
   }
   return next;

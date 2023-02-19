@@ -118,6 +118,7 @@ const useFormHook = (formInitialState, formInitialValidity) => {
         validators
       );
       value = event.target.files[0];
+      console.log(value)
     } else {
       [isInputValid, validatorMessages] = Validator.validate(
         event.target.value,
