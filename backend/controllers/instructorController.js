@@ -118,30 +118,32 @@ exports.updateInstructorProfile = asyncHandler(async (req, res, next) => {
 
   const oldPublicId = instructorFound.avatar?.public_id;
 
-
   // Remove old avatar first
   if (oldPublicId && file) {
-    console.log("Start")
     // Check if there avatar exist
     try {
-    const { result: destroyRes } = await cloudinary.uploader.destroy(
-      oldPublicId,
-      {
-        resource_type: "image",
-      }
-    );
-    } catch (error){
+      const { result: destroyRes } = await cloudinary.uploader.destroy(
+        oldPublicId,
+        {
+          resource_type: "image",
+        }
+      );
+    } catch (error) {
       res.status(400);
       throw new Error(error);
     }
-    console.log("all ok")
   }
 
+  // Add new image to avatar if file exist
   if (file) {
     const { secure_url, public_id } = await cloudinary.uploader.upload(
       file.path,
       {
         resource_type: "image",
+        gravity: "face",
+        height: 150,
+        width: 150,
+        crop: "thumb",
       }
     );
     instructorFound.avatar = { url: secure_url, public_id };
