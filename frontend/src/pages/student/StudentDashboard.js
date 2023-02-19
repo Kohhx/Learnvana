@@ -30,6 +30,7 @@ const StudentDashboard = () => {
 
   return (
     <div>
+      <p>Classes</p>
       {classesDisplay}
     </div>
   )

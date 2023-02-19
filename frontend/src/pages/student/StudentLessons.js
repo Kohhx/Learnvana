@@ -1,18 +1,15 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import NewLesson from "../../components/NewLesson";
-import Hide from "../../components/Hide";
 import Lessonitem from "../../components/Lessonitem";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  getClassLessons,
-  reset,
-} from "../../features/instructor/instructorSlice";
+import { getClassLessons } from "../../features/student/studentSlice";
 import useThunk from "../../hooks/useThunkHook";
 
-const Lessons = () => {
+const StudentLessons = () => {
   let { classId } = useParams();
-  const { classLessons } = useSelector((state) => state.instructor);
+  const { classLessons } = useSelector((state) => state.student);
+  const { user } = useSelector((state) => state.auth);
+  const role = user.role;
 
   const [
     doGetClassLessons,
@@ -22,21 +19,20 @@ const Lessons = () => {
   ] = useThunk(getClassLessons);
 
   useEffect(() => {
-    doGetClassLessons(classId);
-  }, [doGetClassLessons, classId]);
+    doGetClassLessons(classId)
+  }, [doGetClassLessons, classId])
 
   const allLessons = classLessons.map((singleLesson, i) => (
-    <Lessonitem key={i} lessonData={singleLesson} classId={classId} />
+    <Lessonitem key={i} lessonData={singleLesson} role={role} classId={classId} />
   ));
+
+
 
   return (
     <div>
       {allLessons}
-      <Hide>
-        <NewLesson></NewLesson>
-      </Hide>
     </div>
-  );
-};
+  )
+}
 
-export default Lessons;
+export default StudentLessons

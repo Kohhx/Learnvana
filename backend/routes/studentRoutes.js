@@ -11,9 +11,23 @@ router.get('/classes', protect, studentController.getStudentClasses)
 
 // Student get student list from class - GET
 router.get(
-  "/classes/:classId/students",
+  `/classes/:classId/students`,
   protect,
   studentController.getAllStudentsFromClass
 );
+
+// get all class lessons
+router.get(
+  '/classes/:classId/lessons',
+  protect,
+  studentController.getClassLessons
+  );
+
+  // get one lesson from class
+router.get(
+  '/classes/:classId/lessons/:lessonId',
+  protect,
+  studentController.getClassLesson
+  );
 
 module.exports = router;

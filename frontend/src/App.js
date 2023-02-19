@@ -24,9 +24,11 @@ import InstructorProfileUpdate from "./pages/instructor/InstructorProfileUpdate"
 
 // STUDENTS IMPORT
 import StudentClassLayout from "./components/Layouts/StudentClassLayout";
-import StudentSignUp from "./pages/students/StudentSignUp";
-import StudentDashboard from "./pages/students/StudentDashboard";
-import StudentClassmates from "./pages/students/StudentClassmates";
+import StudentSignUp from "./pages/student/StudentSignUp";
+import StudentDashboard from "./pages/student/StudentDashboard";
+import StudentLessons from "./pages/student/StudentLessons";
+import StudentLesson from "./pages/student/StudentLesson";
+import StudentClassmates from "./pages/student/StudentClassmates";
 
 // GUARDIANS IMPORT
 import GuardianCreateStudents from "./pages/guardian/GuardianCreateStudents"
@@ -98,8 +100,8 @@ const App = () => {
                 <Route path="dashboard" element={<StudentDashboard />} />
                 <Route path="classes/:classId" element={<StudentClassLayout />}>
                   <Route path="classmates" element={<StudentClassmates />} />
-                  <Route path="lessons" element={<InstructorLessons />} />
-                  <Route path="lessons/:lessonId" element={<InstructorLesson />} />
+                  <Route path="lessons" element={<StudentLessons />} />
+                  <Route path="lessons/:lessonId" element={<StudentLesson />} />
                 </Route>
               </Route>
               {/* End */}
