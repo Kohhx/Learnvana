@@ -83,6 +83,12 @@ const Navbar = () => {
     }
   }
 
+  let avatarImgSRC = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTugu0kegXOT1Gh1sgDVHvYjkGW29w19Hl9gQ&usqp=CAU"
+  if (user?.role === "instructor" && user.profiles?.avatar.url) {
+    avatarImgSRC = user.profiles?.avatar.url;
+  }
+  console.log(avatarImgSRC)
+
   return (
     <div className="w-screen h-16 bg-gray-500 px-7 flex items-center">
       <div className="flex-1">
@@ -94,7 +100,7 @@ const Navbar = () => {
           <DropDown configs={dropdownConfig} className="absolute right-0 top-10 w-[250px] rounded-md bg-orange-300 p-4">
             <img
               className="rounded-full w-[30px] h-[30px]"
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTugu0kegXOT1Gh1sgDVHvYjkGW29w19Hl9gQ&usqp=CAU"
+              src={avatarImgSRC}
               alt=""
             />
           </DropDown>

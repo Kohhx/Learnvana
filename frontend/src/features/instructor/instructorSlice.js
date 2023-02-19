@@ -277,12 +277,14 @@ export const updateInstructorProfile = createAsyncThunk(
   "instructor/updateInstructorProfile",
   async (newInstructorProfile, thunkAPI) => {
     try {
-      console.log("1")
+      console.log("1");
       const token = thunkAPI.getState().auth.user.token;
-      return await instructorService.updateInstructorProfile(
+      const instructorData = await instructorService.updateInstructorProfile(
         newInstructorProfile,
         token
       );
+      thunkAPI.dispatch(updateProfile(instructorData));
+      return instructorData;
     } catch (error) {
       const message =
         (error.response &&
@@ -376,7 +378,7 @@ export const instructorSlice = createSlice({
       .addCase(newLesson.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.classLessons = [...state.classLessons,action.payload]
+        state.classLessons = [...state.classLessons, action.payload];
         // dont mutate(.push), use destructure^ (make new array and add in)
       })
       .addCase(newLesson.rejected, (state, action) => {

@@ -4,6 +4,7 @@ git init
 npm install express dotenv mongoose colors bcryptjs express-async-handler jsonwebtoken concurrently
 npm install --save multer
 npm install -D nodemon
+npm install cloudinary
 
 // Create React App
 npx create-react-app frontend --template redux
