@@ -7,6 +7,7 @@ const API_INSTRUCTOR_PROFILE_URL = PROXY.concat("/api/instructors/create");
 // class routes
 const API_NEW_CLASS_URL = PROXY.concat("/api/instructors/classes/create");
 const API_GET_INSTRUCTOR_CLASSES_URL = PROXY.concat("/api/instructors/classes");
+const API_DELETE_INSTRUCTOR_CLASSES_URL = PROXY.concat("/api/instructors/classes/delete");
 let API_GET_INSTRUCTOR_CLASS_URL = PROXY.concat("/api/instructors/classes/");
 
 // INSTRUCTOR
@@ -73,12 +74,21 @@ const getInstructorClass = async (classId, token) => {
   }
 };
 
-// const API_GET_INSTRUCTOR_LESSONS_URL = PROXY.concat(
-//   "/api/instructors/classes/:classId/lessons"
-// );
-// let API_GET_INSTRUCTOR_LESSON_URL = PROXY.concat(
-//   "/api/instructors/classes/:classId/lessons/"
-// );
+// Delete Class
+const deleteInstructorClass = async (data, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.post(API_DELETE_INSTRUCTOR_CLASSES_URL, data, config);
+  if (response.data) {
+    return response.data;
+  }
+};
+
+
 
 // post new lesson
 const newLesson = async (lessonData, token) => {
@@ -260,6 +270,7 @@ const instructorService = {
   newClass,
   getInstructorClasses,
   getInstructorClass,
+  deleteInstructorClass,
   newLesson,
   getClassLessons,
   getClassLesson,

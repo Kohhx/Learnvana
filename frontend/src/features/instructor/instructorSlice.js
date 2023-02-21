@@ -107,6 +107,26 @@ export const getInstructorClass = createAsyncThunk(
   }
 );
 
+// Delete a Instructor class
+export const deleteInstructorClass = createAsyncThunk(
+  "instructor/deleteClass",
+  async (data, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await instructorService.deleteInstructorClass(data, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      toast.error(message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 //LESSONS
 
 // Create new lesson
@@ -366,6 +386,23 @@ export const instructorSlice = createSlice({
         state.instructorClass = action.payload;
       })
       .addCase(getInstructorClass.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+
+      // Delete a instructor class
+      .addCase(deleteInstructorClass.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteInstructorClass.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.instructorClasses = state.instructorClasses.filter(
+          (oneClass) => oneClass._id === action.payload._id
+        );
+      })
+      .addCase(deleteInstructorClass.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
