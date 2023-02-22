@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import classNames from "classnames";
-import Validator from "../utilities/Validator";
 
 const InputV2 = ({
   id,

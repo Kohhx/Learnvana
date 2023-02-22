@@ -9,24 +9,24 @@ const VALIDATOR_TYPE_CONTAIN = "CONTAIN"
 const VALIDATOR_TYPE_EQUAL = "EQUAL"
 
 // Validators used in the validate functions
-const VALIDATOR_REQUIRE = () => ({ type: VALIDATOR_TYPE_REQUIRE });
-const VALIDATOR_FILE = () => ({ type: VALIDATOR_TYPE_FILE });
-const VALIDATOR_MINLENGTH = (val) => ({
+exports.VALIDATOR_REQUIRE = () => ({ type: VALIDATOR_TYPE_REQUIRE });
+exports.VALIDATOR_FILE = () => ({ type: VALIDATOR_TYPE_FILE });
+exports.VALIDATOR_MINLENGTH = (val) => ({
   type: VALIDATOR_TYPE_MINLENGTH,
   val: val,
 });
-const VALIDATOR_MAXLENGTH = (val) => ({
+exports.VALIDATOR_MAXLENGTH = (val) => ({
   type: VALIDATOR_TYPE_MAXLENGTH,
   val: val,
 });
-const VALIDATOR_MIN = (val) => ({ type: VALIDATOR_TYPE_MIN, val: val });
-const VALIDATOR_MAX = (val) => ({ type: VALIDATOR_TYPE_MAX, val: val });
-const VALIDATOR_EMAIL = () => ({ type: VALIDATOR_TYPE_EMAIL });
-const VALIDATOR_CONTAIN = (arr) => ({ type: VALIDATOR_TYPE_CONTAIN, arr: arr })
-const VALIDATOR_EQUAL = (val) => ({ type: VALIDATOR_TYPE_EQUAL, val: val })
+exports.VALIDATOR_MIN = (val) => ({ type: VALIDATOR_TYPE_MIN, val: val });
+exports.VALIDATOR_MAX = (val) => ({ type: VALIDATOR_TYPE_MAX, val: val });
+exports.VALIDATOR_EMAIL = () => ({ type: VALIDATOR_TYPE_EMAIL });
+exports.VALIDATOR_CONTAIN = (arr) => ({ type: VALIDATOR_TYPE_CONTAIN, arr: arr })
+exports.VALIDATOR_EQUAL = (val) => ({ type: VALIDATOR_TYPE_EQUAL, val: val })
 
 // Validate Function used to validate, validators is an array
-const validate = (value, validators) => {
+exports.validate = (value, validators) => {
   let errorMessages = [];
   let isValid = true;
   for (const validator of validators) {
@@ -102,18 +102,3 @@ const validate = (value, validators) => {
 
   return [isValid, errorMessages];
 };
-
-const validator = {
-  VALIDATOR_REQUIRE,
-  VALIDATOR_FILE,
-  VALIDATOR_MINLENGTH,
-  VALIDATOR_MAXLENGTH,
-  VALIDATOR_MIN,
-  VALIDATOR_MAX,
-  VALIDATOR_EMAIL,
-  VALIDATOR_CONTAIN,
-  VALIDATOR_EQUAL,
-  validate
-}
-
-export default validator;
