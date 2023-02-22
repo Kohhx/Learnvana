@@ -4,8 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "dev": "nodemon --exec babel-node server.js",
-    "build": "babel ./ -d dist",
+    "dev": "nodemon --exec babel-node src/server.js",
+    "build": "babel src -d dist",
     "start": "node dist/server.js",
     "both-dev": "concurrently \"npm run dev\" \"npm --prefix ../frontend/ run dev\""
   },
