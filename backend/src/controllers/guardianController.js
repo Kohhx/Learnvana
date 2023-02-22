@@ -9,6 +9,7 @@ const User = require("../models/user");
 // @route /api/guardians/create
 // @access private
 exports.createStudents = asyncHandler(async (req, res, next) => {
+
   const user = await User.findById(req.user.id).populate("studentprofiles");
   validation.validateUser(user, res, next);
   validation.validateRole(user, "guardian", res, next);
