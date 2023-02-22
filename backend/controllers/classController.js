@@ -251,7 +251,6 @@ exports.getPendingStudentFromClass = asyncHandler(async (req, res, next) => {
 // @route /api/instructors/classes/:class_id/students/approve
 // @access private
 exports.approveStudentFromClass = asyncHandler(async (req, res, next) => {
-
   const { classId } = req.params;
   const { studentId } = req.body;
   const user = await User.findById(req.user.id);
