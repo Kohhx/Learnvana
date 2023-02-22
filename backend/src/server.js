@@ -51,7 +51,7 @@ app.use((req, res, next) => {
 
 // Root Page
 app.get("/", (req, res) => {
-  res.status(201).json({ message: "Welcome to Learnvana" });
+  res.status(200).json({ message: "Welcome to Learnvana" });
 });
 
 // Routes
