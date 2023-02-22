@@ -77,6 +77,13 @@ router.get(
   classController.getAllStudentsFromClass
 );
 
+// Instructor delete class from class list - DELETE
+router.post(
+  "/classes/delete",
+  protect,
+  instructorController.delete
+);
+
 // Instructor delete student from class student list - DELETE
 router.post(
   "/classes/:classId/students/delete",

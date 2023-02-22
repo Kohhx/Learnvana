@@ -26,6 +26,7 @@ const StudentClassmates = () => {
 
   return (
     <div>
+      <p>Students</p>
       {classMates}
     </div>
   )

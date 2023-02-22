@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Lessonitem = ({ lessonData, classId }) => {
+const Lessonitem = ({ lessonData, role, classId }) => {
   const { title, _id } = lessonData;
 
   return (
     <div>
-      <Link to={`/instructors/classes/${classId}/lessons/${_id}`}>{title}</Link>
+      <Link to={`/${role}s/classes/${classId}/lessons/${_id}`}>{title}</Link>
     </div>
   );
 };

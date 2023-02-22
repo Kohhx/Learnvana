@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const validation = require("../utility/validation");
+const remove = require("../utility/delete");
 const cloudinary = require("cloudinary").v2;
 require("dotenv").config();
 
@@ -10,7 +11,9 @@ cloudinary.config({
 });
 
 // Import Model
+const Student = require("../models/student");
 const Instructor = require("../models/instructor");
+const Class = require("../models/class");
 const User = require("../models/user");
 
 // @desc create a new instructor
@@ -167,4 +170,17 @@ exports.updateInstructorProfile = asyncHandler(async (req, res, next) => {
     avatar: instructorFound.avatar,
     experience: instructorFound.experience,
   });
+});
+
+exports.delete = asyncHandler(async (req, res) => {
+  // delete class function
+  const {action} = req.body;
+  console.log(action)
+
+  if (action === "deleteClass") {
+      remove.oneClass(req, res);
+  } else {
+    console.log("fail")
+  }
+
 });
