@@ -18,7 +18,12 @@ const initialState = {
   message: "",
 };
 
-// INSTRUCTORS
+
+/**
+ * =============================================================================
+ * INSTRUCTOR
+ * =============================================================================
+ */
 
 // create instructor profile for instructor user
 export const UserInstructorProfile = createAsyncThunk(
@@ -45,252 +50,6 @@ export const UserInstructorProfile = createAsyncThunk(
   }
 );
 
-// CLASSES
-
-// Create new class
-export const newClass = createAsyncThunk(
-  "instructor/createClass",
-  async (classData, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await instructorService.newClass(classData, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      toast.error(message);
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
-
-// Get Instructor classes
-export const getInstructorClasses = createAsyncThunk(
-  "instructor/getClasses",
-  async (_, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await instructorService.getInstructorClasses(token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      toast.error(message);
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
-
-// Get One Instructor class
-export const getInstructorClass = createAsyncThunk(
-  "instructor/getClass",
-  async (classId, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await instructorService.getInstructorClass(classId, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      toast.error(message);
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
-
-// Delete a Instructor class
-export const deleteInstructorClass = createAsyncThunk(
-  "instructor/deleteClass",
-  async (data, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await instructorService.deleteInstructorClass(data, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      toast.error(message);
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
-
-//LESSONS
-
-// Create new lesson
-export const newLesson = createAsyncThunk(
-  "instructor/createLesson",
-  async (lessonData, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await instructorService.newLesson(lessonData, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      toast.error(message);
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
-
-// Get Instructor lessons
-export const getClassLessons = createAsyncThunk(
-  "instructor/getLessons",
-  async (classId, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await instructorService.getClassLessons(classId, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      toast.error(message);
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
-
-// Get One Instructor lesson
-export const getClassLesson = createAsyncThunk(
-  "instructor/getLesson",
-  async (ids, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await instructorService.getClassLesson(ids, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      toast.error(message);
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
-
-// Get instructor class pending students
-export const getInstructorClassPendingStudents = createAsyncThunk(
-  "instructor/getClassPendingStudents",
-  async (classId, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await instructorService.getInstructorClassPendingStudents(
-        classId,
-        token
-      );
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      toast.error(message);
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
-
-// Get instructor approve student into class
-export const approveStudentToClass = createAsyncThunk(
-  "instructor/approveStudentToClass",
-  async (ids, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await instructorService.approveStudentToClass(ids, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      toast.error(message);
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
-
-// Get instructor approve student into class
-export const rejectStudentToClass = createAsyncThunk(
-  "instructor/rejectStudentFromClass",
-  async (ids, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await instructorService.rejectStudentToClass(ids, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      toast.error(message);
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
-
-// Get all students from class
-export const getStudentsFromClass = createAsyncThunk(
-  "instructor/getAllStudentFromClass",
-  async (classId, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await instructorService.getStudentsFromClass(classId, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      toast.error(message);
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
-
-// Delete a student from  class
-export const deleteStudentFromClass = createAsyncThunk(
-  "instructor/deleteStudentFromClass",
-  async (ids, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await instructorService.deleteStudentFromClass(ids, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      toast.error(message);
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
 
 // Update instructor profile
 export const updateInstructorProfile = createAsyncThunk(
@@ -318,6 +77,310 @@ export const updateInstructorProfile = createAsyncThunk(
   }
 );
 
+
+/**
+ * =============================================================================
+ * CLASSES
+ * =============================================================================
+ */
+
+// Create new class
+export const newClass = createAsyncThunk(
+  "instructor/createClass",
+  async (classData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await instructorService.newClass(classData, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      toast.error(message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+
+// Update instructor class
+export const updateInstructorClass = createAsyncThunk(
+  "instructor/updateInstructorClass",
+  async (newInstructorClass, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await instructorService.updateInstructorClass(
+        newInstructorClass,
+        token
+      );
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      toast.error(message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+
+// Get Instructor classes
+export const getInstructorClasses = createAsyncThunk(
+  "instructor/getClasses",
+  async (_, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await instructorService.getInstructorClasses(token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      toast.error(message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+
+// Get One Instructor class
+export const getInstructorClass = createAsyncThunk(
+  "instructor/getClass",
+  async (classId, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await instructorService.getInstructorClass(classId, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      toast.error(message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+
+// Delete a Instructor class
+export const deleteInstructorClass = createAsyncThunk(
+  "instructor/deleteClass",
+  async (data, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await instructorService.deleteInstructorClass(data, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      toast.error(message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+
+/**
+ * =============================================================================
+ * LESSONS
+ * =============================================================================
+ */
+
+// Create new lesson
+export const newLesson = createAsyncThunk(
+  "instructor/createLesson",
+  async (lessonData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await instructorService.newLesson(lessonData, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      toast.error(message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+
+// Get Instructor lessons
+export const getClassLessons = createAsyncThunk(
+  "instructor/getLessons",
+  async (classId, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await instructorService.getClassLessons(classId, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      toast.error(message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+
+// Get One Instructor lesson
+export const getClassLesson = createAsyncThunk(
+  "instructor/getLesson",
+  async (ids, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await instructorService.getClassLesson(ids, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      toast.error(message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+
+/**
+ * =============================================================================
+ * STUDENTS, PENDING, ACCEPTANCE, REJECT, DELETE
+ * =============================================================================
+ */
+
+// Get all students from class
+export const getStudentsFromClass = createAsyncThunk(
+  "instructor/getAllStudentFromClass",
+  async (classId, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await instructorService.getStudentsFromClass(classId, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      toast.error(message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+
+// Delete a student from  class
+export const deleteStudentFromClass = createAsyncThunk(
+  "instructor/deleteStudentFromClass",
+  async (ids, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await instructorService.deleteStudentFromClass(ids, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      toast.error(message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+
+// Get instructor class pending students
+export const getInstructorClassPendingStudents = createAsyncThunk(
+  "instructor/getClassPendingStudents",
+  async (classId, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await instructorService.getInstructorClassPendingStudents(
+        classId,
+        token
+      );
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      toast.error(message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+
+// Get instructor approve student into class
+export const approveStudentToClass = createAsyncThunk(
+  "instructor/approveStudentToClass",
+  async (ids, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await instructorService.approveStudentToClass(ids, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      toast.error(message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+
+// Get instructor approve student into class
+export const rejectStudentToClass = createAsyncThunk(
+  "instructor/rejectStudentFromClass",
+  async (ids, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await instructorService.rejectStudentToClass(ids, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      toast.error(message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+
+/**
+ * =============================================================================
+ * INSTRUCTOR SLICE
+ * =============================================================================
+ */
+
 // Create instructorSlice
 export const instructorSlice = createSlice({
   name: "instructor",
@@ -332,6 +395,9 @@ export const instructorSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+
+      //INSTRUCTOR
+
       // Create Instructor Profile
       .addCase(UserInstructorProfile.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -347,6 +413,26 @@ export const instructorSlice = createSlice({
         state.message = action.payload;
       })
 
+      // Update instructor profile
+      .addCase(updateInstructorProfile.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(updateInstructorProfile.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        const user = JSON.parse(localStorage.getItem("user"));
+        user.profiles = action.payload;
+        localStorage.setItem("user", JSON.stringify(user));
+      })
+      .addCase(updateInstructorProfile.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+
+
+      // CLASSES
+
       // Create Class
       .addCase(newClass.pending, (state) => {
         state.isLoading = true;
@@ -356,6 +442,20 @@ export const instructorSlice = createSlice({
         state.isSuccess = true;
       })
       .addCase(newClass.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+
+      // Update instructor class
+      .addCase(updateInstructorClass.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(updateInstructorClass.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+      })
+      .addCase(updateInstructorClass.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
@@ -399,7 +499,7 @@ export const instructorSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.instructorClasses = state.instructorClasses.filter(
-          (oneClass) => oneClass._id === action.payload._id
+          (oneClass) => oneClass._id !== action.payload.classId
         );
       })
       .addCase(deleteInstructorClass.rejected, (state, action) => {
@@ -407,6 +507,9 @@ export const instructorSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
       })
+
+
+      // LESSONS
 
       // Create lesson
       .addCase(newLesson.pending, (state) => {
@@ -449,6 +552,41 @@ export const instructorSlice = createSlice({
         state.classLesson = action.payload;
       })
       .addCase(getClassLesson.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+
+
+      // STUDENTS, PENDING, ACCEPTANCE, REJECT, DELETE
+
+      // Get all students from class
+      .addCase(getStudentsFromClass.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(getStudentsFromClass.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.classStudents = action.payload;
+      })
+      .addCase(getStudentsFromClass.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+
+      // Delete a student from class
+      .addCase(deleteStudentFromClass.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteStudentFromClass.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.classStudents = state.classStudents.filter(
+          (student) => student._id !== action.payload.studentId
+        );
+      })
+      .addCase(deleteStudentFromClass.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
@@ -501,56 +639,8 @@ export const instructorSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
-      })
-
-      // Get all students from class
-      .addCase(getStudentsFromClass.pending, (state, action) => {
-        state.isLoading = true;
-      })
-      .addCase(getStudentsFromClass.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = true;
-        state.classStudents = action.payload;
-      })
-      .addCase(getStudentsFromClass.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload;
-      })
-
-      // Delete a student from class
-      .addCase(deleteStudentFromClass.pending, (state, action) => {
-        state.isLoading = true;
-      })
-      .addCase(deleteStudentFromClass.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = true;
-        state.classStudents = state.classStudents.filter(
-          (student) => student._id !== action.payload.studentId
-        );
-      })
-      .addCase(deleteStudentFromClass.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload;
-      })
-
-      // Update  instructor profile
-      .addCase(updateInstructorProfile.pending, (state, action) => {
-        state.isLoading = true;
-      })
-      .addCase(updateInstructorProfile.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = true;
-        const user = JSON.parse(localStorage.getItem("user"));
-        user.profiles = action.payload;
-        localStorage.setItem("user", JSON.stringify(user));
-      })
-      .addCase(updateInstructorProfile.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload;
       });
+
   },
 });
 

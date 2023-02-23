@@ -14,6 +14,7 @@ import Signup from "./pages/Signup";
 import InstructorClassLayout from "./components/Layouts/InstructorClassLayout";
 import InstructorSignUp from "./pages/instructor/InstructorSignUp";
 import InstructorCreateClass from "./pages/instructor/InstructorCreateClass";
+import InstructorClassUpdate from "./pages/instructor/InstructorClassUpdate";
 import InstructorDashboard from "./pages/instructor/InstructorDashboard";
 import InstructorLessons from "./pages/instructor/InstructorLessons";
 import InstructorLesson from "./pages/instructor/InstructorLesson";
@@ -81,6 +82,7 @@ const App = () => {
                 <Route path="dashboard" element={<InstructorDashboard />} />
                 <Route path="classes/new" element={<InstructorCreateClass />} />
                 <Route path="classes/:classId" element={<InstructorClassLayout />}>
+                  <Route path="update" element={<InstructorClassUpdate />} />
                   <Route path="students">
                     <Route index element={<InstructorClassStudents />} />
                     <Route

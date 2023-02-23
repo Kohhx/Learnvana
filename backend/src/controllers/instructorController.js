@@ -16,6 +16,13 @@ const Instructor = require("../models/instructor");
 const Class = require("../models/class");
 const User = require("../models/user");
 
+
+/**
+ * =============================================================================
+ * INSTRUCTOR
+ * =============================================================================
+ */
+
 // @desc create a new instructor
 // @route /api/instructors/create
 // @access private
@@ -172,15 +179,83 @@ exports.updateInstructorProfile = asyncHandler(async (req, res, next) => {
   });
 });
 
+/**
+ * =============================================================================
+ * UPDATE FUNCTIONS
+ * =============================================================================
+ */
+
+exports.updateInstructorClass = asyncHandler(async (req, res, next) => {
+  const { classId } = req.params;
+  console.log("REQ BODY",req.body)
+  const { title, status, images, address } =
+    req.body;
+
+  const user = await User.findById(req.user.id);
+  const instructor = await Instructor.findById(user.instructorprofile);
+  const classFound = await Class.findById(classId);
+
+  // Validate
+  validation.validateUser(user, res, next);
+  validation.validateRole(user, "instructor", res, next);
+  validation.validateExistent(
+    classFound,
+    400,
+    "No such class found",
+    res,
+    next
+  );
+
+  // Update all the other fields
+  classFound.title = title;
+  classFound.status = status;
+  classFound.images = images;
+  classFound.address = address;
+
+
+  try {
+    await classFound.save();
+  } catch (error) {
+    res.status(400);
+    throw new Error(error);
+  }
+
+  res.status(200).json({
+    _id: classFound._id,
+    title: classFound.title,
+    status: classFound.status,
+    images: classFound.images,
+    address: classFound.address,
+  });
+});
+
+
+/**
+ * =============================================================================
+ * DELETE FUNCTIONS
+ * =============================================================================
+ */
+
 exports.delete = asyncHandler(async (req, res) => {
   // delete class function
-  const {action} = req.body;
+  const {action, classId} = req.body;
   console.log(action)
 
   if (action === "deleteClass") {
+    try {
       remove.oneClass(req, res);
+    } catch (error) {
+      res.status(500);
+      throw new Error(error);
+    }
   } else {
-    console.log("fail")
+    console.log("Action word might be incorrect")
   }
+
+  // return student id that has been deleted
+  res.status(201).json({
+    message: "Successfully removed class from class list",
+    classId,
+  });
 
 });
