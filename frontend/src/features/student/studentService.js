@@ -15,7 +15,7 @@ const UserStudentProfile = async (profileData, token) => {
 };
 
 // Get all students classes
-const getStudentClasses = async (token) => {
+const getStudentClasses = async (studentId, token) => {
   const URL = "students/classes";
   const config = {
     headers: {
@@ -23,7 +23,7 @@ const getStudentClasses = async (token) => {
     },
   };
 
-  const response = await axiosInstance.get(URL, config);
+  const response = await axiosInstance.get(URL, studentId, config);
   if (response.data) {
     return response.data;
   }

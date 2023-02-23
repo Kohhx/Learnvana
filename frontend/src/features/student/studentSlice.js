@@ -23,9 +23,12 @@ export const UserStudentProfile = createAsyncThunk(
   async (studentProfile, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      const studentData = await studentService.UserStudentProfile(studentProfile, token);
+      const studentData = await studentService.UserStudentProfile(
+        studentProfile,
+        token
+      );
       thunkAPI.dispatch(updateProfile(studentData));
-      return studentData
+      return studentData;
     } catch (error) {
       const message =
         (error.response &&
@@ -33,7 +36,7 @@ export const UserStudentProfile = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-        toast.error(message)
+      toast.error(message);
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -42,10 +45,10 @@ export const UserStudentProfile = createAsyncThunk(
 // Get Student classes
 export const getStudentClasses = createAsyncThunk(
   "student/getClasses",
-  async (_, thunkAPI) => {
+  async (studentId, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      return await studentService.getStudentClasses(token);
+      return await studentService.getStudentClasses(studentId, token);
     } catch (error) {
       const message =
         (error.response &&
@@ -130,6 +133,11 @@ export const studentSlice = createSlice({
       state.isError = false;
       state.isSuccess = false;
     },
+    addStudent: (state, action) => {
+      console.log(action);
+      state.student = action.payload;
+      state.studentClasses = action.payload.classes;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -148,7 +156,7 @@ export const studentSlice = createSlice({
         state.message = action.payload;
       })
 
-       // Get Instructor Classes
+      // Get Instructor Classes
       .addCase(getStudentClasses.pending, (state, action) => {
         state.isLoading = true;
       })
@@ -206,9 +214,9 @@ export const studentSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
-      })
+      });
   },
 });
 
-export const { reset } = studentSlice.actions;
+export const { reset, addStudent } = studentSlice.actions;
 export default studentSlice.reducer;
