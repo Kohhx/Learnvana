@@ -102,3 +102,9 @@ exports.validate = (value, validators) => {
 
   return [isValid, errorMessages];
 };
+
+
+const validator = {
+  
+
+}

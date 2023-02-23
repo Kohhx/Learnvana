@@ -1,14 +1,8 @@
-import axios from "axios";
+import { axiosInstance } from "../../config/axios";
 
-const PROXY = "http://localhost:5000";
-const API_SIGNUP_URL = PROXY.concat("/api/users/signup");
-const API_LOGIN_URL = PROXY.concat("/api/users/login");
-const API_STUDENT_PROFILE_URL = PROXY.concat("/api/students/create");
-
-// Register user function (Aysnc)
-// No need try catch if it is an error, response.data carries the error
 const signUp = async (userData) => {
-  const response = await axios.post(API_SIGNUP_URL, userData);
+  const URL = "users/signup"
+  const response = await axiosInstance.post(URL, userData);
   console.log("response: ", response.data);
   if (response.data) {
     localStorage.setItem("user", JSON.stringify(response.data));
@@ -20,7 +14,8 @@ const signUp = async (userData) => {
 
 // login user
 const login = async (userData) => {
-  const response = await axios.post(API_LOGIN_URL, userData);
+  const URL = "users/login"
+  const response = await axiosInstance.post(URL, userData);
   if (response.data) {
     localStorage.setItem("user", JSON.stringify(response.data));
   }

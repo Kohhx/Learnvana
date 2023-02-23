@@ -17,6 +17,8 @@ const ClassInvite = () => {
   const { user } = useSelector((state) => state.auth);
   let { classId } = useParams();
 
+
+
   const { formState, changeHandler, focusHandler } = useForm(
     {
       student: {
@@ -28,17 +30,6 @@ const ClassInvite = () => {
     },
     false
   );
-
-  console.log(formState);
-
-  console.log("check profile",user.profiles);
-  // Get Names array
-  const studentNames = user.profiles.map((student) => ({
-    display: student.first_name,
-    value: student._id,
-  }));
-
-  console.log(studentNames);
 
   // Use Thunk hook for createAsyncThunk
   const [
@@ -62,7 +53,7 @@ const ClassInvite = () => {
       studentId: formState.inputs.student.value,
     };
 
-    console.log("Join", studentClassData)
+    console.log("Join", studentClassData);
     doSendRequestToJoin(studentClassData);
     setIsModalIsOpen(false);
   };
@@ -72,6 +63,21 @@ const ClassInvite = () => {
       setIsSent(true);
     }
   }, [sendRequestToJoinSuccess]);
+
+  // Do not show invite if user is instructor
+  if (user.role === "instructor") {
+    return (
+      <div>
+        <h1>Instructor are not allowed to join class.</h1>
+      </div>
+    );
+  }
+
+   // Get Names array
+   const studentNames = user.profiles.map((student) => ({
+    display: student.first_name,
+    value: student._id,
+  }));
 
   return (
     <div>
