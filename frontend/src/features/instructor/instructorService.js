@@ -1,15 +1,5 @@
 import { axiosInstance } from "../../config/axios";
-
-const PROXY = "http://localhost:5000";
-
-// instructor routes
-const API_INSTRUCTOR_PROFILE_URL = PROXY.concat("/api/instructors/create");
-// class routes
-const API_NEW_CLASS_URL = PROXY.concat("/api/instructors/classes/create");
-const API_GET_INSTRUCTOR_CLASSES_URL = PROXY.concat("/api/instructors/classes");
-const API_DELETE_INSTRUCTOR_CLASSES_URL = PROXY.concat("/api/instructors/classes/delete");
-let API_GET_INSTRUCTOR_CLASS_URL = PROXY.concat("/api/instructors/classes/");
-
+import formatUtil from "../../utilities/FormatUtil";
 
 /**
  * =============================================================================
@@ -19,16 +9,13 @@ let API_GET_INSTRUCTOR_CLASS_URL = PROXY.concat("/api/instructors/classes/");
 
 // Register user: instructor profile function (Aysnc)
 const UserInstructorProfile = async (profileData, token) => {
+  const URL = "instructors/create";
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
-  const response = await axiosInstance.post(
-    API_INSTRUCTOR_PROFILE_URL,
-    profileData,
-    config
-  );
+  const response = await axiosInstance.post(URL, profileData, config);
   if (response.data) {
     return response.data;
   }
@@ -38,35 +25,25 @@ const UserInstructorProfile = async (profileData, token) => {
 // Update instructor profile
 const updateInstructorProfile = async (newInstructorProfile, token) => {
   const { instructorId } = newInstructorProfile;
-  console.log("2", instructorId)
 
+  const newInstructorProfileFD =
+    formatUtil.convertObjToFormData(newInstructorProfile);
 
-  // Make utility function to convert JSON to formdata
-  const convertObjToFormData = (obj) => {
-    let formData = new FormData();
-    for (let key in obj){
-      console.log("Key", key)
-      console.log("Value", obj[key])
-      formData.append(key, obj[key])
-    }
-
-    return formData
-  }
-
-  const newInstructorProfileFD = convertObjToFormData(newInstructorProfile)
-  console.log("FormData OUt",newInstructorProfileFD.get("avatar"))
-  const URL = PROXY.concat(
-    `/api/instructors/${instructorId}/update`
-  );
+  console.log("FormData OUt", newInstructorProfileFD.get("avatar"));
+  const URL = `instructors/${instructorId}/update`;
 
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
-      'Content-Type': 'multipart/form-data',
+      "Content-Type": "multipart/form-data",
     },
   };
 
-  const response = await axiosInstance.post(URL, newInstructorProfileFD, config);
+  const response = await axiosInstance.post(
+    URL,
+    newInstructorProfileFD,
+    config
+  );
   if (response.data) {
     return response.data;
   }
@@ -81,12 +58,13 @@ const updateInstructorProfile = async (newInstructorProfile, token) => {
 
 // post new class
 const newClass = async (classData, token) => {
+  const URL = "instructors/classes/create";
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
-  const response = await axiosInstance.post(API_NEW_CLASS_URL, classData, config);
+  const response = await axiosInstance.post(URL, classData, config);
   if (response.data) {
     return response.data;
   }
@@ -97,15 +75,13 @@ const newClass = async (classData, token) => {
 const updateInstructorClass = async (newInstructorClass, token) => {
   const { classId } = newInstructorClass;
 
+  const URL = `instructors/classes/${classId}/update`;
+
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
-
-  const URL = PROXY.concat(
-    `/api/instructors/classes/${classId}/update`
-  );
 
   const response = await axiosInstance.post(URL, newInstructorClass, config);
   if (response.data) {
@@ -116,12 +92,13 @@ const updateInstructorClass = async (newInstructorClass, token) => {
 
 // Get all instructor Class
 const getInstructorClasses = async (token) => {
+  const URL = "instructors/classes";
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
-  const response = await axiosInstance.get(API_GET_INSTRUCTOR_CLASSES_URL, config);
+  const response = await axiosInstance.get(URL, config);
   if (response.data) {
     return response.data;
   }
@@ -130,16 +107,14 @@ const getInstructorClasses = async (token) => {
 
 // Get one instructor Class
 const getInstructorClass = async (classId, token) => {
+  const URL = `instructors/classes/${classId}`;
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
 
-  const response = await axiosInstance.get(
-    `${API_GET_INSTRUCTOR_CLASS_URL}${classId}`,
-    config
-  );
+  const response = await axiosInstance.get(URL, config);
   if (response.data) {
     return response.data;
   }
@@ -148,13 +123,14 @@ const getInstructorClass = async (classId, token) => {
 
 // Delete Class
 const deleteInstructorClass = async (data, token) => {
+  const URL = "instructors/classes/delete";
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
 
-  const response = await axiosInstance.post(API_DELETE_INSTRUCTOR_CLASSES_URL, data, config);
+  const response = await axiosInstance.post(URL, data, config);
   if (response.data) {
     return response.data;
   }
@@ -170,15 +146,13 @@ const deleteInstructorClass = async (data, token) => {
 // post new lesson
 const newLesson = async (lessonData, token) => {
   const { classId } = lessonData;
-  const API_NEW_LESSON_URL = PROXY.concat(
-    `/api/instructors/classes/${classId}/lessons/create`
-  );
+  const URL = `instructors/classes/${classId}/lessons/create`;
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
-  const response = await axiosInstance.post(API_NEW_LESSON_URL, lessonData, config);
+  const response = await axiosInstance.post(URL, lessonData, config);
   if (response.data) {
     return response.data;
   }
@@ -187,15 +161,14 @@ const newLesson = async (lessonData, token) => {
 
 // Get all instructor Lessons
 const getClassLessons = async (classId, token) => {
-  const API_GET_INSTRUCTOR_LESSONS_URL = PROXY.concat(
-    `/api/instructors/classes/${classId}/lessons`
-  );
+  const URL = `instructors/classes/${classId}/lessons`;
+
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
-  const response = await axiosInstance.get(API_GET_INSTRUCTOR_LESSONS_URL, config);
+  const response = await axiosInstance.get(URL, config);
   if (response.data) {
     return response.data;
   }
@@ -205,16 +178,15 @@ const getClassLessons = async (classId, token) => {
 // Get one instructor Lesson
 const getClassLesson = async (ids, token) => {
   const { classId, lessonId } = ids;
-  const API_GET_INSTRUCTOR_LESSON_URL = PROXY.concat(
-    `/api/instructors/classes/${classId}/lessons/${lessonId}`
-  );
+  const URL = `instructors/classes/${classId}/lessons/${lessonId}`;
+
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
 
-  const response = await axiosInstance.get(API_GET_INSTRUCTOR_LESSON_URL, config);
+  const response = await axiosInstance.get(URL, config);
   if (response.data) {
     return response.data;
   }
@@ -229,9 +201,8 @@ const getClassLesson = async (ids, token) => {
 
 // Get one instructor pending students list
 const getInstructorClassPendingStudents = async (classId, token) => {
-  const URL = PROXY.concat(
-    `/api/instructors/classes/${classId}/students/pending`
-  );
+  const URL = `instructors/classes/${classId}/students/pending`;
+
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -244,13 +215,11 @@ const getInstructorClassPendingStudents = async (classId, token) => {
   }
 };
 
-
 // Get approve student into class
 const approveStudentToClass = async (ids, token) => {
   const { classId } = ids;
-  const URL = PROXY.concat(
-    `/api/instructors/classes/${classId}/students/approve`
-  );
+  const URL = `instructors/classes/${classId}/students/approve`;
+
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -263,13 +232,11 @@ const approveStudentToClass = async (ids, token) => {
   }
 };
 
-
 // Get reject student into class
 const rejectStudentToClass = async (ids, token) => {
   const { classId } = ids;
-  const URL = PROXY.concat(
-    `/api/instructors/classes/${classId}/students/reject`
-  );
+  const URL = `instructors/classes/${classId}/students/reject`;
+
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -285,7 +252,7 @@ const rejectStudentToClass = async (ids, token) => {
 
 // Get all students from class
 const getStudentsFromClass = async (classId, token) => {
-  const URL = PROXY.concat(`/api/instructors/classes/${classId}/students`);
+  const URL = `instructors/classes/${classId}/students`;
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -302,9 +269,8 @@ const getStudentsFromClass = async (classId, token) => {
 // Delete student from class
 const deleteStudentFromClass = async (ids, token) => {
   const { classId } = ids;
-  const URL = PROXY.concat(
-    `/api/instructors/classes/${classId}/students/delete`
-  );
+  const URL = `instructors/classes/${classId}/students/delete`;
+
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -316,8 +282,6 @@ const deleteStudentFromClass = async (ids, token) => {
     return response.data;
   }
 };
-
-
 
 
 // Put all the function into authService object before exporting
