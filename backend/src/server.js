@@ -1,9 +1,17 @@
 const express = require("express");
 const colors = require("colors");
 require("dotenv").config();
-const { errorHandler } = require("./middlewares/errorMiddleware")
+const { errorHandler } = require("./middlewares/errorMiddleware");
 const connectDB = require("./config/db");
 
+const cloudinaryHelper = require("./utility/cloudinaryHelper")
+
+const cloudinary = require("cloudinary").v2;
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 /**
  * =============================================================================
@@ -38,10 +46,12 @@ app.use((req, res, next) => {
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
   );
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, PUT");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PATCH, DELETE, PUT"
+  );
   next();
 });
-
 
 /**
  * =============================================================================
@@ -50,7 +60,7 @@ app.use((req, res, next) => {
  */
 
 // Root Page
-app.get("/", (req, res) => {
+app.get("/", (req, res, next) => {
   res.status(200).json({ message: "Welcome to Learnvana" });
 });
 
@@ -68,8 +78,8 @@ app.use("/api/guardians", require("./routes/guardianRoutes"));
 // student routes
 app.use("/api/students", require("./routes/studentRoutes"));
 
-
-
+// student routes
+app.use("/api/utilities", require("./routes/utilityRoutes"));
 
 /**
  * =============================================================================
