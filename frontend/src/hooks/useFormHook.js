@@ -143,6 +143,18 @@ const useFormHook = (formInitialState, formInitialValidity) => {
     dispatch({ type: "FILL", payload: updateData });
   };
 
+  const editorChangeHandler = (value, id) => {
+    let isInputValid;
+    let validatorMessages;
+    const payload = {
+      value,
+      isValid: true,
+      errorMessages: null,
+    };
+
+    dispatch({ type: "ONCHANGE", payload: payload, id });
+  };
+
   // return [formState, useFormHandler, resetFormHandler, changehandler];
   return {
     formState,
@@ -151,6 +163,7 @@ const useFormHook = (formInitialState, formInitialValidity) => {
     changeHandler,
     focusHandler,
     fillHandler,
+    editorChangeHandler,
   };
 };
 

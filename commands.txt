@@ -14,3 +14,47 @@ npm install react-router-dom react-toastify axios react-icons classnames prop-ty
 npm i react-spinners
 npm install react-transition-group@1.x --save
 npm install uuid
+npm i react-uuid
+npm i @editorjs/editorjs --save
+npm i @editorjs/header --save
+npm i --save @editorjs/list
+npm i --save @editorjs/link
+npm i --save @editorjs/raw
+npm i --save @editorjs/simple-image
+npm i --save @editorjs/image
+npm i --save @editorjs/checklist
+
+
+npm i @calumk/editorjs-codeflask
+npm i --save @editorjs/embed
+npm i --save @editorjs/quote
+npm i --save @editorjs/nested-list
+npm i --save @editorjs/delimiter
+npm i --save editorjs-header-with-alignment
+
+npm install @editorjs/attaches
+npm i --save @rodrigoodhin/editorjs-image-gallery
+
+npm i --save-dev @editorjs/code
+npm i @calumk/editorjs-codeflask
+
+npm i --save-dev @editorjs/marker
+npm i --save @editorjs/underline
+$ npm i --save editorjs-tooltip
+npm i --save editorjs-change-case
+npm i --save editorjs-text-color-plugin
+
+
+npm i --save-dev editorjs-drag-drop
+
+
+// Block Tune
+npm i --save editorjs-text-alignment-blocktune
+
+// React
+npm install --save @stfy/react-editor.js
+npm install --save react-editor-js
+
+// React Parser
+npm install html-react-parser --save
+npm install editorjs-html
