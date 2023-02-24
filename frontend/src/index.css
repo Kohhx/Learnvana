@@ -20,16 +20,52 @@
 }
 
 .grow-enter {
-  transform:scale(0);
+  transform: scale(0);
 }
 .grow-enter-active {
-  transform:scale(1);
+  transform: scale(1);
   transition: all 400ms ease-in-out;
 }
 .grow-exit {
-  transform:scale(1);
+  transform: scale(1);
 }
 .grow-exit-active {
-  transform:scale(0);
+  transform: scale(0);
   transition: all 400ms ease-in-out;
+}
+
+/* Overwrite tail wind so that editor js Header works */
+@layer base {
+  h1 {
+    @apply text-4xl;
+    @apply font-bold;
+  }
+  h2 {
+    @apply text-3xl;
+    @apply font-bold;
+  }
+  h3 {
+    @apply text-2xl;
+    @apply font-bold;
+  }
+  h4 {
+    @apply text-xl;
+    @apply font-semibold;
+  }
+  h5 {
+    @apply text-lg;
+    @apply font-semibold;
+  }
+  h6 {
+    @apply text-sm;
+    @apply font-semibold;
+  }
+}
+
+.ce-block__content,
+.ce-toolbar__content {
+  max-width: calc(100% - 80px) !important;
+}
+.cdx-block {
+  max-width: 100% !important;
 }

@@ -34,6 +34,8 @@ import StudentClassmates from "./pages/student/StudentClassmates";
 import GuardianCreateStudents from "./pages/guardian/GuardianCreateStudents"
 import GuardianDashboard from "./pages/guardian/GuardianDashboard";
 
+import EditorTest from "./pages/Editor";
+
 const App = () => {
   return (
     <div>
@@ -42,7 +44,7 @@ const App = () => {
           <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
-
+            <Route path="/editor" element={<EditorTest />} />
             {/**
              * =================================================================
              *  Public Routes
