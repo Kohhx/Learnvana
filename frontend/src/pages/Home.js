@@ -6,11 +6,12 @@ import Button from "../components/Button";
 
 const Home = () => {
   const [toggle, setToggle] = useState(false);
+  const [prevData, setPrevData] = useState(null)
 
   const { formState, editorChangeHandler } = useForm(
     {
       lesson: {
-        value: "",
+        value: [],
         messages: [],
         isValid: false,
         isFocus: false,
@@ -19,7 +20,7 @@ const Home = () => {
     false
   );
 
-  console.log("Form", formState.inputs.lesson.value);
+  // console.log("Form", formState.inputs.lesson.value);
 
   return (
     <div>

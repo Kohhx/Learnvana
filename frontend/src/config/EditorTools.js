@@ -46,8 +46,6 @@ export const EDITOR_JS_TOOLS = {
   },
 };
 
-
-
 // Helper function
 
 // Upload photo to backend
@@ -66,7 +64,7 @@ const uploadPhotoBackend = async (file) => {
       "Content-Type": "multipart/form-data",
     },
   };
-
+console.log("WHY")
   const response = await axiosInstance.post(URL, newFileFD, config);
   if (response.data) {
     return response.data;
