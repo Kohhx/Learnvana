@@ -261,6 +261,27 @@ export const getClassLesson = createAsyncThunk(
 );
 
 
+// Delete a class lesson
+export const deleteClassLesson = createAsyncThunk(
+  "instructor/deleteLesson",
+  async (data, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await instructorService.deleteClassLesson(data, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      toast.error(message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+
 /**
  * =============================================================================
  * STUDENTS, PENDING, ACCEPTANCE, REJECT, DELETE
@@ -556,6 +577,24 @@ export const instructorSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
       })
+
+      // Delete a instructor class
+      .addCase(deleteClassLesson.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteClassLesson.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.classLessons = state.classLessons.filter(
+          (oneLesson) => oneLesson._id !== action.payload.lessonId
+        );
+      })
+      .addCase(deleteClassLesson.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+
 
 
       // STUDENTS, PENDING, ACCEPTANCE, REJECT, DELETE
