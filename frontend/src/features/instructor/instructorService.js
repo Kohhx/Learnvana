@@ -193,6 +193,23 @@ const getClassLesson = async (ids, token) => {
 };
 
 
+// Delete Lesson
+const deleteClassLesson = async (data, token) => {
+  const { classId } = data;
+  const URL = `instructors/classes/${classId}/lessons/delete`;
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axiosInstance.post(URL, data, config);
+  if (response.data) {
+    return response.data;
+  }
+};
+
+
 /**
  * =============================================================================
  * STUDENTS, PENDING, ACCEPTANCE, REJECT, DELETE
@@ -295,6 +312,7 @@ const instructorService = {
   newLesson,
   getClassLessons,
   getClassLesson,
+  deleteClassLesson,
   getInstructorClassPendingStudents,
   approveStudentToClass,
   rejectStudentToClass,

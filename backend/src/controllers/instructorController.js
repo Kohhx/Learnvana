@@ -238,7 +238,7 @@ exports.updateInstructorClass = asyncHandler(async (req, res, next) => {
 
 exports.delete = asyncHandler(async (req, res) => {
   // delete class function
-  const {action, classId} = req.body;
+  const {action, classId, lessonId} = req.body;
   console.log(action)
 
   if (action === "deleteClass") {
@@ -248,14 +248,35 @@ exports.delete = asyncHandler(async (req, res) => {
       res.status(500);
       throw new Error(error);
     }
+
+    // return class id that has been deleted
+    res.status(201).json({
+      message: "Successfully removed class from class list",
+      classId,
+    });
+
   } else {
-    console.log("Action word might be incorrect")
+    console.log("Action word might be incorrect: class")
   }
 
-  // return student id that has been deleted
-  res.status(201).json({
-    message: "Successfully removed class from class list",
-    classId,
-  });
+
+  if (action === "deleteLesson") {
+    try {
+      remove.oneLesson(req, res);
+    } catch (error) {
+      res.status(500);
+      throw new Error(error);
+    }
+
+    // return lesson id that has been deleted
+    res.status(201).json({
+      message: "Successfully removed lesson from class",
+      lessonId,
+    });
+
+  } else {
+    console.log("Action word might be incorrect: lessons")
+  }
+
 
 });

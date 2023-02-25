@@ -84,6 +84,13 @@ router.get(
 );
 
 
+// Instructor delete lesson from class - DELETE
+router.post(
+  "/classes/:classId/lessons/delete",
+  protect,
+  instructorController.delete
+);
+
 /**
  * =============================================================================
  * STUDENTS, PENDING, ACCEPTANCE, REJECT, DELETE
