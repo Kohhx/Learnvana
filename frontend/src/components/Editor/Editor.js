@@ -2,9 +2,10 @@ import React, { useEffect, useRef } from "react";
 import EditorJs from "@editorjs/editorjs";
 import { EDITOR_JS_TOOLS } from "../../config/EditorTools";
 import uuid from "react-uuid";
+import DragDrop from 'editorjs-drag-drop';
 
 
-const Editor = ({ id, readonly, data, onChange }) => {
+const Editor = ({ id, data, onChange }) => {
 
   const uuidNo = uuid();
   const ejInstance = useRef();
@@ -26,6 +27,7 @@ const Editor = ({ id, readonly, data, onChange }) => {
       logLevel: "ERROR",
       data: data,
       onReady: () => {
+        new DragDrop(editor);
         ejInstance.current = editor;
       },
       onChange: async (event) => {

@@ -81,28 +81,10 @@ const formReducer = (state, action) => {
 
       const oldBlocks = state.inputs[action.id].value.blocks;
       const newBlocks = action.payload.value.blocks;
-      if (oldBlocks && newBlocks) {
-        const oldImages = oldBlocks.filter((block) => block.type === "image");
-        const NewImages = newBlocks.filter((block) => block.type === "image");
-        // console.log("OldImages",oldImages);
-        console.log("NewImages", NewImages);
-        if (NewImages.length < oldImages.length) {
-          const deletedImage = oldImages.filter((oldImage) => {
-            let flag = true;
-            NewImages.forEach((newImage) => {
-              if (oldImage.id === newImage.id) {
-                flag = false;
-              }
-            });
-            return flag;
-          });
-
-          if (deletedImage.length === 1) {
-            const { public_id } = deletedImage[0].data.file;
-            deletePhotoBackend(public_id).then((data) => console.log(data));
-          }
-        }
-      }
+      console.log(newBlocks);
+      deleteType(oldBlocks, newBlocks, "image", "utilities/deletefile");
+      deleteType(oldBlocks, newBlocks, "attaches", "utilities/deletefile");
+      deleteType(oldBlocks, newBlocks, "video", "utilities/deletefile");
 
       return {
         ...state,
@@ -199,7 +181,6 @@ const useFormHook = (formInitialState, formInitialValidity) => {
       errorMessages: null,
     };
 
-    console.log(formState);
     dispatch({ type: "EDITORONCHANGE", payload: payload, id });
   };
 
@@ -217,11 +198,11 @@ const useFormHook = (formInitialState, formInitialValidity) => {
 
 export default useFormHook;
 
-// Helper function
+// Helper functions
 
 // Upload photo to backend
-const deletePhotoBackend = async (public_id) => {
-  const URL = `utilities/deletephoto`;
+const deleteFileBackend = async (URL, public_id, mimetype) => {
+  // const URL = `utilities/deletephoto`;
 
   const { token } = JSON.parse(localStorage.getItem("user"));
 
@@ -231,8 +212,35 @@ const deletePhotoBackend = async (public_id) => {
     },
   };
 
-  const response = await axiosInstance.post(URL, { public_id }, config);
+  const response = await axiosInstance.post(
+    URL,
+    { public_id, mimetype },
+    config
+  );
   if (response.data) {
     return response.data;
+  }
+};
+
+const deleteType = (oldBlocks, newBlocks, type, URL) => {
+  if (oldBlocks && newBlocks) {
+    const oldTypes = oldBlocks.filter((block) => block.type === type);
+    const NewTypes = newBlocks.filter((block) => block.type === type);
+    if (NewTypes.length < oldTypes.length) {
+      const deletedType = oldTypes.filter((oldType) => {
+        let flag = true;
+        NewTypes.forEach((newType) => {
+          if (oldType.id === newType.id) {
+            flag = false;
+          }
+        });
+        return flag;
+      });
+
+      if (deletedType.length === 1) {
+        const { public_id, mimetype } = deletedType[0].data.file;
+        deleteFileBackend(URL, public_id, mimetype).then((data) => console.log(data));
+      }
+    }
   }
 };
