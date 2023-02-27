@@ -254,9 +254,6 @@ exports.delete = asyncHandler(async (req, res) => {
       message: "Successfully removed class from class list",
       classId,
     });
-
-  } else {
-    console.log("Action word might be incorrect: class")
   }
 
 
@@ -273,9 +270,6 @@ exports.delete = asyncHandler(async (req, res) => {
       message: "Successfully removed lesson from class",
       lessonId,
     });
-
-  } else {
-    console.log("Action word might be incorrect: lessons")
   }
 
 

@@ -13,7 +13,7 @@ import useForm from "../hooks/useFormHook";
 
 const NewLesson = () => {
   // Use form hook for form handling
-  const {formState, useFormHandler} = useForm(
+  const {formState, useFormHandler,resetFormHandler} = useForm(
     {
       title: {
         value: "",
@@ -78,16 +78,21 @@ const NewLesson = () => {
     // classDispatch(newClass(newClassData));s
   };
 
+  // const refresh = () => window.location.reload(true)
+
   useEffect(() => {
     if (CreateLessonSuccess) {
-      navigate(`/instructors/classes/${classId}/lessons`);
+      // navigate(`/instructors/classes/${classId}/lessons`);
+      window.location.reload(true);
     }
   }, [navigate, CreateLessonSuccess]);
 
-  // Display loading spinner based on loading state
-  if (CreateLessonLoading) {
-    return <h1>Loading...</h1>;
-  }
+
+
+  // // Display loading spinner based on loading state
+  // if (CreateLessonLoading) {
+  //   return <h1>Loading...</h1>;
+  // }
 
   return (
     <div>
