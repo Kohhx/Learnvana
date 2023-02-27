@@ -57,10 +57,17 @@ exports.oneLesson = asyncHandler(async (req, res, next) => {
   let lessonFound;
   try {
     lessonFound = await classFound.lessons[findLesson(lessonId)]
+    // lessonFound = await Class.findOne(
+    //   { _id: classId },
+    //   { lessons: [lessonId] }
+    // );
   } catch (error) {
     res.status(400);
     throw new Error(error);
   }
+  console.log("sadasd", lessonId)
+
+  console.log("testcheck", lessonFound)
 
   // Validate
   validation.validateUser(user, res, next);
@@ -86,6 +93,8 @@ exports.oneLesson = asyncHandler(async (req, res, next) => {
     );
   } catch (error) {
     res.status(500);
-    throw new Error("Error updating class list");
+    throw new Error("Error updating lesson in class list");
   }
+
+  console.log("reach here?")
 });
