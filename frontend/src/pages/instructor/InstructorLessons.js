@@ -30,7 +30,7 @@ const Lessons = () => {
 
   // display all lessons
   const allLessons = classLessons.map((singleLesson, i) => (
-    <Lessonitem key={i} lessonData={singleLesson} role={role} classId={classId} />
+    <Lessonitem key={i} lessonData={singleLesson} classId={classId} role="instructor" />
   ));
 
 

@@ -11,7 +11,7 @@ const Lesson = require("../models/lesson");
 // create a new lesson inside a class
 
 exports.createLesson = asyncHandler(async (req, res) => {
-  const { title, content, objective, date, time, images } = req.body;
+  const { title, content, objective, date, time } = req.body;
   console.log("lesson",req.body)
 
   const { classId } = req.params
@@ -71,14 +71,15 @@ exports.createLesson = asyncHandler(async (req, res) => {
     throw new Error("Class does not belong to this instructor");
   }
 
+  console.log(content, typeof content)
+
   // Create Lesson
   const newLesson = {
     title,
-    content,
+    content: JSON.stringify(content),
     objective,
     date,
     time,
-    images,
   };
   console.log("OLDDDDDDD",classFound)
 
@@ -97,13 +98,12 @@ exports.createLesson = asyncHandler(async (req, res) => {
 
   if (lessonFound) {
     res.status(201).json({
-      _id: lessonFound._id,
-      title: lessonFound.title,
-      content: lessonFound.content,
-      objective: lessonFound.objective,
-      date: lessonFound.date,
-      time: lessonFound.time,
-      images: lessonFound.images,
+      _id: newLesson._id,
+      title: newLesson.title,
+      content: newLesson.content,
+      objective: newLesson.objective,
+      date: newLesson.date,
+      time: newLesson.time,
     });
   } else {
     res.status(400);

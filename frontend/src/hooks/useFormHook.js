@@ -37,12 +37,6 @@ const formReducer = (state, action) => {
           formIsValid2 = formIsValid2 && state.inputs[inputId].isValid;
         }
       }
-      // console.log({
-      //   ...state.inputs[action.id],
-      //   value: action.payload.value,
-      //   messages: action.payload.errorMessages,
-      //   isValid: action.payload.isValid,
-      // });
       return {
         ...state,
         inputs: {
@@ -81,7 +75,7 @@ const formReducer = (state, action) => {
 
       const oldBlocks = state.inputs[action.id].value.blocks;
       const newBlocks = action.payload.value.blocks;
-      console.log(newBlocks);
+
       deleteType(oldBlocks, newBlocks, "image", "utilities/deletefile");
       deleteType(oldBlocks, newBlocks, "attaches", "utilities/deletefile");
       deleteType(oldBlocks, newBlocks, "video", "utilities/deletefile");

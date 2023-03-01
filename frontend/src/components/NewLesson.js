@@ -1,8 +1,7 @@
 import React, { useCallback, useReducer, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Input from "../components/Input";
+import InputV2 from "../components/InputV2";
 import Button from "../components/Button";
-import Select from "../components/Select";
 import { FaUser } from "react-icons/fa";
 import Validator from "../utilities/Validator";
 import { toast } from "react-toastify";
@@ -10,42 +9,51 @@ import { useSelector, useDispatch } from "react-redux";
 import { newLesson, reset } from "../features/instructor/instructorSlice";
 import useThunk from "../hooks/useThunkHook";
 import useForm from "../hooks/useFormHook";
+import Editor from "./Editor/Editor";
 
 const NewLesson = () => {
   // Use form hook for form handling
-  const {formState, useFormHandler,resetFormHandler} = useForm(
-    {
-      title: {
-        value: "",
-        isValid: false,
+  const { formState, editorChangeHandler, changeHandler, focusHandler } =
+    useForm(
+      {
+        title: {
+          value: "",
+          isValid: false,
+          isFocus: false,
+          messages: [],
+        },
+        content: {
+          value: [],
+          isValid: true,
+          isFocus: false,
+          messages: [],
+        },
+        objective: {
+          value: "",
+          isValid: false,
+          isFocus: false,
+          messages: [],
+        },
+        date: {
+          value: "",
+          isValid: false,
+          isFocus: false,
+          messages: [],
+        },
+        time: {
+          value: "",
+          isValid: false,
+          isFocus: false,
+          messages: [],
+        },
       },
-      content: {
-        value: "",
-        isValid: false,
-      },
-      objective: {
-        value: "",
-        isValid: false,
-      },
-      date: {
-        value: "",
-        isValid: false,
-      },
-      time: {
-        value: "",
-        isValid: false,
-      },
-      images: {
-        value: "",
-        isValid: false,
-      },
-    },
-    false
-  );
+      false
+    );
+
+  console.log(formState);
 
   let { classId } = useParams();
   const navigate = useNavigate();
-
 
   // Use Thunk hook for createAsyncThunk instructor profile create function
   const [
@@ -71,8 +79,7 @@ const NewLesson = () => {
       objective: formState.inputs.objective.value,
       date: formState.inputs.date.value,
       time: formState.inputs.time.value,
-      images: formState.inputs.images.value,
-      classId
+      classId,
     };
     doCreateLessonProfile(newLessonData);
     // classDispatch(newClass(newClassData));s
@@ -104,60 +111,70 @@ const NewLesson = () => {
         <p>Please create a lesson</p>
       </div>
       <form onSubmit={submitHandler}>
-        <Input
+        <InputV2
           id="title"
-          type="title"
+          type="text"
           label="Title"
           placeholder="Enter title"
-          // errorMessage="Please enter a valid email"
-          validators={[Validator.VALIDATOR_REQUIRE()]}
-          formHandler={useFormHandler}
-        ></Input>
-        <Input
-          id="content"
-          type="content"
-          label="Content"
-          placeholder="Enter content"
-          // errorMessage="Please enter a valid email"
-          validators={[Validator.VALIDATOR_REQUIRE()]}
-          formHandler={useFormHandler}
-        ></Input>
-        <Input
+          onFocus={() => focusHandler("title")}
+          onChange={(e) =>
+            changeHandler(e, "title", [Validator.VALIDATOR_REQUIRE()])
+          }
+          value={formState.inputs.title.value}
+          isFocus={formState.inputs.title.isFocus}
+          isValid={formState.inputs.title.isValid}
+          errorMessages={formState.inputs.title.messages}
+        ></InputV2>
+        <InputV2
           id="objective"
-          type="ojective"
-          label="objective"
-          placeholder="Enter objective"
-          // errorMessage="Please enter a valid password"
-          validators={[Validator.VALIDATOR_REQUIRE()]}
-          formHandler={useFormHandler}
-        ></Input>
-        <Input
+          type="text"
+          label="Objective"
+          placeholder="Enter lesson objective"
+          onFocus={() => focusHandler("objective")}
+          onChange={(e) =>
+            changeHandler(e, "objective", [Validator.VALIDATOR_REQUIRE()])
+          }
+          value={formState.inputs.objective.value}
+          isFocus={formState.inputs.objective.isFocus}
+          isValid={formState.inputs.objective.isValid}
+          errorMessages={formState.inputs.objective.messages}
+        ></InputV2>
+        <label>Content</label>
+        <div className="border py-5">
+          <Editor
+            id="content"
+            onChangeEditor={editorChangeHandler}
+            data={formState.inputs.content.value}
+          />
+        </div>
+        <InputV2
           id="date"
           type="date"
           label="Date"
           placeholder="Enter date"
-          // errorMessage="Please enter a valid password"
-          validators={[Validator.VALIDATOR_REQUIRE()]}
-          formHandler={useFormHandler}
-        ></Input>
-        <Input
+          onFocus={() => focusHandler("date")}
+          onChange={(e) =>
+            changeHandler(e, "date", [Validator.VALIDATOR_REQUIRE()])
+          }
+          value={formState.inputs.date.value}
+          isFocus={formState.inputs.date.isFocus}
+          isValid={formState.inputs.date.isValid}
+          errorMessages={formState.inputs.date.messages}
+        ></InputV2>
+        <InputV2
           id="time"
           type="time"
           label="Time"
           placeholder="Enter time"
-          // errorMessage="Please enter a valid password"
-          validators={[Validator.VALIDATOR_REQUIRE()]}
-          formHandler={useFormHandler}
-        ></Input>
-        <Input
-          id="images"
-          type="images"
-          label="Images"
-          placeholder="Attach images"
-          // errorMessage="Please enter a valid password"
-          validators={[Validator.VALIDATOR_REQUIRE()]}
-          formHandler={useFormHandler}
-        ></Input>
+          onFocus={() => focusHandler("time")}
+          onChange={(e) =>
+            changeHandler(e, "time", [Validator.VALIDATOR_REQUIRE()])
+          }
+          value={formState.inputs.time.value}
+          isFocus={formState.inputs.time.isFocus}
+          isValid={formState.inputs.time.isValid}
+          errorMessages={formState.inputs.time.messages}
+        ></InputV2>
         <Button secondary rounded>
           Add lesson
         </Button>
