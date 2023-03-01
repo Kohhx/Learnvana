@@ -2,11 +2,9 @@ import React, { useEffect, useRef } from "react";
 import EditorJs from "@editorjs/editorjs";
 import { EDITOR_JS_TOOLS } from "../../config/EditorTools";
 import uuid from "react-uuid";
-import DragDrop from 'editorjs-drag-drop';
+import DragDrop from "editorjs-drag-drop";
 
-
-const Editor = ({ id, data, onChange }) => {
-
+const Editor = ({ id, data, onChangeEditor }) => {
   const uuidNo = uuid();
   const ejInstance = useRef();
 
@@ -16,8 +14,10 @@ const Editor = ({ id, data, onChange }) => {
       initEditor();
     }
     return () => {
-      ejInstance.current.destroy();
-      ejInstance.current = null;
+      if (ejInstance.current) {
+        ejInstance.current.destroy();
+        ejInstance.current = null;
+      }
     };
   }, []);
 
@@ -32,7 +32,7 @@ const Editor = ({ id, data, onChange }) => {
       },
       onChange: async (event) => {
         let content = await editor.saver.save();
-        onChange(content, id);
+        onChangeEditor(content, id);
       },
       autofocus: true,
       tools: EDITOR_JS_TOOLS,

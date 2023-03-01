@@ -6,7 +6,7 @@ import ClassSidebar from "../Shared/ClassSidebar";
 // import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 const ClassLayout = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   let { classId } = useParams();
 
   // Side Bar config

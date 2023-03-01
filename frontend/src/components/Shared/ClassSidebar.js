@@ -11,7 +11,7 @@ const ClassSidebar = ({ sideBarConfig }) => {
   });
 
   return (
-    <aside className="h-screen w-[13%] bg-orange-400 p-3">
+    <aside className="min-h-screen w-[13%] bg-orange-400 p-3">
       <ul className="flex flex-col">{sideBarLinksContent}</ul>
     </aside>
   );

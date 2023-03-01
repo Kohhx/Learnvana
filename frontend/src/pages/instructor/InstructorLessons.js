@@ -26,7 +26,7 @@ const Lessons = () => {
   }, [doGetClassLessons, classId]);
 
   const allLessons = classLessons.map((singleLesson, i) => (
-    <Lessonitem key={i} lessonData={singleLesson} classId={classId} />
+    <Lessonitem key={i} lessonData={singleLesson} classId={classId} role="instructor" />
   ));
 
   return (

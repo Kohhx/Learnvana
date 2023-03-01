@@ -23,7 +23,7 @@ const EditorReadonly = ({ data }) => {
     const editor = new EditorJs({
       holder: uuidNo,
       logLevel: "ERROR",
-      data: data,
+      data: typeof data === "string" ? JSON.parse(data) : data,
       onReady: () => {
         ejInstance.current = editor;
       },
