@@ -80,24 +80,30 @@ exports.createLesson = asyncHandler(async (req, res) => {
     time,
     images,
   };
+  console.log("OLDDDDDDD",classFound)
 
+  let lessonFound;
   try {
     classFound.lessons.push(newLesson);
     await classFound.save();
+    lessonFound = classFound.lessons.pop()
+    // remeber you need to pull out the lesson added before you can use its _id^
   } catch (error) {
     res.status(500);
     throw new Error("Something went wrong with adding classes to instructor");
   }
 
-  if (newLesson) {
+
+
+  if (lessonFound) {
     res.status(201).json({
-      _id: newLesson._id,
-      title: newLesson.title,
-      content: newLesson.content,
-      objective: newLesson.objective,
-      date: newLesson.date,
-      time: newLesson.time,
-      images: newLesson.images,
+      _id: lessonFound._id,
+      title: lessonFound.title,
+      content: lessonFound.content,
+      objective: lessonFound.objective,
+      date: lessonFound.date,
+      time: lessonFound.time,
+      images: lessonFound.images,
     });
   } else {
     res.status(400);
