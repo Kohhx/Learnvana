@@ -94,16 +94,14 @@ exports.createLesson = asyncHandler(async (req, res) => {
     throw new Error("Something went wrong with adding classes to instructor");
   }
 
-
-
   if (lessonFound) {
     res.status(201).json({
-      _id: newLesson._id,
-      title: newLesson.title,
-      content: newLesson.content,
-      objective: newLesson.objective,
-      date: newLesson.date,
-      time: newLesson.time,
+      _id: lessonFound._id,
+      title: lessonFound.title,
+      content: lessonFound.content,
+      objective: lessonFound.objective,
+      date: lessonFound.date,
+      time: lessonFound.time,
     });
   } else {
     res.status(400);

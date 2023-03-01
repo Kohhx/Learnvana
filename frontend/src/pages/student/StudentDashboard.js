@@ -19,9 +19,9 @@ const StudentDashboard = () => {
 
   // console.log(student._id)
   useEffect(() => {
-    // if (getStudentClassesSuccess) {
+    if (getStudentClassesSuccess) {
       doGetStudentClasses(student._id);
-    // }
+    }
   }, []);
 
   const classesDisplay = studentClasses.map((singleClass, i) => (
