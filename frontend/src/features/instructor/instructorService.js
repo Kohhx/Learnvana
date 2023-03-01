@@ -3,7 +3,7 @@ import formatUtil from "../../utilities/FormatUtil";
 
 /**
  * =============================================================================
- * Instructor
+ * INSTRUCTOR
  * =============================================================================
  */
 
@@ -20,6 +20,7 @@ const UserInstructorProfile = async (profileData, token) => {
     return response.data;
   }
 };
+
 
 // Update instructor profile
 const updateInstructorProfile = async (newInstructorProfile, token) => {
@@ -48,9 +49,10 @@ const updateInstructorProfile = async (newInstructorProfile, token) => {
   }
 };
 
+
 /**
  * =============================================================================
- * Instructor Classes
+ * CLASSES
  * =============================================================================
  */
 
@@ -68,6 +70,26 @@ const newClass = async (classData, token) => {
   }
 };
 
+
+// Update instructor class
+const updateInstructorClass = async (newInstructorClass, token) => {
+  const { classId } = newInstructorClass;
+
+  const URL = `instructors/classes/${classId}/update`;
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axiosInstance.post(URL, newInstructorClass, config);
+  if (response.data) {
+    return response.data;
+  }
+};
+
+
 // Get all instructor Class
 const getInstructorClasses = async (token) => {
   const URL = "instructors/classes";
@@ -81,6 +103,7 @@ const getInstructorClasses = async (token) => {
     return response.data;
   }
 };
+
 
 // Get one instructor Class
 const getInstructorClass = async (classId, token) => {
@@ -97,6 +120,7 @@ const getInstructorClass = async (classId, token) => {
   }
 };
 
+
 // Delete Class
 const deleteInstructorClass = async (data, token) => {
   const URL = "instructors/classes/delete";
@@ -112,9 +136,10 @@ const deleteInstructorClass = async (data, token) => {
   }
 };
 
+
 /**
  * =============================================================================
- * Instructor Lessons
+ * LESSONS
  * =============================================================================
  */
 
@@ -133,6 +158,7 @@ const newLesson = async (lessonData, token) => {
   }
 };
 
+
 // Get all instructor Lessons
 const getClassLessons = async (classId, token) => {
   const URL = `instructors/classes/${classId}/lessons`;
@@ -147,6 +173,7 @@ const getClassLessons = async (classId, token) => {
     return response.data;
   }
 };
+
 
 // Get one instructor Lesson
 const getClassLesson = async (ids, token) => {
@@ -165,9 +192,27 @@ const getClassLesson = async (ids, token) => {
   }
 };
 
+
+// Delete Lesson
+const deleteClassLesson = async (data, token) => {
+  const { classId } = data;
+  const URL = `instructors/classes/${classId}/lessons/delete`;
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axiosInstance.post(URL, data, config);
+  if (response.data) {
+    return response.data;
+  }
+};
+
+
 /**
  * =============================================================================
- * Instructor Class Students
+ * STUDENTS, PENDING, ACCEPTANCE, REJECT, DELETE
  * =============================================================================
  */
 
@@ -221,6 +266,7 @@ const rejectStudentToClass = async (ids, token) => {
   }
 };
 
+
 // Get all students from class
 const getStudentsFromClass = async (classId, token) => {
   const URL = `instructors/classes/${classId}/students`;
@@ -236,7 +282,8 @@ const getStudentsFromClass = async (classId, token) => {
   }
 };
 
-// Get reject student into class
+
+// Delete student from class
 const deleteStudentFromClass = async (ids, token) => {
   const { classId } = ids;
   const URL = `instructors/classes/${classId}/students/delete`;
@@ -253,16 +300,19 @@ const deleteStudentFromClass = async (ids, token) => {
   }
 };
 
+
 // Put all the function into authService object before exporting
 const instructorService = {
   UserInstructorProfile,
   newClass,
+  updateInstructorClass,
   getInstructorClasses,
   getInstructorClass,
   deleteInstructorClass,
   newLesson,
   getClassLessons,
   getClassLesson,
+  deleteClassLesson,
   getInstructorClassPendingStudents,
   approveStudentToClass,
   rejectStudentToClass,

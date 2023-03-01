@@ -81,16 +81,22 @@ exports.createLesson = asyncHandler(async (req, res) => {
     date,
     time,
   };
+  console.log("OLDDDDDDD",classFound)
 
+  let lessonFound;
   try {
     classFound.lessons.push(newLesson);
     await classFound.save();
+    lessonFound = classFound.lessons.pop()
+    // remeber you need to pull out the lesson added before you can use its _id^
   } catch (error) {
     res.status(500);
     throw new Error("Something went wrong with adding classes to instructor");
   }
 
-  if (newLesson) {
+
+
+  if (lessonFound) {
     res.status(201).json({
       _id: newLesson._id,
       title: newLesson.title,

@@ -31,6 +31,8 @@ const InstructorDashboard = () => {
     doGetInstructorClasses();
   }, [doGetInstructorClasses]);
 
+
+
   // // const content = instructorClasses.map((singleClass,i) => <Classitem key={i} classData={singleClass} role={role}/> );
   // const { title, _id } = classData;
 
@@ -43,6 +45,13 @@ const InstructorDashboard = () => {
     doDeleteInstructorClass(dataIn);
   };
 
+  useEffect(() => {
+    if (deleteInstructorClassSuccess) {
+      console.log("successfully removed class");
+    }
+  }, [deleteInstructorClassSuccess]);
+
+
   const tableConfig = [
     {
       label: "Index",
@@ -54,6 +63,13 @@ const InstructorDashboard = () => {
       label: "Classes",
       render: (rowData) => <Link to={`/${role}s/classes/${rowData._id}`}>{rowData.title}</Link>
       // sortValue: (rowData) => rowData.first_name,
+    },
+    {
+      render: (rowData) => (
+        <div className={`p-2 m-3`}>
+          <Button primary rounded><Link to={`/${role}s/classes/${rowData._id}/update`}>Update</Link></Button>
+        </div>
+      ),
     },
     {
       render: (rowData) => (

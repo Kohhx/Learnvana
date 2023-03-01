@@ -23,10 +23,6 @@ const NewClass = () => {
         value: "",
         isValid: false,
       },
-      lessons: {
-        value: "",
-        isValid: false,
-      },
       images: {
         value: "",
         isValid: false,
@@ -62,7 +58,6 @@ const NewClass = () => {
     const newClassData = {
       title: formState.inputs.title.value,
       status: formState.inputs.status.value,
-      lessons: formState.inputs.lessons.value,
       images: formState.inputs.images.value,
       address: formState.inputs.address.value,
     };
@@ -111,15 +106,6 @@ const NewClass = () => {
           ]}
           formHandler={useFormHandler}
         />
-        <Input
-          id="lessons"
-          type="lessons"
-          label="Number of lessons"
-          placeholder="e.g. 2"
-          // errorMessage="Please enter a valid password"
-          validators={[Validator.VALIDATOR_REQUIRE()]}
-          formHandler={useFormHandler}
-        ></Input>
         <Input
           id="images"
           type="images"

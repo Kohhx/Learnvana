@@ -3,17 +3,18 @@ import { useParams } from "react-router-dom";
 import NewLesson from "../../components/NewLesson";
 import Hide from "../../components/Hide";
 import Lessonitem from "../../components/Lessonitem";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  getClassLessons,
-  reset,
-} from "../../features/instructor/instructorSlice";
+import { useSelector } from "react-redux";
+import { reset, getClassLessons, deleteClassLesson } from "../../features/instructor/instructorSlice";
 import useThunk from "../../hooks/useThunkHook";
 
 const Lessons = () => {
+
   let { classId } = useParams();
   const { classLessons } = useSelector((state) => state.instructor);
+  const { user } = useSelector((state) => state.auth);
+  const role = user.role;
 
+  // get all class lessons
   const [
     doGetClassLessons,
     getLessonsLoading,
@@ -21,20 +22,25 @@ const Lessons = () => {
     getLessonsError,
   ] = useThunk(getClassLessons);
 
+
   useEffect(() => {
     doGetClassLessons(classId);
-  }, [doGetClassLessons, classId]);
+  }, [doGetClassLessons]);
 
+
+  // display all lessons
   const allLessons = classLessons.map((singleLesson, i) => (
     <Lessonitem key={i} lessonData={singleLesson} classId={classId} role="instructor" />
   ));
 
+
   return (
     <div>
-      {allLessons}
       <Hide>
         <NewLesson></NewLesson>
       </Hide>
+      {allLessons}
+
     </div>
   );
 };

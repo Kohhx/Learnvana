@@ -144,14 +144,8 @@ exports.createClass = asyncHandler(async (req, res) => {
   // Add class to instructor
   try {
     instructor.classes.push(newClass);
-    // console.log("SSSSSSOASOIDISADIOI",instructor.save())
-
     instructor.user = user;
     await instructor.save();
-
-    user.instructorprofile = instructor;
-    await user.save();
-
   } catch (error) {
     res.status(500);
     throw new Error("Something went wrong with adding classes to instructor");

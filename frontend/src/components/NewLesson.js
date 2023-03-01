@@ -85,11 +85,17 @@ const NewLesson = () => {
     // classDispatch(newClass(newClassData));s
   };
 
+  // const refresh = () => window.location.reload(true)
+
   useEffect(() => {
     if (CreateLessonSuccess) {
-      navigate(`/instructors/classes/${classId}/lessons`);
+      console.log("Lesson created successfully")
+      // navigate(`/instructors/classes/${classId}/lessons`);
+      // window.location.reload(true);
     }
   }, [navigate, CreateLessonSuccess]);
+
+
 
   // Display loading spinner based on loading state
   if (CreateLessonLoading) {
