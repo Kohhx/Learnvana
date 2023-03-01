@@ -25,7 +25,7 @@ const Lessons = () => {
 
   useEffect(() => {
     doGetClassLessons(classId);
-  }, [doGetClassLessons, classId]);
+  }, [doGetClassLessons]);
 
 
   // display all lessons

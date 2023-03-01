@@ -539,7 +539,8 @@ export const instructorSlice = createSlice({
       .addCase(newLesson.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        // state.classLessons = [...state.classLessons, action.payload];
+        console.log(action.payload)
+        state.classLessons = [...state.classLessons, action.payload];
         // only needed if no reloading of page required ^
         // dont mutate(.push), use destructure^ (make new array and add in)
       })

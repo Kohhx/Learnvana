@@ -82,17 +82,18 @@ const NewLesson = () => {
 
   useEffect(() => {
     if (CreateLessonSuccess) {
+      console.log("Lesson created successfully")
       // navigate(`/instructors/classes/${classId}/lessons`);
-      window.location.reload(true);
+      // window.location.reload(true);
     }
   }, [navigate, CreateLessonSuccess]);
 
 
 
-  // // Display loading spinner based on loading state
-  // if (CreateLessonLoading) {
-  //   return <h1>Loading...</h1>;
-  // }
+  // Display loading spinner based on loading state
+  if (CreateLessonLoading) {
+    return <h1>Loading...</h1>;
+  }
 
   return (
     <div>
