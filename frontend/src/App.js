@@ -32,7 +32,7 @@ import StudentLesson from "./pages/student/StudentLesson";
 import StudentClassmates from "./pages/student/StudentClassmates";
 
 // GUARDIANS IMPORT
-import GuardianCreateStudents from "./pages/guardian/GuardianCreateStudents"
+import GuardianCreateStudents from "./pages/guardian/GuardianCreateStudents";
 import GuardianDashboard from "./pages/guardian/GuardianDashboard";
 
 const App = () => {
@@ -75,13 +75,13 @@ const App = () => {
               {/* Instructor */}
               <Route path="/instructors">
                 <Route path="signup" element={<InstructorSignUp />} />
-                <Route
-                  path="update"
-                  element={<InstructorProfileUpdate />}
-                />
+                <Route path="update" element={<InstructorProfileUpdate />} />
                 <Route path="dashboard" element={<InstructorDashboard />} />
                 <Route path="classes/new" element={<InstructorCreateClass />} />
-                <Route path="classes/:classId" element={<InstructorClassLayout />}>
+                <Route
+                  path="classes/:classId"
+                  element={<InstructorClassLayout />}
+                >
                   <Route path="update" element={<InstructorClassUpdate />} />
                   <Route path="students">
                     <Route index element={<InstructorClassStudents />} />
@@ -91,7 +91,10 @@ const App = () => {
                     />
                   </Route>
                   <Route path="lessons" element={<InstructorLessons />} />
-                  <Route path="lessons/:lessonId" element={<InstructorLesson />} />
+                  <Route
+                    path="lessons/:lessonId"
+                    element={<InstructorLesson />}
+                  />
                 </Route>
               </Route>
               {/* End */}
@@ -99,11 +102,19 @@ const App = () => {
               {/* Students */}
               <Route path="/students">
                 <Route path="signup" element={<StudentSignUp />} />
-                <Route path="dashboard" element={<StudentDashboard />} />
-                <Route path="classes/:classId" element={<StudentClassLayout />}>
-                  <Route path="classmates" element={<StudentClassmates />} />
-                  <Route path="lessons" element={<StudentLessons />} />
-                  <Route path="lessons/:lessonId" element={<StudentLesson />} />
+                <Route path=":studentId">
+                  <Route path="dashboard" element={<StudentDashboard />} />
+                  <Route
+                    path="classes/:classId"
+                    element={<StudentClassLayout />}
+                  >
+                    <Route path="classmates" element={<StudentClassmates />} />
+                    <Route path="lessons" element={<StudentLessons />} />
+                    <Route
+                      path="lessons/:lessonId"
+                      element={<StudentLesson />}
+                    />
+                  </Route>
                 </Route>
               </Route>
               {/* End */}
@@ -114,7 +125,6 @@ const App = () => {
                 <Route path="dashboard" element={<GuardianDashboard />} />
               </Route>
               {/* End */}
-
             </Route>
             {/**
              * =================================================================

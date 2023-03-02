@@ -5,8 +5,8 @@ import { getStudentsFromClass } from "../../features/student/studentSlice";
 import { useSelector } from "react-redux";
 
 const StudentClassmates = () => {
-  const { classStudents } = useSelector((state) => state.student)
-  const { classId } = useParams();
+  const { classStudents } = useSelector((state) => state.student);
+  const { classId, studentId } = useParams();
 
   const [
     doGetStudentsFromClass,
@@ -15,21 +15,26 @@ const StudentClassmates = () => {
     getStudentsFromClassError,
   ] = useThunk(getStudentsFromClass);
 
-
   useEffect(() => {
-    doGetStudentsFromClass(classId);
+    doGetStudentsFromClass({
+      classId,
+      studentId,
+    });
   }, [doGetStudentsFromClass]);
 
-  const classMates = classStudents.map((student, i) => <li key={i}> {student.first_name} </li> );
-
-
+ let classMates;
+  if (classStudents) {
+   classMates = classStudents.map((student, i) => (
+    <li key={i}> {student.first_name} </li>
+  ));
+  }
 
   return (
     <div>
       <p>Students</p>
       {classMates}
     </div>
-  )
-}
+  );
+};
 
-export default StudentClassmates
+export default StudentClassmates;
