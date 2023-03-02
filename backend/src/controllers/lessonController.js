@@ -81,7 +81,6 @@ exports.createLesson = asyncHandler(async (req, res) => {
     date,
     time,
   };
-  console.log("OLDDDDDDD",classFound)
 
   let lessonFound;
   try {
