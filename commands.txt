@@ -58,3 +58,9 @@ npm install --save react-editor-js
 // React Parser
 npm install html-react-parser --save
 npm install editorjs-html
+
+// To move to different section in page
+npm install --save react-router-hash-link
+
+// Detect intersection and entry of section to viewport
+npm install react-intersection-observer --save

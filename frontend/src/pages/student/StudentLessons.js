@@ -19,20 +19,19 @@ const StudentLessons = () => {
   ] = useThunk(getClassLessons);
 
   useEffect(() => {
-    doGetClassLessons(classId)
-  }, [doGetClassLessons, classId])
+    doGetClassLessons(classId);
+  }, [doGetClassLessons, classId]);
 
   const allLessons = classLessons.map((singleLesson, i) => (
-    <Lessonitem key={i} lessonData={singleLesson} role={role} classId={classId} />
+    <Lessonitem
+      key={i}
+      lessonData={singleLesson}
+      role="student"
+      classId={classId}
+    />
   ));
 
+  return <div>{allLessons}</div>;
+};
 
-
-  return (
-    <div>
-      {allLessons}
-    </div>
-  )
-}
-
-export default StudentLessons
+export default StudentLessons;

@@ -29,7 +29,6 @@ const InstructorLesson = () => {
     return (
       <div>
         <p>{classLesson.title}</p>
-        <p>sssssssss</p>
         <EditorReadonly data={classLesson.content} />
       </div>
     );
