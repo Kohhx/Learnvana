@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Button from "./Button";
 import { deleteClassLesson } from "../features/instructor/instructorSlice";
 import useThunk from "../hooks/useThunkHook";
 
 const Lessonitem = ({ lessonData, role, classId }) => {
   const { title, _id } = lessonData;
+  const { studentId } = useParams();
 
   // delete class lesson
   const [
@@ -36,7 +38,7 @@ const Lessonitem = ({ lessonData, role, classId }) => {
 
   return (
     <div>
-      <div className="inline-block"><Link to={`/${role}s/classes/${classId}/lessons/${_id}`}>{title}</Link></div>
+      <div className="inline-block"><Link to={`students/${studentId}/classes/${classId}/lessons/${_id}`}>{title}</Link></div>
       <div className="inline-block pl-10">
         <Button
           danger

@@ -7,11 +7,11 @@ const { protect } = require("../middlewares/authMiddleware")
 router.post('/create', protect, studentController.createStudent)
 
 // get student classes
-router.get('/classes', protect, studentController.getStudentClasses)
+router.get('/:studentId/classes', protect, studentController.getStudentClasses)
 
 // Student get student list from class - GET
 router.get(
-  `/classes/:classId/students`,
+  `/:studentId/classes/:classId/students`,
   protect,
   studentController.getAllStudentsFromClass
 );

@@ -7,14 +7,13 @@ import ClassSidebar from "../Shared/ClassSidebar";
 
 const ClassLayout = () => {
   const [isOpen, setIsOpen] = useState(true);
-  let { classId } = useParams();
-
+  let { classId, studentId } = useParams();
   // Side Bar config
   const sideBarConfig = [
-    { name: "Lessons", link: `/students/classes/${classId}/lessons` },
+    { name: "Lessons", link: `/students/${studentId}/classes/${classId}/lessons` },
     {
       name: "Classmates",
-      link: `/students/classes/${classId}/classmates`,
+      link: `/students/${studentId}/classes/${classId}/classmates`,
     },
   ];
 

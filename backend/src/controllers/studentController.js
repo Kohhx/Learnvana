@@ -88,13 +88,14 @@ exports.createStudent = asyncHandler(async (req, res) => {
  */
 
 exports.getStudentClasses = asyncHandler(async (req, res) => {
-  console.log("WHat")
+  console.log("YYYY")
   const user = await User.findById(req.user.id);
-  const { studentId } = req.body;
+  const { studentId } = req.params;
   console.log("studentId",studentId)
   const student = await Student.findById(studentId).populate(
     "classes"
   );
+
   if (!user) {
     res.status(400);
     throw new Error("No user found");
@@ -114,7 +115,7 @@ exports.getStudentClasses = asyncHandler(async (req, res) => {
 
   const studentClasses = student.classes;
 
-  console.log(studentClasses);
+  console.log("Student Classes",studentClasses);
 
   res.status(201).json(studentClasses);
 });
@@ -150,19 +151,15 @@ exports.getClassLessons = asyncHandler(async (req, res) => {
 
   const user = await User.findById(req.user.id);
   const student = await Student.findById(user.studentprofiles);
-  // const instructor = await Instructor.findById(user.instructorprofile).populate(
-  //   { "classes" }
-  // );
-  //
 
   if (!user) {
     res.status(400);
     throw new Error("No user found");
   }
 
-  if (user.role !== "student") {
+  if (user.role !== "student" && user.role !== "guardian" ) {
     res.status(400);
-    throw new Error("User is not a student");
+    throw new Error("User is not a student or guardian");
   }
 
   if (!student) {
@@ -237,9 +234,9 @@ exports.getClassLesson = asyncHandler(async (req, res) => {
     throw new Error("No user found");
   }
 
-  if (user.role !== "student") {
+  if (user.role !== "student" && user.role !== "guardian") {
     res.status(400);
-    throw new Error("User is not a student");
+    throw new Error("User is not a student or guardian");
   }
 
   if (!student) {

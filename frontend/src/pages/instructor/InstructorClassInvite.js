@@ -17,8 +17,6 @@ const ClassInvite = () => {
   const { user } = useSelector((state) => state.auth);
   let { classId } = useParams();
 
-
-
   const { formState, changeHandler, focusHandler } = useForm(
     {
       student: {
@@ -53,7 +51,7 @@ const ClassInvite = () => {
       studentId: formState.inputs.student.value,
     };
 
-    console.log("Join", studentClassData);
+    // console.log("Join", studentClassData);
     doSendRequestToJoin(studentClassData);
     setIsModalIsOpen(false);
   };
@@ -73,11 +71,21 @@ const ClassInvite = () => {
     );
   }
 
-   // Get Names array
-   const studentNames = user.profiles.map((student) => ({
-    display: student.first_name,
-    value: student._id,
-  }));
+  let studentNames;
+  if (user.role === "guardian") {
+    // Get Names array
+    studentNames = user.profiles.map((student) => ({
+      display: student.first_name,
+      value: student._id,
+    }));
+  } else {
+    studentNames = [
+      {
+        display: user.profiles.first_name,
+        value: user.profiles._id,
+      },
+    ];
+  }
 
   return (
     <div>

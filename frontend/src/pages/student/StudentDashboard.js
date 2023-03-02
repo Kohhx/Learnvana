@@ -1,14 +1,15 @@
 import React, { useEffect } from "react";
-import Button from "../../components/Button";
+import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getStudentClasses } from "../../features/student/studentSlice";
 import Classitem from "../../components/Classitem";
 import useThunk from "../../hooks/useThunkHook";
 
 const StudentDashboard = () => {
-  const { studentClasses, student } = useSelector((state) => state.student);
+  const { studentClasses } = useSelector((state) => state.student);
   const { user } = useSelector((state) => state.auth);
   const role = user.role;
+  const { studentId } = useParams();
 
   const [
     doGetStudentClasses,
@@ -18,15 +19,22 @@ const StudentDashboard = () => {
   ] = useThunk(getStudentClasses);
 
   // console.log(student._id)
+  // let studentId = student?._id ? student._id : user.profiles._id;
+  // console.log(studentId)
   useEffect(() => {
-    if (getStudentClassesSuccess) {
-      doGetStudentClasses(student._id);
-    }
+    doGetStudentClasses(studentId);
   }, []);
 
-  const classesDisplay = studentClasses.map((singleClass, i) => (
-    <Classitem key={i} classData={singleClass} role={role} />
-  ));
+  let classesDisplay;
+  if (studentClasses) {
+    classesDisplay = studentClasses.map((singleClass, i) => (
+      <Classitem key={i} classData={singleClass} role={role} />
+    ));
+  }
+
+  if (getStudentClassesLoading) {
+    <h1>loading...</h1>;
+  }
 
   return (
     <div>

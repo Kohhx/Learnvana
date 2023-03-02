@@ -5,7 +5,7 @@ import { addStudent } from "../../features/student/studentSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Button from "../../components/Button";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
 const GuardianDashboard = () => {
   const navigate = useNavigate();
@@ -22,31 +22,37 @@ const GuardianDashboard = () => {
     doGetGuardianStudents();
   }, [doGetGuardianStudents]);
 
-  const handleStudentSelect = (student) => {
+  const handleStudentClassSelect = (student, classId) => {
     console.log(student);
     dispatch(addStudent(student));
-    navigate("/students/dashboard")
+    navigate(`/students/${student._id}/classes/${classId}`);
+  };
+
+  const handleStudentSelect = (student) => {
+    dispatch(addStudent(student));
+    navigate(`/students/${student._id}/dashboard`);
   };
 
   const studentClassContent = guardianStudents.map((student, i) => {
     const classes = student.classes.map((studentClasses) => {
       return (
-        <Link
-          className="ml-2 block"
-          to={`/students/classes/${studentClasses._id}`}
+        <Button
+          onClick={() => handleStudentClassSelect(student, studentClasses._id)}
         >
           {studentClasses.title}
-        </Link>
+        </Button>
       );
     });
 
     return (
       <li className="mb-3">
-        {`Student ${i + 1}: `}
-        <Button onClick={() => handleStudentSelect(student)}>
+        <Button
+          classNames="inline-block"
+          onClick={() => handleStudentSelect(student)}
+        >
+          {`Student ${i + 1}: `}
           {student.first_name}
         </Button>
-
         {classes}
       </li>
     );

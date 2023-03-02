@@ -45,7 +45,7 @@ export const UserStudentProfile = createAsyncThunk(
 // Get Student classes
 export const getStudentClasses = createAsyncThunk(
   "student/getClasses",
-  async (studentId, thunkAPI) => {
+  async ( studentId, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
       return await studentService.getStudentClasses(studentId, token);
@@ -65,10 +65,10 @@ export const getStudentClasses = createAsyncThunk(
 // Get all students from class
 export const getStudentsFromClass = createAsyncThunk(
   "student/getAllStudentFromClass",
-  async (classId, thunkAPI) => {
+  async (ids, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      return await studentService.getStudentsFromClass(classId, token);
+      return await studentService.getStudentsFromClass(ids, token);
     } catch (error) {
       const message =
         (error.response &&
@@ -156,7 +156,7 @@ export const studentSlice = createSlice({
         state.message = action.payload;
       })
 
-      // Get Instructor Classes
+      // Get Student Classes
       .addCase(getStudentClasses.pending, (state, action) => {
         state.isLoading = true;
       })

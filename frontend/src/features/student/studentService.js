@@ -8,7 +8,7 @@ const UserStudentProfile = async (profileData, token) => {
       Authorization: `Bearer ${token}`,
     },
   };
-  const response = await axiosInstance.post(URL, profileData, config);
+  const response = await axiosInstance.get(URL, profileData, config);
   if (response.data) {
     return response.data;
   }
@@ -16,22 +16,26 @@ const UserStudentProfile = async (profileData, token) => {
 
 // Get all students classes
 const getStudentClasses = async (studentId, token) => {
-  const URL = "students/classes";
+  const URL = `students/${studentId}/classes`;
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
-
-  const response = await axiosInstance.get(URL, studentId, config);
-  if (response.data) {
-    return response.data;
+  try {
+    const response = await axiosInstance.get(URL, config);
+    if (response.data) {
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
   }
 };
 
 // Get all students from class
-const getStudentsFromClass = async (classId, token) => {
-  const URL = `students/classes/${classId}/students`;
+const getStudentsFromClass = async (ids, token) => {
+  const { studentId, classId } = ids;
+  const URL = `students/${studentId}/classes/${classId}/students`;
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
