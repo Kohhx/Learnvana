@@ -24,8 +24,8 @@ const Lessonitem = ({ lessonData, role, classId }) => {
       lessonId,
       action: "deleteLesson",
     };
-    console.log(_id);
-    console.log("lessonITEM", lessonId);
+    // console.log(_id);
+    // console.log("lessonITEM", lessonId);
     doDeleteClassLesson(dataIn);
   };
 
@@ -35,13 +35,18 @@ const Lessonitem = ({ lessonData, role, classId }) => {
     }
   }, [deleteLessonSuccess]);
 
+  const lessonContent =
+    role === "instructor" ? (
+      <Link to={`/${role}s/classes/${classId}/lessons/${_id}`}>{title}</Link>
+    ) : (
+      <Link to={`/${role}s/${studentId}/classes/${classId}/lessons/${_id}`}>
+        {title}
+      </Link>
+    );
+
   return (
     <div>
-      <div className="inline-block">
-        <Link to={`/students/${studentId}/classes/${classId}/lessons/${_id}`}>
-          {title}
-        </Link>
-      </div>
+      <div className="inline-block">{lessonContent}</div>
 
       {role === "instructor" && (
         <div className="inline-block pl-10">

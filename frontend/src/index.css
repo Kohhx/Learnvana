@@ -69,3 +69,31 @@
 .cdx-block {
   max-width: 100% !important;
 }
+
+@layer utilities {
+  /* Background colours */
+  .h-Sscreen {
+    height: 100svh;
+  }
+  .proj-bg-grey-100 {
+    background-color: #585858;
+  }
+  .proj-bg-black-100 {
+    background-color: #000000;
+  }
+  .proj-bg-blue-300 {
+    background-color: #40747f;
+  }
+  .proj-bg-blue-200 {
+    background-color: #3e8492;
+  }
+  .proj-bg-blue-100 {
+    background-color: #6c98a2;
+  }
+  .proj-bg-white-200 {
+    background-color: #f8f8f8;
+  }
+  .proj-bg-white-100 {
+    background-color: #ffffff;
+  }
+}

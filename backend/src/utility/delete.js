@@ -1,11 +1,11 @@
 const asyncHandler = require("express-async-handler");
 const validation = require("../utility/validation");
+const cloudinaryHelper = require("../utility/cloudinaryHelper");
 
 // models
 const Instructor = require("../models/instructor");
 const Class = require("../models/class");
 const User = require("../models/user");
-
 
 // remove a class
 exports.oneClass = asyncHandler(async (req, res, next) => {
@@ -37,7 +37,6 @@ exports.oneClass = asyncHandler(async (req, res, next) => {
   }
 });
 
-
 exports.oneLesson = asyncHandler(async (req, res, next) => {
   const { classId, lessonId } = req.body;
   const user = await User.findById(req.user.id);
@@ -45,18 +44,18 @@ exports.oneLesson = asyncHandler(async (req, res, next) => {
   const classFound = await Class.findById(classId);
 
   function findLesson(lessonId) {
-    for (let i=0; i < classFound.lessons.length; i++) {
+    for (let i = 0; i < classFound.lessons.length; i++) {
       if (classFound.lessons[i].id === lessonId) {
         // console.log(i);
         // x = i;
         return i;
       }
     }
-  };
+  }
 
   let lessonFound;
   try {
-    lessonFound = await classFound.lessons[findLesson(lessonId)]
+    lessonFound = await classFound.lessons[findLesson(lessonId)];
     // lessonFound = await Class.findOne(
     //   { _id: classId },
     //   { lessons: [lessonId] }
@@ -65,9 +64,9 @@ exports.oneLesson = asyncHandler(async (req, res, next) => {
     res.status(400);
     throw new Error(error);
   }
-  console.log("sadasd", lessonId)
+  console.log("sadasd", lessonId);
 
-  console.log("testcheck", lessonFound)
+  console.log("testcheck", lessonFound);
 
   // Validate
   validation.validateUser(user, res, next);
@@ -85,6 +84,38 @@ exports.oneLesson = asyncHandler(async (req, res, next) => {
     throw new Error("No such lesson");
   }
 
+  // Lets remove everything from cloudinary if there is
+
+  console.log("LessonFound", lessonFound);
+
+  const { blocks } = JSON.parse(lessonFound.content);
+  console.log(blocks)
+  blocks.forEach((block) => {
+    const { type, data } = block;
+    if (type === "image" || type === "video" || type === "attaches") {
+      const mimetypeArr = data.file.mimetype.split("/");
+
+      let deleteType = "image";
+      if (mimetypeArr[0] === "video") {
+        deleteType = "video";
+      }
+
+      if (mimetypeArr[0] === "application") {
+        if (mimetypeArr[1] !== "pdf") {
+          deleteType = "raw";
+        }
+      }
+
+      const destroRes = cloudinaryHelper
+        .deleteFile(data.file.public_id, deleteType)
+        .then((destroRes) => console.log(destroRes))
+        .catch((error) => {
+          res.status(400);
+          throw new Error("Error deleting resource from cloudinary");
+        });
+    }
+  });
+
   // Remove lesson from class
   try {
     await Class.updateOne(
@@ -96,5 +127,5 @@ exports.oneLesson = asyncHandler(async (req, res, next) => {
     throw new Error("Error updating lesson in class list");
   }
 
-  console.log("reach here?")
+  console.log("reach here?");
 });
