@@ -5,6 +5,7 @@ import useForm from "../hooks/useFormHook";
 import Button from "../components/Button";
 import LearnvanaLogo from "../images/LearnvanaLogo.png";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { HashLink } from "react-router-hash-link";
 
 const Home = () => {
   return (
@@ -42,28 +43,39 @@ const Home = () => {
                 Market Place
               </Button>
               <div className="flex gap-12 mt-12">
-                <div className="rounded-full border-2 p-3 flex items-center justify-center bg-proj-white3-300">
-                  <RxHamburgerMenu className="text-5xl"/>
-                </div>
-                <div className="rounded-full border-2 p-3 flex items-center justify-center bg-proj-white3-300">
-                  <RxHamburgerMenu className="text-5xl"/>
-                </div>
-                <div className="rounded-full border-2 p-3 flex items-center justify-center bg-proj-white3-300">
-                  <RxHamburgerMenu className="text-5xl"/>
-                </div>
-                <div className="rounded-full border-2 p-3 flex items-center justify-center bg-proj-white3-300">
-                  <RxHamburgerMenu className="text-5xl"/>
-                </div>
+                <HashLink smooth to="#section1">
+                  <div className="rounded-full border-2 p-3 flex items-center justify-center bg-proj-white3-300">
+                    <RxHamburgerMenu className="text-5xl" />
+                  </div>
+                </HashLink>
+
+                <HashLink smooth to="#section2">
+                  <div className="rounded-full border-2 p-3 flex items-center justify-center bg-proj-white3-300">
+                    <RxHamburgerMenu className="text-5xl" />
+                  </div>
+                </HashLink>
+
+                <HashLink smooth to="#section3">
+                  <div className="rounded-full border-2 p-3 flex items-center justify-center bg-proj-white3-300">
+                    <RxHamburgerMenu className="text-5xl" />
+                  </div>
+                </HashLink>
+
+                <HashLink smooth to="#section4">
+                  <div className="rounded-full border-2 p-3 flex items-center justify-center bg-proj-white3-300">
+                    <RxHamburgerMenu className="text-5xl" />
+                  </div>
+                </HashLink>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="h-screen bg-proj-grey1-300"></div>
-      <div className="h-screen bg-proj-black1-300"></div>
-      <div className="h-screen bg-proj-white1-300"></div>
-      <div className="h-screen bg-orange-200"></div>
+      <div id="section1" className="h-screen bg-proj-grey1-300"></div>
+      <div id="section2" className="h-screen bg-proj-black1-300"></div>
+      <div id="section3" className="h-screen bg-proj-white1-300"></div>
+      <div id="section4" className="h-screen bg-orange-200"></div>
     </div>
   );
 };
