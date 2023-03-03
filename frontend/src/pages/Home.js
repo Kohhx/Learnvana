@@ -12,7 +12,8 @@ import { BiCategoryAlt } from "react-icons/bi";
 import { RiSlideshowLine } from "react-icons/ri";
 import { GrContactInfo } from "react-icons/gr";
 import { DiRuby } from "react-icons/di";
-import "./Home.css"
+import BooksImg from "../images/books.png";
+import "./Home.css";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -21,10 +22,13 @@ const Home = () => {
   return (
     <div>
       {floatNavBarInView && <HomeFloatNav />}
-      <div className="h-screen proj-bg-white-300 flex proj-bg-">
-        <div className="w-1/2"></div>
 
-        <div className="w-1/2 p-7">
+      <div className="h-screen proj-bg-white-300 flex proj-bg-">
+        <div className="w-2/5 overflow-hidden relative">
+          <img src={BooksImg} alt="book" className="scale-[0.9] absolute -left-[60px]" />
+        </div>
+
+        <div className="w-3/5 p-7">
           <div className="flex gap-4 justify-end">
             <div className="flex items-center gap-7">
               <HomeFixedNav />
@@ -55,26 +59,26 @@ const Home = () => {
               </Button>
               <div className="flex gap-12 mt-12">
                 <HashLink smooth to="#section1">
-                  <div className="rounded-full border-2 p-3 flex items-center justify-center bg-proj-white3-300 section1">
-                    <BiCategoryAlt className="text-5xl" />
+                  <div className="rounded-full border-2 p-3 flex items-center justify-center bg-proj-white3-300 section1 hover:scale-110 ">
+                    <BiCategoryAlt className="text-5xl hover:scale-110 transition-all" />
                   </div>
                 </HashLink>
 
                 <HashLink smooth to="#section2">
                   <div className="rounded-full border-2 p-3 flex items-center justify-center bg-proj-white3-300 section2">
-                    <RiSlideshowLine className="text-5xl" />
+                    <RiSlideshowLine className="text-5xl hover:scale-110 transition-all" />
                   </div>
                 </HashLink>
 
                 <HashLink smooth to="#section3">
                   <div className="rounded-full border-2 p-3 flex items-center justify-center bg-proj-white3-300 section3">
-                    <GrContactInfo className="text-5xl" />
+                    <GrContactInfo className="text-5xl hover:scale-110 transition-all" />
                   </div>
                 </HashLink>
 
                 <HashLink smooth to="#section4">
                   <div className="rounded-full border-2 p-3 flex items-center justify-center bg-proj-white3-300 section4">
-                    <DiRuby className="text-5xl" />
+                    <DiRuby className="text-5xl hover:scale-110 transition-all" />
                   </div>
                 </HashLink>
               </div>
