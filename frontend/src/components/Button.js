@@ -11,6 +11,7 @@ const Button = ({
   outline,
   rounded,
   addClass,
+  className,
   ...rest
 }) => {
 
@@ -31,8 +32,10 @@ const Button = ({
       "text-yellow-400": outline && warning,
       "text-red-500": outline && danger,
     },
-    rest.classNames,  // Other custom classname that comes in as props
+    className,  // Other custom classname that comes in as props
   );
+
+
 
   return (
     <div>
