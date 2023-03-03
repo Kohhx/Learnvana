@@ -33,12 +33,12 @@ const HomeFixedNav = () => {
 
   const fixedNavBar = !user ? (
     <>
-      <Button
+      {/* <Button
         onClick={() => navigate("/users/signup")}
         className="font-kaisei rounded-md  bg-proj-blue2-300 text-proj-white1-300 border-none text-[22px] w-[180px] h-[52px] hover:text-proj-black1-300 hover:border-solid hover:border-proj-black1-300 hover:bg-transparent transition-all"
       >
         Sign Up
-      </Button>
+      </Button> */}
       <Button
         onClick={() => navigate("/users/login")}
         className="font-kaisei rounded-md border-proj-black1-300 text-proj-black1-300 text-[22px] w-[180px] h-[52px] hover:border-none hover:bg-proj-grey1-100 transition-all"

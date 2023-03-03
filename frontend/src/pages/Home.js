@@ -3,14 +3,19 @@ import Button from "../components/Button";
 import LearnvanaLogo from "../images/LearnvanaLogo.png";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { HashLink } from "react-router-hash-link";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import HomeFixedNav from "../components/Home/HomeFixedNav";
+import { useInView } from "react-intersection-observer";
+import { CiSearch } from "react-icons/ci";
+import HomeFloatNav from "../components/Home/HomeFloatNav";
 
 const Home = () => {
   const navigate = useNavigate();
+  const { ref: floatNavBarRef, inView: floatNavBarInView } = useInView();
 
   return (
     <div>
+      {floatNavBarInView && <HomeFloatNav />}
       <div className="h-screen proj-bg-white-300 flex proj-bg-">
         <div className="w-1/2"></div>
 
@@ -20,7 +25,7 @@ const Home = () => {
               <HomeFixedNav />
             </div>
           </div>
-          <div className="mt-5">
+          <div className="mt-11">
             <div className="w-fit mx-auto flex items-center gap-5">
               <img src={LearnvanaLogo} alt="" />
               <h1 className="text-[66px] font-kaisei font-normal">Learnvana</h1>
@@ -73,10 +78,12 @@ const Home = () => {
         </div>
       </div>
 
-      <div id="section1" className="h-screen bg-proj-grey1-300"></div>
-      <div id="section2" className="h-screen bg-proj-black1-300"></div>
-      <div id="section3" className="h-screen bg-proj-white1-300"></div>
-      <div id="section4" className="h-screen bg-orange-200"></div>
+      <div id="section1" className="h-screen bg-sky-300"></div>
+      <div ref={floatNavBarRef}>
+        <div id="section2" className="h-screen bg-proj-black1-300"></div>
+        <div id="section3" className="h-screen bg-proj-white1-300"></div>
+        <div id="section4" className="h-screen bg-orange-200"></div>
+      </div>
     </div>
   );
 };
