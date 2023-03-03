@@ -40,7 +40,7 @@ const App = () => {
     <div>
       <Router>
         <div>
-          <Navbar />
+          {/* <Navbar /> */}
           <Routes>
             <Route path="/" element={<Home />} />
             {/* <Route path="/editor" element={<EditorTest />} /> */}
