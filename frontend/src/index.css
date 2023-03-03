@@ -25,14 +25,14 @@
 }
 .grow-enter-active {
   transform: scale(1);
-  transition: all 400ms ease-in-out;
+  transition: all 200ms ease-in-out;
 }
 .grow-exit {
   transform: scale(1);
 }
 .grow-exit-active {
   transform: scale(0);
-  transition: all 400ms ease-in-out;
+  transition: all 200ms ease-in-out;
 }
 
 /* Overwrite tail wind so that editor js Header works */
