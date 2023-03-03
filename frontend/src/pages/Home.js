@@ -15,10 +15,10 @@ const Home = () => {
 
         <div className="w-1/2 p-7">
           <div className="flex gap-4 justify-end">
-            <Button classNames="rounded-md  bg-proj-blue2-300 text-proj-white1-300 border-none text-[22px] w-[180px] h-[52px]">
+            <Button className="font-kaisei rounded-md  bg-proj-blue2-300 text-proj-white1-300 border-none text-[22px] w-[180px] h-[52px] hover:text-proj-black1-300 hover:border-solid hover:border-proj-black1-300 hover:bg-transparent transition-all">
               Sign Up
             </Button>
-            <Button classNames="rounded-md border-proj-black1-300 text-proj-black1-300 text-[22px] w-[180px] h-[52px]">
+            <Button className="font-kaisei rounded-md border-proj-black1-300 text-proj-black1-300 text-[22px] w-[180px] h-[52px] hover:border-none hover:bg-proj-grey1-100 transition-all">
               Log In
             </Button>
           </div>
@@ -36,10 +36,10 @@ const Home = () => {
                 content here', t is a long established fact that a reader will
                 be distracted by the readable content of..
               </p>
-              <Button classNames="mb-6 rounded-md  bg-proj-blue2-300 text-proj-white1-300 border-none text-[30px] w-[228px] h-[64px]">
+              <Button className="font-kaisei mb-6 rounded-md  bg-proj-blue2-300 text-proj-white1-300 border-none text-[30px] w-[228px] h-[64px] hover:text-proj-black1-300 hover:border-solid hover:border-proj-black1-300 hover:bg-transparent transition-all">
                 Join
               </Button>
-              <Button classNames="rounded-md border-proj-black1-300 text-proj-black1-300 text-[30px] w-[228px] h-[64px]">
+              <Button className="font-kaisei rounded-md border-proj-black1-300 text-proj-black1-300 text-[30px] w-[228px] h-[64px] hover:border-none hover:bg-proj-grey1-100 transition-all">
                 Market Place
               </Button>
               <div className="flex gap-12 mt-12">
