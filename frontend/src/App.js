@@ -40,7 +40,7 @@ const App = () => {
     <div>
       <Router>
         <div>
-          {/* <Navbar /> */}
+          <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
             {/* <Route path="/editor" element={<EditorTest />} /> */}
@@ -65,6 +65,7 @@ const App = () => {
              *  Private Routes
              * =================================================================
              */}
+
             <Route element={<ProtectedRoute />}>
               {/* Classes */}
               <Route path="/classes/:classId">
