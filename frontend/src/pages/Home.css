@@ -1,0 +1,63 @@
+@keyframes section1 {
+  0% {
+    transform: rotateX(0deg)
+  }
+  50% {
+    transform: rotateX(180deg)
+  }
+  100% {
+    transform: rotateX(360deg)
+  }
+}
+
+.section1 {
+  animation: section1 0.8s linear 0.2s forwards;
+}
+
+@keyframes section2 {
+  0% {
+    transform: rotateX(0deg)
+  }
+  50% {
+    transform: rotateX(180deg)
+  }
+  100% {
+    transform: rotateX(360deg)
+  }
+}
+
+.section2 {
+  animation: section2 0.8s linear 0.8s forwards;
+}
+
+@keyframes section3 {
+  0% {
+    transform: rotateX(0deg)
+  }
+  50% {
+    transform: rotateX(180deg)
+  }
+  100% {
+    transform: rotateX(360deg)
+  }
+}
+
+.section3 {
+  animation: section3 0.8s linear 1.2s forwards;
+}
+
+@keyframes section4 {
+  0% {
+    transform: rotateX(0deg)
+  }
+  50% {
+    transform: rotateX(180deg)
+  }
+  100% {
+    transform: rotateX(360deg)
+  }
+}
+
+.section4 {
+  animation: section4 0.8s linear 1.6s forwards;
+}

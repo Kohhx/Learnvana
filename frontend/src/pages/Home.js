@@ -8,6 +8,11 @@ import HomeFixedNav from "../components/Home/HomeFixedNav";
 import { useInView } from "react-intersection-observer";
 import { CiSearch } from "react-icons/ci";
 import HomeFloatNav from "../components/Home/HomeFloatNav";
+import { BiCategoryAlt } from "react-icons/bi";
+import { RiSlideshowLine } from "react-icons/ri";
+import { GrContactInfo } from "react-icons/gr";
+import { DiRuby } from "react-icons/di";
+import "./Home.css"
 
 const Home = () => {
   const navigate = useNavigate();
@@ -50,26 +55,26 @@ const Home = () => {
               </Button>
               <div className="flex gap-12 mt-12">
                 <HashLink smooth to="#section1">
-                  <div className="rounded-full border-2 p-3 flex items-center justify-center bg-proj-white3-300">
-                    <RxHamburgerMenu className="text-5xl" />
+                  <div className="rounded-full border-2 p-3 flex items-center justify-center bg-proj-white3-300 section1">
+                    <BiCategoryAlt className="text-5xl" />
                   </div>
                 </HashLink>
 
                 <HashLink smooth to="#section2">
-                  <div className="rounded-full border-2 p-3 flex items-center justify-center bg-proj-white3-300">
-                    <RxHamburgerMenu className="text-5xl" />
+                  <div className="rounded-full border-2 p-3 flex items-center justify-center bg-proj-white3-300 section2">
+                    <RiSlideshowLine className="text-5xl" />
                   </div>
                 </HashLink>
 
                 <HashLink smooth to="#section3">
-                  <div className="rounded-full border-2 p-3 flex items-center justify-center bg-proj-white3-300">
-                    <RxHamburgerMenu className="text-5xl" />
+                  <div className="rounded-full border-2 p-3 flex items-center justify-center bg-proj-white3-300 section3">
+                    <GrContactInfo className="text-5xl" />
                   </div>
                 </HashLink>
 
                 <HashLink smooth to="#section4">
-                  <div className="rounded-full border-2 p-3 flex items-center justify-center bg-proj-white3-300">
-                    <RxHamburgerMenu className="text-5xl" />
+                  <div className="rounded-full border-2 p-3 flex items-center justify-center bg-proj-white3-300 section4">
+                    <DiRuby className="text-5xl" />
                   </div>
                 </HashLink>
               </div>
