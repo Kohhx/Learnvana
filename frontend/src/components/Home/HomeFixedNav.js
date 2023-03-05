@@ -41,7 +41,7 @@ const HomeFixedNav = () => {
       </Button> */}
       <Button
         onClick={() => navigate("/users/login")}
-        className="font-kaisei rounded-md border-proj-black1-300 text-proj-black1-300 text-[22px] w-[180px] h-[52px] hover:border-none hover:bg-proj-grey1-100 transition-all"
+        className="shadow-lg shadow-black-500/50 font-kaisei rounded-md border-proj-black1-300 text-proj-black1-300 text-[22px] w-[180px] h-[52px] hover:border-none hover:bg-proj-grey1-100 transition-all"
       >
         Log In
       </Button>

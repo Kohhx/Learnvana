@@ -137,7 +137,7 @@ const Input = ({
     <>
       {label && <label htmlFor="">{label}</label>}
       {formContent}
-      {inputState.isFocus && !inputState.isValid && <div> {errors}</div>}
+      {inputState.isFocus && !inputState.isValid && <div>{errors}</div>}
     </>
   );
 };
