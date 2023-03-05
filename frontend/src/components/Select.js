@@ -10,6 +10,7 @@ const Select = ({
   errorMessage,
   validators,
   formHandler,
+  display,
   ...rest
 }) => {
   const [selectState, setSelectState] = useState({
@@ -48,9 +49,9 @@ const Select = ({
       payload: {
         value: selectState.value,
         isValid: selectState.isValid,
-      }
+      },
     });
-  },[selectState, formHandler, id])
+  }, [selectState, formHandler, id]);
 
   // Build Error
   const errorClasses = "text-red-500";
@@ -60,30 +61,37 @@ const Select = ({
       <p className={errorClasses}>{errorMessage}</p>
     ) : (
       selectState.errorMessages.map((message, i) => (
-        <p id={i} className={errorClasses}>- {message}</p>
+        <p id={i} className={errorClasses}>
+          - {message}
+        </p>
       ))
     );
   }
 
   // Build Classes for input
-  const classes = classNames("border block mb-2", rest.className);
+  const classes = classNames("border", rest.className);
 
   // Create select JSX content
   const formContent = (
+    // <select className={classes} onChange={changeHandler} onFocus={focusHandler}>
     <select className={classes} onChange={changeHandler} onFocus={focusHandler}>
-      <option value="nil">Select a {label}</option>
+      <option value="nil">{display}</option>
       {options.map((option, i) => (
-        <option id={i} value={option}>{option}</option>
+        <option id={i} value={option}>
+          {option}
+        </option>
       ))}
     </select>
   );
 
   return (
-    <div className="mb-3">
-      <label htmlFor="">{label}</label>
+    <>
+      {label && <label htmlFor="" className="block">{label}</label>}
+      <div className="text-center">
       {formContent}
+      </div>
       {selectState.isFocus && !selectState.isValid && errors}
-    </div>
+    </>
   );
 };
 
