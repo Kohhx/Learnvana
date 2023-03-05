@@ -50,11 +50,11 @@ const Home = () => {
               </p>
               <Button
                 onClick={() => navigate("/users/signup")}
-                className="font-kaisei mb-6 rounded-md  bg-proj-blue2-300 text-proj-white1-300 border-none text-[30px] w-[228px] h-[64px] hover:text-proj-black1-300 hover:border-solid hover:border-proj-black1-300 hover:bg-transparent transition-all"
+                className="shadow-lg shadow-black-500/50 font-kaisei mb-6 rounded-md  bg-proj-blue2-300 text-proj-white1-300 border-none text-[30px] w-[228px] h-[64px] hover:text-proj-black1-300 hover:border-solid hover:border-proj-black1-300 hover:bg-transparent transition-all"
               >
                 Join
               </Button>
-              <Button className="font-kaisei rounded-md border-proj-black1-300 text-proj-black1-300 text-[30px] w-[228px] h-[64px] hover:border-none hover:bg-proj-grey1-100 transition-all">
+              <Button className="shadow-lg shadow-black-500/50 font-kaisei rounded-md border-proj-black1-300 text-proj-black1-300 text-[30px] w-[228px] h-[64px] hover:border-none hover:bg-proj-grey1-100 transition-all">
                 Market Place
               </Button>
               <div className="flex gap-12 mt-12">
