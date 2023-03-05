@@ -23,12 +23,12 @@ const Home = () => {
     <div>
       {floatNavBarInView && <HomeFloatNav />}
 
-      <div className="h-screen proj-bg-white-300 flex proj-bg-">
-        <div className="w-2/5 overflow-hidden relative">
-          <img src={BooksImg} alt="book" className="scale-[0.9] absolute -left-[60px]" />
+      <div className="min-h-screen w-full proj-bg-white-300 flex">
+        <div className="w-2/5 overflow-hidden relative hidden lg:block">
+          <img src={BooksImg} alt="book" className="absolute -left-[60px] top-[80px] max-w-full" />
         </div>
 
-        <div className="w-3/5 p-7">
+        <div className="lg:w-3/5 p-7">
           <div className="flex gap-4 justify-end">
             <div className="flex items-center gap-7">
               <HomeFixedNav />
