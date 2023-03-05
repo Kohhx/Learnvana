@@ -37,5 +37,8 @@ module.exports = {
       kaisei: ["Kaisei Tokumin", "serif"],
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwindcss'),
+    require('autoprefixer'),
+  ]
 };

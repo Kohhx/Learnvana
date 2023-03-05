@@ -29,7 +29,7 @@ const Input = ({
   //   setInputState(initialState);
   // };
   useEffect(() => {
-      setInputState(initialState);
+    setInputState(initialState);
   }, [reset]);
 
   const changehandler = (event) => {
@@ -78,7 +78,7 @@ const Input = ({
   };
 
   // Build Error
-  const errorClasses = "text-red-500";
+  const errorClasses = "text-red-400";
   let errors = null;
   if (!disableErrorMessages) {
     errors = errorMessage ? (
@@ -92,10 +92,17 @@ const Input = ({
     );
   }
 
-  
+  const inputErrorClasses =
+    inputState.isFocus && !inputState.isValid
+      ? "bg-red-100 border-2 border-red-400"
+      : "";
 
   // Build Classes for input
-  const classes = classNames("border block mb-2", rest.className);
+  const classes = classNames(
+    "border block mb-2",
+    rest.className,
+    inputErrorClasses
+  );
 
   // Inject form content here
 
@@ -127,11 +134,11 @@ const Input = ({
   }
 
   return (
-    <div className="mb-3">
-      <label htmlFor="">{label}</label>
+    <>
+      {label && <label htmlFor="">{label}</label>}
       {formContent}
-      {inputState.isFocus && !inputState.isValid && errors}
-    </div>
+      {inputState.isFocus && !inputState.isValid && <div> {errors}</div>}
+    </>
   );
 };
 

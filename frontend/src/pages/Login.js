@@ -9,14 +9,14 @@ import { useSelector } from "react-redux";
 import { login } from "../features/auth/authSlice";
 import useThunk from "../hooks/useThunkHook";
 import useForm from "../hooks/useFormHook";
-
+import LearnvanaLogo from "../images/LearnvanaLogo.png";
 
 const Login = () => {
   // Initalize navigate
   const navigate = useNavigate();
 
   // Use form hook for form handling
-  const {formState, useFormHandler} = useForm(
+  const { formState, useFormHandler } = useForm(
     {
       email: {
         value: "",
@@ -61,19 +61,18 @@ const Login = () => {
     }
   }, [LoginSuccess, user, navigate]);
 
-   // Display loading spinner based on loading state
-   if (LoginProfileLoading) {
+  // Display loading spinner based on loading state
+  if (LoginProfileLoading) {
     return <h1>...isLoading</h1>;
   }
 
   return (
-    <div>
-      <div className="text-center">
-        <h1>
-          <FaUser className="inline mr-3" /> Login
-        </h1>
-        <p>Please login to your account</p>
-      </div>
+    <div className="w-4/5 mx-auto">
+        <div className="w-fit mx-auto flex items-center gap-5">
+          <img src={LearnvanaLogo} alt="" />
+          <h1 className="text-[66px] font-kaisei font-normal">Learnvana</h1>
+        </div>
+
       <form onSubmit={submitHandler}>
         <Input
           id="email"

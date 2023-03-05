@@ -90,7 +90,7 @@ const Navbar = () => {
   console.log(avatarImgSRC)
 
   return (
-    <div className="w-screen h-16 bg-gray-500 px-7 flex items-center">
+    <div className=" h-16 bg-gray-500 px-7 flex items-center">
       <div className="flex-1">
         <Link to="/">Learnava Logo</Link>
       </div>
