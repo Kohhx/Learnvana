@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { logout, reset } from "../../features/auth/authSlice";
 import DropDown from "../Shared/Dropdown";
 
-const HomeFloatNav = () => {
+const HomeNav = () => {
   const navigate = useNavigate();
   const authDispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
@@ -18,7 +18,7 @@ const HomeFloatNav = () => {
     navigate("/");
   };
 
-  const [searchValue, setSearchValue] = useState("");
+  // const [searchValue, setSearchValue] = useState("");
 
   let dropdownConfig = [];
   dropdownConfig = [
@@ -40,11 +40,11 @@ const HomeFloatNav = () => {
 
   const floatNavBar = (
     <div className="sticky top-0 bg-proj-white3-300 h-20 bg-opacity flex items-center justify-between px-7 z-20">
-      <div className="rounded-full w-[60px] h-[60px]">
+      <div className="rounded-full w-[60px] h-[60px] grow basis-0">
         <img src={LearnvanaLogo} alt="Learnvana Logo" />
       </div>
 
-      <ul className="flex items-center gap-12 font-kaisei text-[22px]">
+      <ul className="flex gap-12 font-kaisei text-[22px]">
         <li>
           <NavLink to="/" style={activeStyle}>
             <span className="hover:text-gray-300"> Home</span>
@@ -65,34 +65,38 @@ const HomeFloatNav = () => {
       </ul>
 
       {user ? (
-        <div className="flex gap-5">
-          <DropDown
-            configs={dropdownConfig}
-            className="absolute right-0 top-[65px] w-[250px] rounded-md border-1 border-proj-black1-300 bg-proj-grey1-300 text-proj-white1-300 p-4"
-          >
-            <div className="rounded-full w-[60px] h-[60px] p-[2px] border-2  border-transparent hover:border-proj-blue2-300 transition-all">
-              <img
-                className="rounded-full"
-                src={avatarImgSRC}
-                alt="avatar profile"
-              />
-            </div>
-          </DropDown>
+        <div className="text-right grow basis-0">
+          <div className="flex gap-5 w-fit ml-auto">
+            <DropDown
+              configs={dropdownConfig}
+              className="absolute right-0 top-[65px] w-[250px] rounded-md border-1 border-proj-black1-300 bg-proj-grey1-300 text-proj-white1-300 p-4"
+            >
+              <div className="rounded-full w-[60px] h-[60px] p-[2px] border-2  border-transparent hover:border-proj-blue2-300 transition-all">
+                <img
+                  className="rounded-full"
+                  src={avatarImgSRC}
+                  alt="avatar profile"
+                />
+              </div>
+            </DropDown>
+          </div>
         </div>
       ) : (
-        <div className="flex gap-5">
-          <Button
-            onClick={() => navigate("/users/signup")}
-            className="font-kaisei rounded-md  bg-proj-blue2-300 text-proj-white1-300 border-none text-[22px] w-[150px] h-[52px] hover:text-proj-black1-300 hover:border-solid hover:border-proj-black1-300 hover:bg-transparent transition-all"
-          >
-            Sign Up
-          </Button>
-          <Button
-            onClick={() => navigate("/users/login")}
-            className="font-kaisei rounded-md border-proj-black1-300 text-proj-black1-300 text-[22px] w-[150px] h-[52px] hover:border-none hover:bg-proj-grey1-100 transition-all"
-          >
-            Log In
-          </Button>
+        <div className="text-right grow basis-0">
+          <div className="flex gap-5 w-fit ml-auto">
+            <Button
+              onClick={() => navigate("/users/signup")}
+              className="font-kaisei rounded-md  bg-proj-blue2-300 text-proj-white1-300 border-none text-[22px] w-[150px] h-[52px] hover:text-proj-black1-300 hover:border-solid hover:border-proj-black1-300 hover:bg-transparent transition-all"
+            >
+              Sign Up
+            </Button>
+            <Button
+              onClick={() => navigate("/users/login")}
+              className="font-kaisei rounded-md border-proj-black1-300 text-proj-black1-300 text-[22px] w-[150px] h-[52px] hover:border-none hover:bg-proj-grey1-100 transition-all"
+            >
+              Log In
+            </Button>
+          </div>
         </div>
       )}
     </div>
@@ -101,4 +105,4 @@ const HomeFloatNav = () => {
   return floatNavBar;
 };
 
-export default HomeFloatNav;
+export default HomeNav;
