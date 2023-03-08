@@ -40,8 +40,10 @@ const HomeNav = () => {
 
   const floatNavBar = (
     <div className="sticky top-0 bg-proj-white3-300 h-20 bg-opacity flex items-center justify-between px-7 z-20">
-      <div className="rounded-full w-[60px] h-[60px] grow basis-0">
-        <img src={LearnvanaLogo} alt="Learnvana Logo" />
+      <div className="rounded-full grow basis-0">
+        <div className="rounded-full w-[50px] h-[50px] grow">
+          <img className="" src={LearnvanaLogo} alt="Learnvana Logo" />
+        </div>
       </div>
 
       <ul className="flex gap-12 font-kaisei text-[22px]">
