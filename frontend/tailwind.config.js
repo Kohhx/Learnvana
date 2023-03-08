@@ -21,14 +21,23 @@ module.exports = {
           300: "#6c98a2",
         },
         "proj-white3": {
+          300: "#FFFFFF",
+        },
+        "proj-white4": {
           300: "#E8E8E8",
         },
         "proj-black1": {
           300: "#000000",
         },
+        "proj-black2": {
+          300: "#3B3B3B",
+        },
         "proj-grey1": {
           300: "#585858",
           100: "#d1d1d1",
+        },
+        "proj-grey2": {
+          300: "#A1A1A1",
         },
       },
     },

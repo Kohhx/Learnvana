@@ -1,12 +1,12 @@
 @keyframes section1 {
   0% {
-    transform: rotateX(0deg)
+    transform: rotateX(0deg);
   }
   50% {
-    transform: rotateX(180deg)
+    transform: rotateX(180deg);
   }
   100% {
-    transform: rotateX(360deg)
+    transform: rotateX(360deg);
   }
 }
 
@@ -16,13 +16,13 @@
 
 @keyframes section2 {
   0% {
-    transform: rotateX(0deg)
+    transform: rotateX(0deg);
   }
   50% {
-    transform: rotateX(180deg)
+    transform: rotateX(180deg);
   }
   100% {
-    transform: rotateX(360deg)
+    transform: rotateX(360deg);
   }
 }
 
@@ -32,13 +32,13 @@
 
 @keyframes section3 {
   0% {
-    transform: rotateX(0deg)
+    transform: rotateX(0deg);
   }
   50% {
-    transform: rotateX(180deg)
+    transform: rotateX(180deg);
   }
   100% {
-    transform: rotateX(360deg)
+    transform: rotateX(360deg);
   }
 }
 
@@ -48,16 +48,84 @@
 
 @keyframes section4 {
   0% {
-    transform: rotateX(0deg)
+    transform: rotateX(0deg);
   }
   50% {
-    transform: rotateX(180deg)
+    transform: rotateX(180deg);
   }
   100% {
-    transform: rotateX(360deg)
+    transform: rotateX(360deg);
   }
 }
 
 .section4 {
   animation: section4 0.8s linear 1.6s forwards;
+}
+
+@keyframes fade-down {
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-down {
+  animation: fade-down 0.5s linear 0s forwards;
+}
+
+@keyframes fade-right {
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.fade-right1 {
+  animation: fade-right 0.5s linear 0.5s forwards;
+}
+
+.fade-right2 {
+  animation: fade-right 0.5s linear 1s forwards;
+}
+
+.fade-right3 {
+  animation: fade-right 0.5s linear 1.5s forwards;
+}
+
+.train-track {
+  position: absolute;
+  /* height:200px; */
+  width: 0rem;
+  border-bottom: 2px solid black;
+  transform: translateX(-50%);
+  left: 50%;
+  animation: traintrack 0.8s linear 1.6s forwards;
+}
+
+@keyframes traintrack {
+  100% {
+    width: 30rem;
+  }
+}
+
+.train-track:hover {
+  width: 30rem;
+}
+
+@keyframes train-fade-down {
+  100% {
+    opacity: 1;
+    transform: translateX(10%);
+  }
+}
+
+@keyframes train-move-y {
+  100% {
+    transform:translateX(10%) translateY(-0.05rem);
+  }
+}
+
+.train-appear {
+  animation: train-fade-down 0.3s linear 2.4s forwards,
+    train-move-y 0.2s ease-out 3.2s infinite;
 }
