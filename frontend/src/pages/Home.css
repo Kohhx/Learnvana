@@ -129,3 +129,69 @@
   animation: train-fade-down 0.3s linear 2.4s forwards,
     train-move-y 0.2s ease-out 3.2s infinite;
 }
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.horizontal-scrolling {
+  width: 200%;
+  animation: marquee 20s linear infinite;
+}
+
+.horizontal-scrolling:hover{
+  animation-play-state: paused;
+}
+
+@keyframes expand {
+  100% {
+    transform: scale(0.9);
+    opacity: 1;
+  }
+}
+
+.expand{
+  transform-origin: bottom left;
+  transform: scale(0.7);
+  animation: expand 0.2s linear forwards;
+  opacity: 0;
+}
+
+@keyframes reveal {
+  100% {
+    width:0%;
+  }
+}
+
+.button-animate::after {
+  content: "";
+  position:absolute;
+  background-color: #E8E8E8;
+  width:51%;
+  height: 100%;
+  top:0;
+  left:0;
+  border-top-left-radius: 0.375rem;
+  border-bottom-left-radius: 0.375rem;
+  animation: reveal 0.3s linear 0.3s forwards;
+}
+
+
+.button-animate::before {
+  content: "";
+  position:absolute;
+  background-color: #E8E8E8;
+  width:51%;
+  height: 100%;
+  transform: translateX(-100%);
+  top:0;
+  left:100%;
+  border-top-right-radius: 0.375rem;
+  border-bottom-right-radius: 0.375rem;
+  animation: reveal 0.3s linear 0.3s forwards;
+}
