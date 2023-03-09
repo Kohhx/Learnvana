@@ -46,7 +46,7 @@ const HomeNav = () => {
         </div>
       </div>
 
-      <ul className="flex gap-12 font-kaisei text-[22px]">
+      <ul className="hidden lg:flex gap-12 font-kaisei text-[22px]">
         <li>
           <NavLink to="/" style={activeStyle}>
             <span className="hover:text-gray-300"> Home</span>

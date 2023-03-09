@@ -38,7 +38,7 @@ const Home = () => {
           )}
         </div>
 
-        <div className="lg:w-3/5 p-7 border-2 flex items-center justify-center">
+        <div className="w-full lg:w-3/5 p-7 flex items-center justify-center mx-auto">
           <div>
             <div className="w-fit mx-auto flex items-center gap-7">
               <img className="max-w-[5rem]" src={LearnvanaLogo} alt="" />
@@ -55,7 +55,7 @@ const Home = () => {
               <div ref={bookExpand}></div>
               {bookExpandInView && (
                 <div className="relative">
-                  <Button className="button-animate font-kaisei rounded-md border-proj-black1-300 text-proj-black1-300 text-[30px] px-9 h-[64px] hover:border-none hover:bg-proj-grey1-100 transition-all">
+                  <Button className="button-animate font-kaisei rounded-md border-proj-black1-300 text-proj-black1-300 text-[30px] px-9  py-5 hover:border-none hover:bg-proj-grey1-100 transition-all">
                     Explore Marketplace
                   </Button>
                 </div>
