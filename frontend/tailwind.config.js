@@ -14,6 +14,9 @@ module.exports = {
         "proj-blue3": {
           300: "#6c98a2",
         },
+        "proj-blue4": {
+          300: "#6D9395",
+        },
         "proj-white1": {
           300: "#f8f8f8",
         },
@@ -21,9 +24,11 @@ module.exports = {
           300: "#6c98a2",
         },
         "proj-white3": {
+          200: "#F1F1F1",
           300: "#FFFFFF",
         },
         "proj-white4": {
+          200: "#E4E4E4",
           300: "#E8E8E8",
         },
         "proj-black1": {
@@ -38,6 +43,9 @@ module.exports = {
         },
         "proj-grey2": {
           300: "#A1A1A1",
+        },
+        "proj-grey3": {
+          300: "#696969",
         },
       },
     },
