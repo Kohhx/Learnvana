@@ -22,6 +22,8 @@ import InstructorClassInvite from "./pages/instructor/InstructorClassInvite";
 import InstructorClassPendingStudents from "./pages/instructor/InstructorClassPendingStudents";
 import InstructorClassStudents from "./pages/instructor/InstructorClassStudents";
 import InstructorProfileUpdate from "./pages/instructor/InstructorProfileUpdate";
+import InstructorDashboardClasses from "./pages/instructor/InstructorDashboardClasses";
+import InstructorDashboardMain from "./pages/instructor/InstructorDashboardMain";
 
 // STUDENTS IMPORT
 import StudentClassLayout from "./components/Layouts/StudentClassLayout";
@@ -34,6 +36,8 @@ import StudentClassmates from "./pages/student/StudentClassmates";
 // GUARDIANS IMPORT
 import GuardianCreateStudents from "./pages/guardian/GuardianCreateStudents";
 import GuardianDashboard from "./pages/guardian/GuardianDashboard";
+
+import DashboardLayout from "./components/Layouts/DashboardLayout";
 
 const App = () => {
   return (
@@ -60,6 +64,8 @@ const App = () => {
               <Route path="/users/signup/student" element={<StudentSignUp />} />
             </Route>
 
+            <Route path="/test" element={<DashboardLayout />} />
+
             {/**
              * =================================================================
              *  Private Routes
@@ -77,7 +83,13 @@ const App = () => {
               <Route path="/instructors">
                 <Route path="signup" element={<InstructorSignUp />} />
                 <Route path="update" element={<InstructorProfileUpdate />} />
-                <Route path="dashboard" element={<InstructorDashboard />} />
+                <Route path="dashboard" element={<DashboardLayout />}>
+                  <Route index element={<InstructorDashboardMain />} />
+                  <Route
+                    path="classes"
+                    element={<InstructorDashboardClasses />}
+                  />
+                </Route>
                 <Route path="classes/new" element={<InstructorCreateClass />} />
                 <Route
                   path="classes/:classId"

@@ -22,7 +22,6 @@ const HomeNav = () => {
 
   let dropdownConfig = [];
   dropdownConfig = [
-    { name: "Update user", link: `/users/update` },
     {
       name: "Logout",
       button: <button onClick={handleClick}>Logout</button>,
@@ -37,6 +36,15 @@ const HomeNav = () => {
 
   const activeStyle = ({ isActive }) =>
     isActive ? { color: "red" } : undefined;
+
+  if (user) {
+    const dashBoardLink =
+      user.role === "instructor"
+        ? "/instructors/dashboard"
+        : user.role === "guardian"
+        ? "/guardians/dashboard"
+        : `/students/${user.profiles._id}/dashboard`;
+  }
 
   const floatNavBar = (
     <div className="sticky top-0 bg-proj-white3-300 h-20 bg-opacity flex items-center justify-between px-7 z-20">
@@ -59,7 +67,7 @@ const HomeNav = () => {
         </li>
         {user && (
           <li>
-            <NavLink to="/404" style={activeStyle}>
+            <NavLink to="/instructors/dashboard" style={activeStyle}>
               <span className="hover:text-gray-300">Dashboard</span>
             </NavLink>
           </li>
