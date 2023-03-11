@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 
 const Modal = ({ children, isOpen, closeModal }) => {
-
   // This is prevent content behind of overlay from moving when modal is displayed
   useEffect(() => {
     if (isOpen) {
@@ -13,11 +12,8 @@ const Modal = ({ children, isOpen, closeModal }) => {
   }, [isOpen]);
 
   const modalContent = (
-    <div className="fixed h-screen w-screen flex items-center justify-center">
-      <div
-        className="fixed inset-0 bg-black opacity-50"
-        onClick={closeModal}
-      ></div>
+    <div className="z-50 fixed h-screen w-screen flex items-center justify-center">
+      <div className=" fixed inset-0 bg-black/50" onClick={closeModal}></div>
       <div className="absolute bg-white rounded-lg p-10">{children}</div>
     </div>
   );

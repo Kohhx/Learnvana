@@ -15,6 +15,7 @@ module.exports = {
           300: "#6c98a2",
         },
         "proj-blue4": {
+          200: "#78B2B5",
           300: "#6D9395",
         },
         "proj-white1": {

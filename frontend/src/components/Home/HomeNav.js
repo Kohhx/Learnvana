@@ -29,7 +29,7 @@ const HomeNav = () => {
   ];
 
   let avatarImgSRC =
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTugu0kegXOT1Gh1sgDVHvYjkGW29w19Hl9gQ&usqp=CAU";
+    "https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG.png";
   if (user?.role === "instructor" && user.profiles?.avatar?.url) {
     avatarImgSRC = user.profiles?.avatar.url;
   }
