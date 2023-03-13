@@ -11,6 +11,7 @@ const SelectV2 = ({
   errorMessages,
   isFocus,
   isValid,
+  className,
   ...rest
 }) => {
   // Build Error
@@ -28,8 +29,20 @@ const SelectV2 = ({
     }
   }
 
-  // Build Classes for input
-  const classes = classNames("border block mb-2", rest.className);
+  const inputErrorClasses =
+  (isFocus && !isValid) ? "bg-red-100 border-2 border-red-400 bg-red-200/40 focus:border-red-400"
+  : "";
+
+
+// Build Classes for input
+const classes = classNames(
+  "border block mb-2",
+  className,
+  inputErrorClasses
+);
+
+  // // Build Classes for input
+  // const classes = classNames("border block mb-2", rest.className);
 
   // Inject form content here
   const formContent = (
@@ -42,7 +55,7 @@ const SelectV2 = ({
   );
 
   return (
-    <div className="mb-3">
+    <div className="mb-3 w-full">
       <label htmlFor="">{label}</label>
       {formContent}
       {isFocus && !isValid && errors}

@@ -104,6 +104,15 @@ const formReducer = (state, action) => {
       }
       return copyState;
 
+    case "FILLSELECTED":
+      const copyState2 = { ...state, formisValid: false };
+      // console.log("action payload", action.payload)
+      for (const inputId in action.payload) {
+        copyState2.inputs[inputId].value = action.payload[inputId];
+        copyState2.inputs[inputId].isValid = true;
+      }
+      return copyState2;
+
     default:
       return state;
   }
@@ -168,6 +177,10 @@ const useFormHook = (formInitialState, formInitialValidity) => {
     dispatch({ type: "FILL", payload: updateData });
   };
 
+  const fillSelectedHandler = (updateData) => {
+    dispatch({ type: "FILLSELECTED", payload: updateData });
+  };
+
   const editorChangeHandler = (value, id) => {
     const payload = {
       value,
@@ -187,6 +200,7 @@ const useFormHook = (formInitialState, formInitialValidity) => {
     focusHandler,
     fillHandler,
     editorChangeHandler,
+    fillSelectedHandler,
   };
 };
 
@@ -233,7 +247,9 @@ const deleteType = (oldBlocks, newBlocks, type, URL) => {
 
       if (deletedType.length === 1) {
         const { public_id, mimetype } = deletedType[0].data.file;
-        deleteFileBackend(URL, public_id, mimetype).then((data) => console.log(data));
+        deleteFileBackend(URL, public_id, mimetype).then((data) =>
+          console.log(data)
+        );
       }
     }
   }

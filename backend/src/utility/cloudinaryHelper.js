@@ -7,29 +7,30 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-console.log("CloudinaryName",process.env.CLOUDINARY_NAME)
+console.log("CloudinaryName", process.env.CLOUDINARY_NAME);
 
-exports.uploadPhoto = async (file) => {
+exports.uploadPhoto = async (file, options) => {
   if (file) {
-    console.log("FILE", file)
+    console.log("Uploading file....")
+    // return await cloudinary.uploader.upload(file.path, options);
     try {
-      return await cloudinary.uploader.upload(file.path,   {
-        resource_type: "image",
-      });
+      const uploadData =  await cloudinary.uploader.upload(file.path, options);
+      return uploadData;
     } catch (error) {
-      res.status(400);
-      next(new Error(error));
+      console.log(error)
+      // res.status(400);
+      // next(new Error(error));
     }
   } else {
-    res.status(400);
-    next(new Error("No image file found"));
+    // res.status(400);
+    // next(new Error("No image file found"));
   }
 };
 
 exports.uploadVideo = async (file) => {
   if (file) {
     try {
-      return await cloudinary.uploader.upload(file.path,   {
+      return await cloudinary.uploader.upload(file.path, {
         resource_type: "video",
       });
     } catch (error) {
@@ -47,25 +48,26 @@ exports.deleteFile = async (public_id, deleteType) => {
     // Check if there avatar exist
     try {
       const { result: destroyRes } = await cloudinary.uploader.destroy(
-        public_id, {
+        public_id,
+        {
           resource_type: deleteType,
         }
       );
-      console.log("File deleted", destroyRes)
+      console.log("File deleted", destroyRes);
       return destroyRes;
     } catch (error) {
-      res.status(400);
-      throw new Error(error);
+      // res.status(400);
+      // throw new Error(error);
     }
   }
 };
 
 exports.uploadAllFiles = async (file) => {
   if (file) {
-    console.log("FILE", file)
+    console.log("FILE", file);
     try {
       return await cloudinary.uploader.upload(file.path, {
-        public_id: `${file.filename}_${file.originalname}`.replace(/\s/g,"_"),
+        public_id: `${file.filename}_${file.originalname}`.replace(/\s/g, "_"),
         resource_type: "auto",
       });
     } catch (error) {

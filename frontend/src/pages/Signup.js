@@ -55,7 +55,7 @@ const Signup = () => {
     if (signUpSuccess) {
       // if instructor, navigate to instructor fill in form
       if (user.role === "instructor") {
-        navigate("/instructors/signup");
+        navigate("/instructors/dashboard/signup");
       }
 
       if (user.role === "student") {

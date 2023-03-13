@@ -27,7 +27,7 @@ const instructorSchema = mongoose.Schema(
       public_id: String,
     },
     contact: {
-      type: Number,
+      type: String,
     },
     email: {
       type: String,

@@ -1,15 +1,20 @@
 .dashboard-grid {
   display: grid;
   gap: 5px;
-  grid-auto-columns: 1fr 3fr 1fr;
+  /* grid-auto-columns: 1fr 3fr 1fr;
   grid-auto-rows: 1.25fr 3fr;
   grid-template-areas:
     "sidebar header header"
-    "sidebar main main-right";
+    "sidebar main main-right"; */
+
+  grid-auto-columns: 1fr 4fr;
+  grid-auto-rows: 1fr;
+  grid-template-areas: "sidebar main";
 }
 
 .dashboard-sidebar {
   grid-area: sidebar;
+  height: 100vh;
 }
 
 .dashboard-header {
@@ -18,7 +23,6 @@
 
 .dashboard-main {
   grid-area: main;
-  overflow-y: auto;
 }
 
 .dashboard-main-right {
