@@ -167,7 +167,7 @@ const DashboardUpdateUserModal = ({ isModalOpen, closeModal }) => {
         <AiFillCloseCircle className="text-3xl" />
       </div>
 
-      <div className="min-w-[45rem] mx-auto overscroll-y-auto">
+      <div className="max-w-[45rem] mx-auto overscroll-y-auto">
         <div className="text-center mb-5">
           <div className="flex items-center justify-center gap-4 mb-8">
             <FaUserEdit className="text-4xl" />

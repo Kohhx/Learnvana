@@ -30,7 +30,7 @@ const SelectV2 = ({
   }
 
   const inputErrorClasses =
-  (isFocus && !isValid) ? "bg-red-100 border-2 border-red-400 bg-red-200/40 focus:border-red-400"
+  (isFocus && !isValid) ? "border-2 !border-red-400 !bg-red-200/40 !focus:border-red-400"
   : "";
 
 
