@@ -1,4 +1,5 @@
 import { axiosInstance } from "../../config/axios";
+import formatUtil from "../../utilities/FormatUtil";
 
 const signUp = async (userData) => {
   const URL = "users/signup"
@@ -28,11 +29,39 @@ const logout = () => {
   console.log("user Removed");
 };
 
+// Update instructor profile
+const updateUserProfile = async (newUserProfile, token) => {
+  console.log("2")
+
+  const newUserProfileFD =
+    formatUtil.convertObjToFormData(newUserProfile);
+
+  console.log("FormData OUt", newUserProfileFD.get("avatar"));
+  const URL = `users/update`;
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data",
+    },
+  };
+
+  const response = await axiosInstance.post(
+    URL,
+    newUserProfileFD,
+    config
+  );
+  if (response.data) {
+    return response.data;
+  }
+};
+
 // Put all the function into authService object before exporting
 const authService = {
   signUp,
   login,
   logout,
+  updateUserProfile,
 };
 
 // DEV ONLY - pause loading to see loading state spinner!!!

@@ -60,6 +60,34 @@ export const logout = createAsyncThunk("auth/logout", async () => {
   await authService.logout();
 });
 
+// Update user
+// Update instructor profile
+export const updateUserProfile = createAsyncThunk(
+  "user/updateUserProfile",
+  async (newUserProfile, thunkAPI) => {
+    try {
+      console.log("1");
+      const token = thunkAPI.getState().auth.user.token;
+      const userData = await authService.updateUserProfile(
+        newUserProfile,
+        token
+      );
+      thunkAPI.dispatch(updateProfile(userData));
+      return userData;
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      toast.error(message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+
 // Create authSlice
 export const authSlice = createSlice({
   name: "auth",
@@ -110,6 +138,21 @@ export const authSlice = createSlice({
         state.user = action.payload;
       })
       .addCase(login.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.user = null;
+        state.message = action.payload;
+      })
+      .addCase(updateUserProfile.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateUserProfile.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = {...state.user,...action.payload};
+
+      })
+      .addCase(updateUserProfile.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.user = null;

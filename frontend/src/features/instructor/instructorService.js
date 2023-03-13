@@ -10,12 +10,17 @@ import formatUtil from "../../utilities/FormatUtil";
 // Register user: instructor profile function (Aysnc)
 const UserInstructorProfile = async (profileData, token) => {
   const URL = "instructors/create";
+
+  const InstructorProfileFD =
+    formatUtil.convertObjToFormData(profileData);
+
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data",
     },
   };
-  const response = await axiosInstance.post(URL, profileData, config);
+  const response = await axiosInstance.post(URL, InstructorProfileFD, config);
   if (response.data) {
     return response.data;
   }

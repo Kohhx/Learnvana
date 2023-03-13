@@ -3,7 +3,8 @@ exports.validateUser = (user, res, next) => {
     res.status(400);
     return next(new Error("User not logged in"));
   }
-  return next;
+  console.log("Validated user")
+  return;
 };
 
 exports.validateExistent = (obj, errorNumber, message, res, next) => {

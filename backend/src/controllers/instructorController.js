@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const validation = require("../utility/validation");
 const remove = require("../utility/delete");
+const cloudinaryHelper = require("../utility/cloudinaryHelper");
 const cloudinary = require("cloudinary").v2;
 require("dotenv").config();
 
@@ -15,7 +16,6 @@ const Student = require("../models/student");
 const Instructor = require("../models/instructor");
 const Class = require("../models/class");
 const User = require("../models/user");
-
 
 /**
  * =============================================================================
@@ -44,18 +44,12 @@ exports.createInstructor = asyncHandler(async (req, res) => {
     throw new Error("Instructor account can only create 1 instructor profile");
   }
 
-  const {
-    first_name,
-    last_name,
-    age,
-    gender,
-    email,
-    contact,
-    avatar,
-    experience,
-  } = req.body;
+  const { first_name, last_name, age, gender, email, contact, experience } =
+    req.body;
 
-  if (!first_name || !last_name || !age || !gender) {
+  const { file } = req;
+
+  if (!first_name || !last_name || !age || !gender || !email) {
     res.status(400);
     throw new Error("Please include all fields");
   }
@@ -68,8 +62,40 @@ exports.createInstructor = asyncHandler(async (req, res) => {
     email,
     experience,
     contact: contact || null,
-    avatar: avatar || null,
   });
+
+  const oldPublicId = instructor.avatar?.public_id;
+
+  // Remove old avatar first
+  if (oldPublicId && file) {
+    // Check if there avatar exist
+    try {
+      const { result: destroyRes } = await cloudinary.uploader.destroy(
+        oldPublicId,
+        {
+          resource_type: "image",
+        }
+      );
+    } catch (error) {
+      res.status(400);
+      throw new Error(error);
+    }
+  }
+
+  // Add new image to avatar if file exist
+  if (file) {
+    const { secure_url, public_id } = await cloudinary.uploader.upload(
+      file.path,
+      {
+        resource_type: "image",
+        gravity: "face",
+        height: 150,
+        width: 150,
+        crop: "thumb",
+      }
+    );
+    instructor.avatar = { url: secure_url, public_id };
+  }
 
   instructor.user = user;
   await instructor.save();
@@ -131,31 +157,19 @@ exports.updateInstructorProfile = asyncHandler(async (req, res, next) => {
   // Remove old avatar first
   if (oldPublicId && file) {
     // Check if there avatar exist
-    try {
-      const { result: destroyRes } = await cloudinary.uploader.destroy(
-        oldPublicId,
-        {
-          resource_type: "image",
-        }
-      );
-    } catch (error) {
-      res.status(400);
-      throw new Error(error);
-    }
+    const destroyRes = cloudinaryHelper.deleteFile(oldPublicId, "image");
   }
 
   // Add new image to avatar if file exist
   if (file) {
-    const { secure_url, public_id } = await cloudinary.uploader.upload(
-      file.path,
-      {
-        resource_type: "image",
-        gravity: "face",
-        height: 150,
-        width: 150,
-        crop: "thumb",
-      }
-    );
+    const { secure_url, public_id } = await cloudinaryHelper.uploadPhoto(file, {
+      resource_type: "image",
+      gravity: "face",
+      height: 150,
+      width: 150,
+      crop: "thumb",
+    });
+
     instructorFound.avatar = { url: secure_url, public_id };
   }
 
@@ -187,9 +201,8 @@ exports.updateInstructorProfile = asyncHandler(async (req, res, next) => {
 
 exports.updateInstructorClass = asyncHandler(async (req, res, next) => {
   const { classId } = req.params;
-  console.log("REQ BODY",req.body)
-  const { title, status, images, address } =
-    req.body;
+  console.log("REQ BODY", req.body);
+  const { title, status, images, address } = req.body;
 
   const user = await User.findById(req.user.id);
   const instructor = await Instructor.findById(user.instructorprofile);
@@ -212,7 +225,6 @@ exports.updateInstructorClass = asyncHandler(async (req, res, next) => {
   classFound.images = images;
   classFound.address = address;
 
-
   try {
     await classFound.save();
   } catch (error) {
@@ -229,7 +241,6 @@ exports.updateInstructorClass = asyncHandler(async (req, res, next) => {
   });
 });
 
-
 /**
  * =============================================================================
  * DELETE FUNCTIONS
@@ -238,8 +249,8 @@ exports.updateInstructorClass = asyncHandler(async (req, res, next) => {
 
 exports.delete = asyncHandler(async (req, res) => {
   // delete class function
-  const {action, classId, lessonId} = req.body;
-  console.log(action)
+  const { action, classId, lessonId } = req.body;
+  console.log(action);
 
   if (action === "deleteClass") {
     try {
@@ -256,7 +267,6 @@ exports.delete = asyncHandler(async (req, res) => {
     });
   }
 
-
   if (action === "deleteLesson") {
     try {
       remove.oneLesson(req, res);
@@ -271,6 +281,4 @@ exports.delete = asyncHandler(async (req, res) => {
       lessonId,
     });
   }
-
-
 });

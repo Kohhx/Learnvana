@@ -30,8 +30,8 @@ const HomeNav = () => {
 
   let avatarImgSRC =
     "https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG.png";
-  if (user?.role === "instructor" && user.profiles?.avatar?.url) {
-    avatarImgSRC = user.profiles?.avatar.url;
+  if (user?.role === "instructor" && user.avatar?.url) {
+    avatarImgSRC = user.avatar?.url;
   }
 
   const activeStyle = ({ isActive }) =>

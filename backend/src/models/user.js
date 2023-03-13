@@ -33,6 +33,12 @@ const userSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Instructor",
     },
+     // avatar: String,
+     avatar: {
+      type: Object,
+      url: String,
+      public_id: String,
+    },
   },
   {
     timestamps: true,
