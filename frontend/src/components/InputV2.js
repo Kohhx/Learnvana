@@ -33,8 +33,9 @@ const InputV2 = React.forwardRef(
     }
 
     const inputErrorClasses =
-      (isFocus && !isValid) ? "bg-red-100 border-2 border-red-400 bg-red-200/40 focus:border-red-400"
+      (isFocus && !isValid) ? "!border-2 !border-red-400 !bg-red-200/40 focus:!border-red-400"
       : "";
+      console.log((isFocus && !isValid) )
 
 
     // Build Classes for input
@@ -43,7 +44,6 @@ const InputV2 = React.forwardRef(
       className,
       inputErrorClasses
     );
-
 
     // // Build Classes for input
     // const classes = classNames("border block mb-2 w-full", rest.className);
