@@ -66,7 +66,7 @@ const DashboardLayout = () => {
   return (
     <>
       <div className="dashboard-grid min-h-screen bg-proj-blue4-300">
-        <div className="bg-proj-white3-200 dashboard-sidebar p-8 h-full">
+        <div className="bg-proj-white3-200 dashboard-sidebar py-8 px-5 h-full">
           <DashboardSidebar sideBarConfig={sideBarConfig} />
         </div>
         <div className="bg-proj-blue4-300 dashboard-main">

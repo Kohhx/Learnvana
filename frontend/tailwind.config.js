@@ -18,6 +18,9 @@ module.exports = {
           200: "#78B2B5",
           300: "#6D9395",
         },
+        "proj-blue5": {
+          300: "#86BDC0",
+        },
         "proj-white1": {
           300: "#f8f8f8",
         },
@@ -48,11 +51,15 @@ module.exports = {
         "proj-grey3": {
           300: "#696969",
         },
+        "proj-orange1": {
+          300: "#DFBCA4",
+        },
       },
     },
 
     fontFamily: {
       kaisei: ["Kaisei Tokumin", "serif"],
+      inter: ["Inter", "sans-serif"],
     },
   },
   plugins: [
