@@ -40,6 +40,7 @@ import GuardianCreateStudents from "./pages/guardian/GuardianCreateStudents";
 import GuardianDashboard from "./pages/guardian/GuardianDashboard";
 
 import DashboardLayout from "./components/Layouts//DashboardLayout/DashboardLayout";
+import ProtectRouteProfileCheck from "./routing/ProtectRouteProfileCheck";
 
 const App = () => {
   return (
@@ -70,84 +71,104 @@ const App = () => {
 
             {/**
              * =================================================================
+             *  Private Routes for profile sign up
+             * =================================================================
+             */}
+            <Route element={<ProtectedRoute />}>
+              <Route path="/instructors/dashboard" element={<DashboardLayout />}>
+                <Route
+                  path="signup"
+                  element={<InstructorDashBoardSignup />}
+                />
+              </Route>
+            </Route>
+
+            {/**
+             * =================================================================
              *  Private Routes
              * =================================================================
              */}
 
-            <Route element={<ProtectedRoute />}>
-              {/* Classes */}
-              <Route path="/classes/:classId">
-                <Route path="request" element={<InstructorClassInvite />} />
-              </Route>
-              {/* End */}
-
-              {/* Instructor */}
-              <Route path="/instructors">
-                <Route path="signup" element={<InstructorSignUp />} />
-                <Route path="update" element={<InstructorProfileUpdate />} />
-                <Route path="dashboard" element={<DashboardLayout />}>
-                  <Route index element={<InstructorDashboardMain />} />
-                  <Route
-                    path="signup"
-                    element={<InstructorDashBoardSignup />}
-                  />
-                  <Route
-                    path="setting"
-                    element={<InstructorDashboardSetting />}
-                  />
-                  <Route
-                    path="classes"
-                    element={<InstructorDashboardClasses />}
-                  />
+            <Route element={<ProtectRouteProfileCheck />}>
+                {/* Classes */}
+                <Route path="/classes/:classId">
+                  <Route path="request" element={<InstructorClassInvite />} />
                 </Route>
-                <Route path="classes/new" element={<InstructorCreateClass />} />
-                <Route
-                  path="classes/:classId"
-                  element={<InstructorClassLayout />}
-                >
-                  <Route path="update" element={<InstructorClassUpdate />} />
-                  <Route path="students">
-                    <Route index element={<InstructorClassStudents />} />
+                {/* End */}
+
+                {/* Instructor */}
+                <Route path="/instructors">
+                  {/* <Route path="signup" element={<InstructorSignUp />} /> */}
+                  <Route path="update" element={<InstructorProfileUpdate />} />
+                  <Route path="dashboard" element={<DashboardLayout />}>
+                    <Route index element={<InstructorDashboardMain />} />
+                    {/* <Route
+                      path="signup"
+                      element={<InstructorDashBoardSignup />}
+                    /> */}
                     <Route
-                      path="pending"
-                      element={<InstructorClassPendingStudents />}
+                      path="setting"
+                      element={<InstructorDashboardSetting />}
+                    />
+                    <Route
+                      path="classes"
+                      element={<InstructorDashboardClasses />}
                     />
                   </Route>
-                  <Route path="lessons" element={<InstructorLessons />} />
                   <Route
-                    path="lessons/:lessonId"
-                    element={<InstructorLesson />}
+                    path="classes/new"
+                    element={<InstructorCreateClass />}
                   />
-                </Route>
-              </Route>
-              {/* End */}
-
-              {/* Students */}
-              <Route path="/students">
-                <Route path="signup" element={<StudentSignUp />} />
-                <Route path=":studentId">
-                  <Route path="dashboard" element={<StudentDashboard />} />
                   <Route
                     path="classes/:classId"
-                    element={<StudentClassLayout />}
+                    element={<InstructorClassLayout />}
                   >
-                    <Route path="classmates" element={<StudentClassmates />} />
-                    <Route path="lessons" element={<StudentLessons />} />
+                    <Route path="update" element={<InstructorClassUpdate />} />
+                    <Route path="students">
+                      <Route index element={<InstructorClassStudents />} />
+                      <Route
+                        path="pending"
+                        element={<InstructorClassPendingStudents />}
+                      />
+                    </Route>
+                    <Route path="lessons" element={<InstructorLessons />} />
                     <Route
                       path="lessons/:lessonId"
-                      element={<StudentLesson />}
+                      element={<InstructorLesson />}
                     />
                   </Route>
                 </Route>
-              </Route>
-              {/* End */}
+                {/* End */}
 
-              {/* Guardians */}
-              <Route path="/guardians">
-                <Route path="signup" element={<GuardianCreateStudents />} />
-                <Route path="dashboard" element={<GuardianDashboard />} />
-              </Route>
-              {/* End */}
+                {/* Students */}
+                <Route path="/students">
+                  <Route path="signup" element={<StudentSignUp />} />
+                  <Route path=":studentId">
+                    <Route path="dashboard" element={<StudentDashboard />} />
+                    <Route
+                      path="classes/:classId"
+                      element={<StudentClassLayout />}
+                    >
+                      <Route
+                        path="classmates"
+                        element={<StudentClassmates />}
+                      />
+                      <Route path="lessons" element={<StudentLessons />} />
+                      <Route
+                        path="lessons/:lessonId"
+                        element={<StudentLesson />}
+                      />
+                    </Route>
+                  </Route>
+                </Route>
+                {/* End */}
+
+                {/* Guardians */}
+                <Route path="/guardians">
+                  <Route path="signup" element={<GuardianCreateStudents />} />
+                  <Route path="dashboard" element={<GuardianDashboard />} />
+                </Route>
+                {/* End */}
             </Route>
             {/**
              * =================================================================
