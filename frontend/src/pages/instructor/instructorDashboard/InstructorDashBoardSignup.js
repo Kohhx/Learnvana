@@ -105,23 +105,23 @@ const InstructorDashBoardSignup = () => {
     // setPreviewUrl(previewUrlInitialState);
   }, []);
 
-  // useEffect(() => {
-  //   if (createInstructorProfileSuccess && !createInstructorProfileLoading) {
-  //     toast.success("Profile created");
-  //     navigate("/instructors/dashboard")
-  //   }
-  // }, [createInstructorProfileSuccess, createInstructorProfileLoading]);
+  useEffect(() => {
+    if (createInstructorProfileSuccess && !createInstructorProfileLoading) {
+      toast.success("Profile created");
+      navigate("/instructors/dashboard")
+    }
+  }, [createInstructorProfileSuccess, createInstructorProfileLoading]);
 
-  // useEffect(() => {
-  //   if (!formState.inputs.avatar.value) {
-  //     return;
-  //   }
-  //   const fileReader = new FileReader();
-  //   fileReader.onload = () => {
-  //     setPreviewUrl(fileReader.result);
-  //   };
-  //   fileReader.readAsDataURL(formState.inputs.avatar.value);
-  // }, [formState.inputs.avatar.value]);
+  useEffect(() => {
+    if (!formState.inputs.avatar.value) {
+      return;
+    }
+    const fileReader = new FileReader();
+    fileReader.onload = () => {
+      setPreviewUrl(fileReader.result);
+    };
+    fileReader.readAsDataURL(formState.inputs.avatar.value);
+  }, [formState.inputs.avatar.value]);
 
   const updateUserSubmitHandler = (event) => {
     event.preventDefault();
