@@ -7,7 +7,7 @@
     "sidebar header header"
     "sidebar main main-right"; */
 
-  grid-auto-columns: 1fr 4fr;
+  grid-auto-columns: 1fr 5fr;
   grid-auto-rows: 1fr;
   grid-template-areas: "sidebar main";
 }
