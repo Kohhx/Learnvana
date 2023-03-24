@@ -43,7 +43,7 @@ const DashboardSidebar = ({ sideBarConfig }) => {
 
   return (
     <>
-      <div className="w-full h-full mx-auto flex flex-col px-3">
+      <div className="w-full min-h-full mx-auto flex flex-col px-3 overflow-y-auto">
         <Link to="/">
           <div className="mx-auto flex items-center gap-4 mb-12">
             <img className="max-w-[3rem]" src={LearnvanaLogo} alt="" />
