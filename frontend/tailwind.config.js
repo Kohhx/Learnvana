@@ -46,6 +46,7 @@ module.exports = {
           100: "#d1d1d1",
         },
         "proj-grey2": {
+          200: "#AFAFAF",
           300: "#A1A1A1",
         },
         "proj-grey3": {
@@ -53,6 +54,9 @@ module.exports = {
         },
         "proj-orange1": {
           300: "#DFBCA4",
+        },
+        "proj-red1": {
+          300: "#D2929A",
         },
       },
     },

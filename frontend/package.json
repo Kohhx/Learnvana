@@ -27,6 +27,7 @@
     "autoprefixer": "^10.4.13",
     "axios": "^1.2.5",
     "classnames": "^2.3.2",
+    "date-fns": "^2.29.3",
     "editorjs-change-case": "^0.0.3",
     "editorjs-drag-drop": "^1.1.13",
     "editorjs-header-with-alignment": "^1.0.1",
