@@ -12,6 +12,7 @@ const InstructorDashboardLayout2 = () => {
       <div className="dashBoard-layout2-right-main bg-proj-white3-200"></div>
     </div>
   );
+
 };
 
 export default InstructorDashboardLayout2;
