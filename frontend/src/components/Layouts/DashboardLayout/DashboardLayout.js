@@ -27,7 +27,7 @@ const DashboardLayout = () => {
     {
       icon: <MdClass className="text-proj-blue4-300 text-4xl" />,
       name: "All Classes",
-      link: "/instructors/dashboard",
+      link: "/instructors/dashboard/classes",
     },
     {
       icon: <HiDocumentCheck className="text-proj-blue4-300 text-4xl" />,

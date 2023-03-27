@@ -1,0 +1,22 @@
+.dashBoard-layout2-grid {
+  display: grid;
+  gap: 5px;
+
+  grid-auto-columns: 3fr 1fr;
+  grid-auto-rows: 1fr 7fr;
+  grid-template-areas:
+  "header header"
+  "left-main right-main";
+}
+
+.dashBoard-layout2-header{
+  grid-area: header;
+}
+
+.dashBoard-layout2-left-main {
+  grid-area: left-main;
+}
+
+.dashBoard-layout2-right-main {
+  grid-area: right-main;
+}
