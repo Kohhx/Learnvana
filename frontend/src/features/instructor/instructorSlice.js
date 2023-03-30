@@ -461,6 +461,7 @@ export const instructorSlice = createSlice({
       .addCase(newClass.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
+        state.instructorClasses = [...state.instructorClasses, action.payload];
       })
       .addCase(newClass.rejected, (state, action) => {
         state.isLoading = false;

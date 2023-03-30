@@ -2,8 +2,8 @@
   display: grid;
   gap: 5px;
 
-  grid-auto-columns: 3fr 1fr;
-  grid-auto-rows: 1fr 7fr;
+  grid-auto-columns: 3.3fr 1fr;
+  grid-auto-rows: 1fr 10fr;
   grid-template-areas:
   "header header"
   "left-main right-main";
