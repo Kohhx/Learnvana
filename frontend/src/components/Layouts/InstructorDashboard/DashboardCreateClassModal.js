@@ -19,8 +19,6 @@ const DashboardUpdateUserModal = ({ isModalOpen, closeModal }) => {
   // Get User state
   const { user } = useSelector((state) => state.auth);
 
-  // Get instructor ID
-  const { _id: instructorId } = user.profiles;
 
   // Initalize navigate
   const navigate = useNavigate();
@@ -43,6 +41,12 @@ const DashboardUpdateUserModal = ({ isModalOpen, closeModal }) => {
   } = useForm(
     {
       avatar: { value: null, messages: [], isValid: true, isFocus: false },
+      instructor_name: {
+        value: user.profiles.first_name,
+        messages: [],
+        isValid: true,
+        isFocus: false,
+      },
       title: {
         value: "",
         messages: [],
@@ -88,6 +92,7 @@ const DashboardUpdateUserModal = ({ isModalOpen, closeModal }) => {
 
     // If all pass then we submit login form to backend
     const newClassData = {
+      instructor_name: formState.inputs.instructor_name.value,
       title: formState.inputs.title.value,
       status: formState.inputs.status.value,
       images: formState.inputs.images.value,
@@ -114,6 +119,25 @@ const DashboardUpdateUserModal = ({ isModalOpen, closeModal }) => {
 
         <form onSubmit={updateUserSubmitHandler}>
           <div className="overflow-y-auto max-h-[55vh] pr-3">
+            <div className="flex gap-5 justify-between">
+              <InputV2
+                id="instructor_name"
+                type="text"
+                label="Instructor"
+                placeholder="Enter instructor name"
+                onFocus={() => focusHandler("title")}
+                onChange={(e) =>
+                  changeHandler(e, "instructor_name", [
+                    Validator.VALIDATOR_REQUIRE(),
+                  ])
+                }
+                value={formState.inputs.instructor_name.value}
+                isFocus={formState.inputs.instructor_name.isFocus}
+                isValid={formState.inputs.instructor_name.isValid}
+                errorMessages={formState.inputs.instructor_name.messages}
+                className="block grow w-full outline-none bg-transparent text-lg py-1 px-3 rounded-lg border-2  focus:border-2 focus:border-proj-blue4-200"
+              ></InputV2>
+            </div>
             <div className="flex gap-5 justify-between">
               <InputV2
                 id="title"

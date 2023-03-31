@@ -37,7 +37,7 @@ const InstructorDashboardClasses = () => {
     },
     {
       label: "Instructor",
-      render: (rowData) => rowData.instructor
+      render: (rowData) => rowData.instructor_name
       // class create should allow of instructor name
     },
     {

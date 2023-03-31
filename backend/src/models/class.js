@@ -4,6 +4,10 @@ const lessonSchema = require("./lesson");
 
 const classSchema = mongoose.Schema({
   instructor: { type: mongoose.Schema.Types.ObjectId, ref: "Instructor" },
+  instructor_name: {
+    type: String,
+    required: true,
+  },
   title: {
     type: String,
     required: true,

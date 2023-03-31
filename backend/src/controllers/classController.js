@@ -93,7 +93,7 @@ exports.getInstructorClasses = asyncHandler(async (req, res) => {
 // @access private
 exports.createClass = asyncHandler(async (req, res) => {
   console.log("test to see");
-  const { title, status, images, address } = req.body;
+  const { instructor_name, title, status, images, address } = req.body;
 
   const user = await User.findById(req.user.id);
   const instructor = await Instructor.findById(user.instructorprofile);
@@ -101,7 +101,7 @@ exports.createClass = asyncHandler(async (req, res) => {
   console.log(instructor);
 
   // Validation
-  if (!title || !status || !images || !address) {
+  if (!instructor_name || !title || !status || !images || !address) {
     res.status(400);
     throw new Error("Please include all fields");
   }
@@ -127,6 +127,7 @@ exports.createClass = asyncHandler(async (req, res) => {
   let newClass;
   try {
     newClass = await Class.create({
+      instructor_name,
       title,
       status,
       images,
@@ -154,6 +155,7 @@ exports.createClass = asyncHandler(async (req, res) => {
   if (newClass) {
     res.status(201).json({
       _id: newClass._id,
+      instructor_name: newClass.instructor_name,
       title: newClass.title,
       status: newClass.status,
       images: newClass.images,
