@@ -93,23 +93,37 @@ const InstructorDashboardClasses = () => {
       />
       <div className="py-4 px-8 overflow-y-auto">
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-proj-grey3-300 text-xl font-medium">
-            Active classes
-          </h3>
+          <div>
+            <h3 className="text-proj-grey3-300 text-xl font-medium">
+              Active classes
+            </h3>
+          </div>
+          <div className="flex items-center justify-between gap-2.5">
           <button
-            onClick={() => setIsModalIsOpen(true)}
-            className="p-1.5 rounded-full border-2 border-proj-grey3-300  w-fit -right-1 flex items-center justify-center"
-          >
-            <p className="capitalize text-proj-grey3-300 font-medium">add class</p>
-          </button>
+              onClick={() => setIsModalIsOpen(true)}
+              className="py-1.5 px-3  rounded-full border-2 border-proj-grey3-300  w-fit -right-1 flex items-center justify-center"
+            >
+              <p className="capitalize text-proj-grey3-300 font-medium">add class</p>
+            </button>
+            <button
+              className="py-1.5 px-3 rounded-full border-2 border-proj-grey3-300  w-fit -right-1 flex items-center justify-center"
+            >
+              <p className="capitalize text-proj-grey3-300 font-medium">view class history</p>
+            </button>
+          </div>
         </div>
-        <div className="grid grid-cols-12">
-          <div className="col-span-4">Class</div>
-          <div className="col-span-2">Instructor</div>
-          <div className="col-span-2">Start Date</div>
-          <div className="col-span-2">End Date</div>
+        <div className="grid grid-cols-16">
+
+          {/* insertion of headers */ }
+          <div className="col-span-4 mb-3 pl-5">Class</div>
+          <div className="col-span-3">Instructor</div>
+          <div className="col-span-3">Start Date</div>
+          <div className="col-span-3">End Date</div>
+          <div className="col-span-1">drop</div>
           <div className="col-span-1"></div>
-          <div className="col-span-1">asdas</div>
+          <div className="col-span-1 text-center">asdas</div>
+
+          {/* insertion of rows data */ }
           {allClasses}
 
         </div>
