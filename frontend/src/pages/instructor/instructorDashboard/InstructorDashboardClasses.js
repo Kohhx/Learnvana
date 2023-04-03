@@ -7,7 +7,6 @@ import useThunk from "../../../hooks/useThunkHook";
 import SortableTable from "../../../components/Shared/SortableTable";
 import DotLoader from "react-spinners/DotLoader";
 import DashboardCreateClassModal from "../../../components/Layouts/InstructorDashboard/DashboardCreateClassModal";
-import { FaUserEdit } from "react-icons/fa";
 
 const InstructorDashboardClasses = () => {
   const { instructorClasses } = useSelector((state) => state.instructor);
@@ -101,12 +100,12 @@ const InstructorDashboardClasses = () => {
           <div className="flex items-center justify-between gap-2.5">
           <button
               onClick={() => setIsModalIsOpen(true)}
-              className="py-1.5 px-3  rounded-full border-2 border-proj-grey3-300  w-fit -right-1 flex items-center justify-center"
+              className="py-1.5 px-3 rounded-full border-2 border-proj-grey3-300 hover:opacity-50 w-fit -right-1 flex items-center justify-center"
             >
               <p className="capitalize text-proj-grey3-300 font-medium">add class</p>
             </button>
             <button
-              className="py-1.5 px-3 rounded-full border-2 border-proj-grey3-300  w-fit -right-1 flex items-center justify-center"
+              className="py-1.5 px-3 rounded-full border-2 border-proj-grey3-300 hover:opacity-50 w-fit -right-1 flex items-center justify-center"
             >
               <p className="capitalize text-proj-grey3-300 font-medium">view class history</p>
             </button>
@@ -119,7 +118,7 @@ const InstructorDashboardClasses = () => {
           <div className="col-span-3">Instructor</div>
           <div className="col-span-3">Start Date</div>
           <div className="col-span-3">End Date</div>
-          <div className="col-span-1">drop</div>
+          <div className="col-span-1"></div>
           <div className="col-span-1"></div>
           <div className="col-span-1 text-center">asdas</div>
 
