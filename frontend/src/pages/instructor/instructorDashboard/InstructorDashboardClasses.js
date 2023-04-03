@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Button from "../../../components/Button";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getInstructorClasses, deleteInstructorClass } from "../../../features/instructor/instructorSlice";
-import Classitem from "../../../components/Classitem"
+import Classdisplay from "../../../components/Classdisplay"
 import useThunk from "../../../hooks/useThunkHook";
 import SortableTable from "../../../components/Shared/SortableTable";
 import DotLoader from "react-spinners/DotLoader";
@@ -26,6 +25,13 @@ const InstructorDashboardClasses = () => {
   useEffect(() => {
     doGetInstructorClasses();
   }, [doGetInstructorClasses]);
+
+
+  // display all lessons
+  const allClasses = instructorClasses.map((singleClass, i) => (
+    <Classdisplay key={i} classData={singleClass} role="instructor" />
+  ));
+
 
 
   const tableConfig = [
@@ -85,19 +91,27 @@ const InstructorDashboardClasses = () => {
         isModalOpen={isModalOpen}
         closeModal={() => setIsModalIsOpen(false)}
       />
-      <div className="w-5/6 mx-auto mt-4">
-        <button
-          onClick={() => setIsModalIsOpen(true)}
-          className="p-1.5 rounded-full border-2 border-proj-grey3-300  w-fit -right-1 flex items-center justify-center"
-        >
-          <p className="capitalize text-proj-grey3-300 font-medium">add class</p>
-        </button>
+      <div className="py-4 px-8 overflow-y-auto">
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="text-proj-grey3-300 text-xl font-medium">
+            Active classes
+          </h3>
+          <button
+            onClick={() => setIsModalIsOpen(true)}
+            className="p-1.5 rounded-full border-2 border-proj-grey3-300  w-fit -right-1 flex items-center justify-center"
+          >
+            <p className="capitalize text-proj-grey3-300 font-medium">add class</p>
+          </button>
+        </div>
+        <div className="grid grid-cols-12">
+          <div className="col-span-4">Class</div>
+          <div className="col-span-2">Instructor</div>
+          <div className="col-span-2">Start Date</div>
+          <div className="col-span-2">End Date</div>
+          <div className="col-span-1"></div>
+          <div className="col-span-1">asdas</div>
+          {allClasses}
 
-        <div className="w-4/6 mx-auto mt-4">
-          <h1 className="capitalize text-proj-grey3-300 text-xl font-medium">active classes</h1>
-          <div className="mt-3">
-            {<SortableTable index data={instructorClasses} config={tableConfig} />}
-          </div>
         </div>
       </div>
     </>
