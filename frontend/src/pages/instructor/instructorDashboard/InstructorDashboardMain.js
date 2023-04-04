@@ -207,7 +207,7 @@ const InstructorDashboardMain = () => {
                   Today Classes
                 </h3>
                 <CardV1 className="px-3 py-5">
-                  <div className="flex flex-col gap-3 h-[200px] overflow-auto px-3">
+                  <div className="flex flex-col gap-3 h-[185px] overflow-auto px-3">
                     <CardV1 className="flex items-center justify-between text-sm bg-proj-blue4-200 text-proj-white3-200 border-none">
                       <p>Dev Math</p>
                       <p>03 - basic trigonometry</p>
@@ -227,7 +227,7 @@ const InstructorDashboardMain = () => {
                 </CardV1>
               </div>
 
-              <div>
+              <div className="w-[50%]">
                 <div className="px-4">
                   <h3 className="capitalize text-proj-grey3-300 text-xl font-medium mb-2">
                     Achiever's Test
@@ -252,6 +252,38 @@ const InstructorDashboardMain = () => {
                     // isValid={formState.inputs.gender.isValid}
                     // errorMessages={formState.inputs.gender.messages}
                   />
+                  <div className="overflow-auto w-full h-[185px] flex flex-col gap-2 pr-1">
+                    <CardV1 className="flex flex-col gap-1 items-center text-sm bg-proj-white3-200 text-proj-grey3-400">
+                      <div className="w-full flex justify-between">
+                        <p className="text-proj-blue4-200 font-bold">Dev Math</p>
+                        <p>23 March 2023</p>
+                      </div>
+                      <div className="w-full flex justify-between">
+                        <p>Completion Test</p>
+                        <p>Not Graded</p>
+                      </div>
+                    </CardV1>
+                    <CardV1 className="flex flex-col gap-1 items-center text-sm bg-proj-grey4-300 text-proj-grey3-400 border-none">
+                      <div className="w-full flex justify-between">
+                        <p className="text-proj-blue4-200 font-bold">Dev Math</p>
+                        <p>3 April 2023</p>
+                      </div>
+                      <div className="w-full flex justify-between">
+                        <p>Test 1: Trigometry</p>
+                        <p>All Graded</p>
+                      </div>
+                    </CardV1>
+                    <CardV1 className="flex flex-col gap-1 items-center text-sm bg-proj-grey4-300 text-proj-grey3-400 border-none">
+                      <div className="w-full flex justify-between">
+                        <p className="text-proj-blue4-200 font-bold">Dev Math</p>
+                        <p>10 March 2023</p>
+                      </div>
+                      <div className="w-full flex justify-between">
+                        <p>Swimming Gold Test</p>
+                        <p>All Graded</p>
+                      </div>
+                    </CardV1>
+                  </div>
                 </div>
               </div>
             </div>
