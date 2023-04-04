@@ -32,7 +32,6 @@ const InstructorDashboardClasses = () => {
   ));
 
 
-
   const tableConfig = [
     {
       label: "Index",
@@ -120,7 +119,7 @@ const InstructorDashboardClasses = () => {
           <div className="col-span-3">End Date</div>
           <div className="col-span-1"></div>
           <div className="col-span-1"></div>
-          <div className="col-span-1 text-center">asdas</div>
+          <div className="col-span-1 text-center">L/M</div>
 
           {/* insertion of rows data */ }
           {allClasses}
