@@ -16,7 +16,6 @@
 .dashboard-main-leftbody {
   grid-area: main-left;
   display: grid;
-  gap: 10px;
   grid-auto-rows: 1fr 1fr;
   grid-template-areas:
     "main-top"
