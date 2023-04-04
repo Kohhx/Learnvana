@@ -112,8 +112,9 @@ exports.createLesson = asyncHandler(async (req, res) => {
 // get all lessons from a class
 
 exports.getClassLessons = asyncHandler(async (req, res) => {
-  console.log("/api/classes//instructor-classes/:classId/instructor-lessons");
+  console.log("/api/classes/instructor-classes/:classId/instructor-lessons");
   const classId = req.params.classId;
+  console.log("MEGASHARK", classId)
 
   let classFound;
   try {

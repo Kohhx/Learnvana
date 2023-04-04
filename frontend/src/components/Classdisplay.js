@@ -1,11 +1,56 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import Classhide from "./Classhide";
+import Lessondisplay from "./Lessondisplay";
+import useThunk from "../hooks/useThunkHook";
+import { getClassLessons } from "../features/instructor/instructorSlice";
 
 const Classdisplay = ({classData, role }) => {
   const { _id, title, instructor_name } = classData;
-  const {studentId }= useParams();
+  const { studentId }= useParams();
+
+  let {classId} = {classId: _id}
+  const { classLessons } = useSelector((state) => state.instructor);
+
+  // React state to manage visibility
+  const [show, setShow] = useState();
+
+  // function to toggle the boolean value
+  function toggleShow() {
+    setShow(!show);
+  }
+
+
+  // get all class lessons
+  const [
+    doGetClassLessons,
+    getLessonsLoading,
+    getLessonsSuccess,
+    getLessonsError,
+  ] = useThunk(getClassLessons);
+
+
+  useEffect(() => {
+    if (show) {
+      doGetClassLessons(classId);
+    }
+  }, [doGetClassLessons, show]);
+
+
+  console.log("GET FROM THUNK", classLessons )
+
+
+  // display all lessons
+  const allLessons = classLessons.map((singleLesson, i) => (
+    <Lessondisplay key={i} lessonData={singleLesson} classId={classId} role="instructor" />
+  ));
+
+  console.log("all lessons", allLessons )
+
+
   return (
     <>
       <div className="
@@ -35,7 +80,7 @@ const Classdisplay = ({classData, role }) => {
         bg-proj-white3-200 border-proj-grey2-200"
         >
           <div className="flex justify-end pr-5">
-            <RiArrowDropDownLine className="text-2xl hover:opacity-30" />
+            <RiArrowDropDownLine onClick={toggleShow} className="text-2xl hover:opacity-30" />
           </div>
       </div>
       <div className="col-span-1 mb-3 py-3"></div>
@@ -44,6 +89,10 @@ const Classdisplay = ({classData, role }) => {
         bg-proj-white3-200 border-proj-grey2-200"
         >6/6
       </div>
+      {show && allLessons}
+
+
+
 
     </>
 
