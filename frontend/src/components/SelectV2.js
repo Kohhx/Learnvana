@@ -12,6 +12,7 @@ const SelectV2 = ({
   isFocus,
   isValid,
   className,
+  optionTitle,
   ...rest
 }) => {
   // Build Error
@@ -47,7 +48,7 @@ const classes = classNames(
   // Inject form content here
   const formContent = (
     <select className={classes} {...rest}>
-      <option value="">Select a {label}</option>
+      <option value="">{optionTitle ? optionTitle : `Select a ${label}`}</option>
       {options.map((option, i) => (
         <option id={i} value={option.value} key={i}>{option.display}</option>
       ))}

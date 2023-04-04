@@ -9,6 +9,7 @@ import CardV1 from "../../../components/Shared/CardV1";
 import SortableTable from "../../../components/Shared/SortableTable";
 import { compareAsc, format } from "date-fns";
 import { AiFillPlusCircle } from "react-icons/ai";
+import SelectV2 from "../../../components/SelectV2";
 
 const InstructorDashboardMain = () => {
   const { user } = useSelector((state) => state.auth);
@@ -184,7 +185,7 @@ const InstructorDashboardMain = () => {
 
               <div className="border-2 self-stretch">
                 <CardV1 className="h-[100%]">
-                <h6 className="text-center font-semibold">Add Notes</h6>
+                  <h6 className="text-center font-semibold">Add Notes</h6>
                   <div className="flex items-center gap-4 pb-3">
                     <input
                       type="text"
@@ -199,7 +200,62 @@ const InstructorDashboardMain = () => {
             </div>
           </div>
 
-          <div className="main-bottom-section"></div>
+          <div className="main-bottom-section">
+            <div className="flex px-8">
+              <div className="w-[50%] px-4">
+                <h3 className="capitalize text-proj-grey3-300 text-xl font-medium mb-2">
+                  Today Classes
+                </h3>
+                <CardV1 className="px-3 py-5">
+                  <div className="flex flex-col gap-3 h-[200px] overflow-auto px-3">
+                    <CardV1 className="flex items-center justify-between text-sm bg-proj-blue4-200 text-proj-white3-200 border-none">
+                      <p>Dev Math</p>
+                      <p>03 - basic trigonometry</p>
+                      <p>0900</p>
+                    </CardV1>
+                    <CardV1 className="flex items-center justify-between text-sm bg-proj-grey4-300 text-proj-grey3-400 border-none">
+                      <p>Elementary Mathematics</p>
+                      <p>03 - basic trigonometry</p>
+                      <p>0900</p>
+                    </CardV1>
+                    <CardV1 className="flex items-center justify-between text-sm bg-proj-grey4-300 text-proj-grey3-400 border-none">
+                      <p>Dev Math</p>
+                      <p>03 - basic trigonometry</p>
+                      <p>0900</p>
+                    </CardV1>
+                  </div>
+                </CardV1>
+              </div>
+
+              <div>
+                <div className="px-4">
+                  <h3 className="capitalize text-proj-grey3-300 text-xl font-medium mb-2">
+                    Achiever's Test
+                  </h3>
+                  <SelectV2
+                    id="gender"
+                    // label="Gender"
+                    options={[
+                      {
+                        display: "Some",
+                        value: "some",
+                      },
+                      {
+                        display: "Latest",
+                        value: "latest",
+                      },
+                    ]}
+                    className="border border-proj-grey2-200 rounded-full px-2.5 py-1 text-sm"
+                    optionTitle="All"
+                    // value={formState.inputs.gender.value}
+                    // isFocus={formState.inputs.gender.isFocus}
+                    // isValid={formState.inputs.gender.isValid}
+                    // errorMessages={formState.inputs.gender.messages}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="dashboard-main-rightbody bg-proj-white3-200"></div>

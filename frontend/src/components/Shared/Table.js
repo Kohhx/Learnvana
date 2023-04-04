@@ -41,7 +41,7 @@ const Table = ({ data, config, className }) => {
   });
 
   return (
-    <div className="max-h-[6rem] overflow-auto">
+    <div className="max-h-[7rem] overflow-auto">
     <table className="text-left table-auto border-spacing-2 mx-auto text-sm">
       <thead className="sticky top-0 bg-proj-white3-200">
         <tr className="border-b-2">{headerContent}</tr>

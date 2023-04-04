@@ -59,6 +59,10 @@ module.exports = {
         },
         "proj-grey3": {
           300: "#696969",
+          400: "#616161"
+        },
+        "proj-grey4": {
+          300: "#DADADA",
         },
         "proj-orange1": {
           300: "#DFBCA4",
