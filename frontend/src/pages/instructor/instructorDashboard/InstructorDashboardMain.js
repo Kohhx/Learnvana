@@ -10,9 +10,11 @@ import SortableTable from "../../../components/Shared/SortableTable";
 import { compareAsc, format } from "date-fns";
 import { AiFillPlusCircle } from "react-icons/ai";
 import SelectV2 from "../../../components/SelectV2";
+import { BsFillCheckCircleFill } from "react-icons/bs";
 
 const InstructorDashboardMain = () => {
   const { user } = useSelector((state) => state.auth);
+  const [activity, setActivity] = useState("All");
   const [isModalOpen, setIsModalIsOpen] = useState(false);
 
   let avatarImgSRC =
@@ -66,6 +68,9 @@ const InstructorDashboardMain = () => {
       render: (rowData) => format(rowData.time, "HH:mm"),
     },
   ];
+
+  const borderClass = "border-black";
+
   return (
     <>
       <DashboardUpdateUserModal
@@ -201,12 +206,12 @@ const InstructorDashboardMain = () => {
           </div>
 
           <div className="main-bottom-section">
-            <div className="flex px-8">
-              <div className="w-[50%] px-4">
+            <div className="flex px-8 gap-6">
+              <div className="w-[50%]">
                 <h3 className="capitalize text-proj-grey3-300 text-xl font-medium mb-2">
                   Today Classes
                 </h3>
-                <CardV1 className="px-3 py-5">
+                <CardV1 className="px-2 py-5">
                   <div className="flex flex-col gap-3 h-[185px] overflow-auto px-3">
                     <CardV1 className="flex items-center justify-between text-sm bg-proj-blue4-200 text-proj-white3-200 border-none">
                       <p>Dev Math</p>
@@ -228,7 +233,7 @@ const InstructorDashboardMain = () => {
               </div>
 
               <div className="w-[50%]">
-                <div className="px-4">
+                <div className="">
                   <h3 className="capitalize text-proj-grey3-300 text-xl font-medium mb-2">
                     Achiever's Test
                   </h3>
@@ -255,7 +260,9 @@ const InstructorDashboardMain = () => {
                   <div className="overflow-auto w-full h-[185px] flex flex-col gap-2 pr-1">
                     <CardV1 className="flex flex-col gap-1 items-center text-sm bg-proj-white3-200 text-proj-grey3-400">
                       <div className="w-full flex justify-between">
-                        <p className="text-proj-blue4-200 font-bold">Dev Math</p>
+                        <p className="text-proj-blue4-200 font-bold">
+                          Dev Math
+                        </p>
                         <p>23 March 2023</p>
                       </div>
                       <div className="w-full flex justify-between">
@@ -265,7 +272,9 @@ const InstructorDashboardMain = () => {
                     </CardV1>
                     <CardV1 className="flex flex-col gap-1 items-center text-sm bg-proj-grey4-300 text-proj-grey3-400 border-none">
                       <div className="w-full flex justify-between">
-                        <p className="text-proj-blue4-200 font-bold">Dev Math</p>
+                        <p className="text-proj-blue4-200 font-bold">
+                          Dev Math
+                        </p>
                         <p>3 April 2023</p>
                       </div>
                       <div className="w-full flex justify-between">
@@ -275,7 +284,9 @@ const InstructorDashboardMain = () => {
                     </CardV1>
                     <CardV1 className="flex flex-col gap-1 items-center text-sm bg-proj-grey4-300 text-proj-grey3-400 border-none">
                       <div className="w-full flex justify-between">
-                        <p className="text-proj-blue4-200 font-bold">Dev Math</p>
+                        <p className="text-proj-blue4-200 font-bold">
+                          Dev Math
+                        </p>
                         <p>10 March 2023</p>
                       </div>
                       <div className="w-full flex justify-between">
@@ -290,7 +301,72 @@ const InstructorDashboardMain = () => {
           </div>
         </div>
 
-        <div className="dashboard-main-rightbody bg-proj-white3-200"></div>
+        <div className="dashboard-main-rightbody bg-proj-white3-200 px-5 py-5">
+          <div className="text-center text-[20px] font-bold text-proj-grey3-500 mb-3">
+            {format(new Date(), "EEEE, d LLL yyyy")}
+          </div>
+          <div>
+            <div className="flex justify-between border-b-2 border-proj-grey3-300 text-proj-grey3-300 pb-3">
+              <h6>Activity</h6>
+              <div className="flex gap-1 ">
+                <h6
+                  className={`cursor-pointer px-2 border rounded-full border-transparent ${
+                    activity === "All" && borderClass
+                  }`}
+                  onClick={() => setActivity("All")}
+                >
+                  All
+                </h6>
+                <h6
+                  className={`cursor-pointer px-2 border rounded-full border-transparent ${
+                    activity === "Hwk" && borderClass
+                  }`}
+                  onClick={() => setActivity("Hwk")}
+                >
+                  Hwk
+                </h6>
+                <h6
+                  className={`cursor-pointer px-2 border rounded-full border-transparent ${
+                    activity === "Payment" && borderClass
+                  }`}
+                  onClick={() => setActivity("Payment")}
+                >
+                  Payment
+                </h6>
+              </div>
+            </div>
+
+            {/* // Content */}
+            <div className="overflow-auto mt-2 text-sm text-proj-grey3-500 flex flex-col gap-2 h-[150px] pr-3">
+              <div className="flex items-center justify-between">
+                <p>Trig Hwk</p>
+                <p>15/15</p>
+              </div>
+              <div className="flex items-center justify-between">
+                <p>SwimEx Payment</p>
+                <p>
+                  <BsFillCheckCircleFill className="text-proj-blue4-200" />
+                </p>
+              </div>
+              <div className="flex items-center justify-between">
+                <p>Celebration Meetup</p>
+                <p>15/15</p>
+              </div>
+              <div className="flex items-center justify-between">
+                <p>Math Class</p>
+                <p>
+                  <BsFillCheckCircleFill className="text-proj-blue4-200" />
+                </p>
+              </div>
+              <div className="flex items-center justify-between">
+                <p>Math Class</p>
+                <p>
+                  <BsFillCheckCircleFill className="text-proj-blue4-200" />
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );
