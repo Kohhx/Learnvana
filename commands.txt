@@ -23,6 +23,7 @@ npm i --save @editorjs/raw
 npm i --save @editorjs/simple-image
 npm i --save @editorjs/image
 npm i --save @editorjs/checklist
+npm i tailwind-scrollbar-hide
 
 
 npm i @calumk/editorjs-codeflask

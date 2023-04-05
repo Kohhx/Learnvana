@@ -89,7 +89,7 @@ const InstructorDashboardClasses = () => {
         isModalOpen={isModalOpen}
         closeModal={() => setIsModalIsOpen(false)}
       />
-      <div className="py-4 px-8 overflow-y-auto">
+      <div className="py-4 px-8 h-screen overflow-auto scrollbar-hide">
         <div className="flex items-center justify-between mb-3">
           <div>
             <h3 className="text-proj-grey3-300 text-xl font-medium">
@@ -113,7 +113,7 @@ const InstructorDashboardClasses = () => {
         <div className="grid grid-cols-16">
 
           {/* insertion of headers */ }
-          <div className="col-span-4 mb-3 pl-5">Class</div>
+          <div className="col-span-4 pl-5">Class</div>
           <div className="col-span-3">Instructor</div>
           <div className="col-span-3">Start Date</div>
           <div className="col-span-3">End Date</div>
