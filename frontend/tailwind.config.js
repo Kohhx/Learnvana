@@ -50,8 +50,8 @@ module.exports = {
           300: "#3B3B3B",
         },
         "proj-grey1": {
-          300: "#585858",
           100: "#d1d1d1",
+          300: "#585858",
         },
         "proj-grey2": {
           200: "#AFAFAF",
@@ -81,6 +81,7 @@ module.exports = {
   },
   plugins: [
     require('tailwindcss'),
+    require('tailwind-scrollbar-hide'),
     require('autoprefixer'),
   ]
 };
