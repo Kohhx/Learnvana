@@ -95,6 +95,8 @@ const Classdisplay = ({classData, role }) => {
         bg-proj-white3-200 border-proj-grey2-200"
         >6/6
       </div>
+
+      {/* insertion of rows lessons data */ }
       {show && allLessons}
 
 

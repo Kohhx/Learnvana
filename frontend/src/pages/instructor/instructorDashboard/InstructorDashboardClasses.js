@@ -121,7 +121,7 @@ const InstructorDashboardClasses = () => {
           <div className="col-span-1"></div>
           <div className="col-span-1 text-center">L/M</div>
 
-          {/* insertion of rows data */ }
+          {/* insertion of rows classes data */ }
           {allClasses}
 
         </div>
