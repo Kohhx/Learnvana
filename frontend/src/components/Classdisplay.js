@@ -9,22 +9,19 @@ import useThunk from "../hooks/useThunkHook";
 import { getClassLessons } from "../features/instructor/instructorSlice";
 
 const Classdisplay = ({classData, role }) => {
-  const { _id, title, instructor_name } = classData;
+  const { _id, title, instructor_name, lessons } = classData;
   const { studentId }= useParams();
 
   let {classId} = {classId: _id}
-  const { classLessons } = useSelector((state) => state.instructor);
-
-
 
   // React state to manage visibility
   const [show, setShow] = useState();
 
+
   // function to toggle the boolean value
   function toggleShow() {
     setShow(!show);
-
-  }
+  };
 
   // get all class lessons
   const [
@@ -36,21 +33,24 @@ const Classdisplay = ({classData, role }) => {
 
 
   useEffect(() => {
-    if (show) {
-      doGetClassLessons(classId);
-    }
+    doGetClassLessons(classId);
   }, [doGetClassLessons, show]);
 
 
-  console.log("GET FROM THUNK", classLessons )
-
-
   // display all lessons
-  const allLessons = classLessons.map((singleLesson, i) => (
+  const allLessons = lessons.map((singleLesson, i) => (
     <Lessondisplay key={i} lessonData={singleLesson} classId={classId} role="instructor" />
   ));
 
-  console.log("all lessons", allLessons )
+
+  // check if lessons exist, if lessons exist icon appear
+  function displayIcon() {
+    if (allLessons.length === 0) {
+      return (<></>)
+    } else {
+      return (<><RiArrowDropDownLine onClick={toggleShow} className="text-2xl hover:opacity-30" /></>)
+    }
+  }
 
 
   return (
@@ -85,7 +85,7 @@ const Classdisplay = ({classData, role }) => {
         bg-proj-white3-200 border-proj-grey2-200"
         >
           <div className="flex justify-end pr-5">
-            <RiArrowDropDownLine onClick={toggleShow} className="text-2xl hover:opacity-30" />
+            {displayIcon()}
           </div>
       </div>
       <div className="col-span-1 mt-3 py-3 z-10 text-proj-grey3-300"></div>
@@ -98,10 +98,6 @@ const Classdisplay = ({classData, role }) => {
 
       {/* insertion of rows lessons data */ }
       {show && allLessons}
-
-
-
-
     </>
 
   );
